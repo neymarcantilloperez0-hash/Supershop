@@ -85,7 +85,7 @@ categories:
       diamond:        { material: DIAMOND,          name: "&bDiamante",            buy: 150,  sell: 75 }
       emerald:        { material: EMERALD,          name: "&aEsmeralda",           buy: 180,  sell: 90 }
       quartz:         { material: QUARTZ,           name: "&fCuarzo",              buy: 18,   sell: 9 }
-      netherite_ingot:{ material: NETHERITE_INGOT,  name: "&8Lingote de Netherita",buy: 900,  sell: 450 }
+      netherite_ingot: { material: NETHERITE_INGOT,  name: "&8Lingote de Netherita",buy: 900,  sell: 450 }
       raw_iron:       { material: RAW_IRON,         name: "&7Hierro en Bruto",     buy: 14,   sell: 6 }
       raw_gold:       { material: RAW_GOLD,         name: "&6Oro en Bruto",        buy: 28,   sell: 12 }
       raw_copper:     { material: RAW_COPPER,       name: "&6Cobre en Bruto",      buy: 10,   sell: 4 }
@@ -99,7 +99,7 @@ categories:
     items:
       bread:          { material: BREAD,            name: "&6Pan",                 buy: 10,  sell: 4 }
       cooked_beef:    { material: COOKED_BEEF,       name: "&6Filete Cocido",       buy: 15,  sell: 7 }
-      cooked_porkchop:{ material: COOKED_PORKCHOP,   name: "&6Chuleta Cocida",      buy: 15,  sell: 7 }
+      cooked_porkchop: { material: COOKED_PORKCHOP,   name: "&6Chuleta Cocida",      buy: 15,  sell: 7 }
       cooked_chicken: { material: COOKED_CHICKEN,    name: "&6Pollo Cocido",        buy: 15,  sell: 7 }
       cooked_salmon:  { material: COOKED_SALMON,     name: "&6Salmón Cocido",       buy: 18,  sell: 8 }
       carrot:         { material: CARROT,            name: "&6Zanahoria",           buy: 5,   sell: 2 }
@@ -127,7 +127,7 @@ categories:
       iron_pickaxe:      { material: IRON_PICKAXE,      name: "&fPico de Hierro",       buy: 100,  sell: 40 }
       diamond_pickaxe:   { material: DIAMOND_PICKAXE,   name: "&bPico de Diamante",     buy: 400,  sell: 160 }
       iron_chestplate:   { material: IRON_CHESTPLATE,   name: "&fPechera de Hierro",    buy: 150,  sell: 60 }
-      diamond_chestplate:{ material: DIAMOND_CHESTPLATE,name: "&bPechera de Diamante",  buy: 500,  sell: 200 }
+      diamond_chestplate: { material: DIAMOND_CHESTPLATE,name: "&bPechera de Diamante",  buy: 500,  sell: 200 }
       netherite_chestplate: { material: NETHERITE_CHESTPLATE, name: "&8Pechera de Netherita", buy: 1800, sell: 720 }
       bow:               { material: BOW,               name: "&6Arco",                 buy: 80,   sell: 30 }
       crossbow:          { material: CROSSBOW,          name: "&6Ballesta",             buy: 120,  sell: 50 }
@@ -156,9 +156,9 @@ categories:
       blaze_rod:       { material: BLAZE_ROD,         name: "&6Vara de Blaze",       buy: 300,  sell: 140 }
       magma_cream:     { material: MAGMA_CREAM,       name: "&6Crema de Magma",      buy: 120,  sell: 50 }
       slime_ball:      { material: SLIME_BALL,        name: "&aBaba de Slime",       buy: 40,   sell: 18 }
-      phantom_membrane:{ material: PHANTOM_MEMBRANE,  name: "&fEsencia Fantasma",    buy: 180,  sell: 80 }
-      totem_of_undying:{ material: TOTEM_OF_UNDYING,  name: "&6Totem de Inmortalidad", buy: 1000, sell: 450 }
-      heart_of_the_sea:{ material: HEART_OF_THE_SEA,  name: "&bCorazón del Mar",     buy: 800,  sell: 350 }
+      phantom_membrane: { material: PHANTOM_MEMBRANE,  name: "&fEsencia Fantasma",    buy: 180,  sell: 80 }
+      totem_of_undying: { material: TOTEM_OF_UNDYING,  name: "&6Totem de Inmortalidad", buy: 1000, sell: 450 }
+      heart_of_the_sea: { material: HEART_OF_THE_SEA,  name: "&bCorazón del Mar",     buy: 800,  sell: 350 }
       feather:         { material: FEATHER,           name: "&fPluma",               buy: 6,    sell: 2 }
       leather:         { material: LEATHER,           name: "&6Cuero",               buy: 12,   sell: 5 }
 
@@ -169,10 +169,10 @@ categories:
     main-menu-slot: 19
     items:
       spawner_zombie:  { material: SPAWNER, name: "&2Spawner de Zombie",       buy: 5000,  sell: 2000, entity: ZOMBIE }
-      spawner_skeleton:{ material: SPAWNER, name: "&fSpawner de Esqueleto",    buy: 6000,  sell: 2500, entity: SKELETON }
+      spawner_skeleton: { material: SPAWNER, name: "&fSpawner de Esqueleto",    buy: 6000,  sell: 2500, entity: SKELETON }
       spawner_spider:  { material: SPAWNER, name: "&8Spawner de Araña",        buy: 5500,  sell: 2200, entity: SPIDER }
       spawner_creeper: { material: SPAWNER, name: "&aSpawner de Creeper",      buy: 8000,  sell: 3200, entity: CREEPER }
-      spawner_enderman:{ material: SPAWNER, name: "&5Spawner de Enderman",     buy: 10000, sell: 4000, entity: ENDERMAN }
+      spawner_enderman: { material: SPAWNER, name: "&5Spawner de Enderman",     buy: 10000, sell: 4000, entity: ENDERMAN }
       spawner_blaze:   { material: SPAWNER, name: "&6Spawner de Blaze",        buy: 15000, sell: 6000, entity: BLAZE }
       spawner_wither_skeleton: { material: SPAWNER, name: "&8Spawner de Wither Skeleton", buy: 18000, sell: 7500, entity: WITHER_SKELETON }
 
@@ -197,7 +197,7 @@ categories:
       shulker_box:     { material: SHULKER_BOX,      name: "&5Shulker Box",         buy: 300, sell: 120 }
       decorated_pot:   { material: DECORATED_POT,    name: "&6Jarrón Decorado",     buy: 25,  sell: 10 }
       candle:          { material: CANDLE,           name: "&fVela",                buy: 8,   sell: 3 }
-      tube_coral_block:{ material: TUBE_CORAL_BLOCK, name: "&bBloque de Coral",     buy: 20,  sell: 8 }
+      tube_coral_block: { material: TUBE_CORAL_BLOCK, name: "&bBloque de Coral",     buy: 20,  sell: 8 }
 
   custom:
     display-name: "&6&lObjetos Custom"
@@ -209,5 +209,5 @@ categories:
       netherite_fragment: { material: NETHERITE_SCRAP, name: "&8Fragmento de Netherita", buy: 300, sell: 150 }
       nautilus_shell:  { material: NAUTILUS_SHELL,   name: "&bNautilus Shell",         buy: 150,  sell: 60 }
       name_tag:        { material: NAME_TAG,         name: "&fEtiqueta",               buy: 50,   sell: -1 }
-      experience_bottle:{ material: EXPERIENCE_BOTTLE, name: "&aBotella de Experiencia", buy: 25, sell: -1 }
+      experience_bottle: { material: EXPERIENCE_BOTTLE, name: "&aBotella de Experiencia", buy: 25, sell: -1 }
       saddle:          { material: SADDLE,           name: "&6Silla de Montar",        buy: 60,   sell: 20 }
