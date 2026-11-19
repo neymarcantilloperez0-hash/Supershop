@@ -1,0 +1,213 @@
+# =========================================================
+#  SuperShop - Catálogo de la tienda
+#  Cada categoría tiene su propio vidrio de color, ícono y
+#  slot en el menú principal (0-53). Para agregar un ítem
+#  nuevo, copia el bloque de cualquiera y cambia los valores.
+#
+#  buy: precio de compra  |  sell: precio de venta
+#  Pon "sell: -1" si el ítem NO se puede vender.
+#  Pon "buy: -1"  si el ítem NO se puede comprar (solo venta).
+# =========================================================
+
+categories:
+
+  madera:
+    display-name: "&6&lMadera"
+    icon: OAK_LOG
+    glass: BROWN_STAINED_GLASS_PANE
+    main-menu-slot: 10
+    items:
+      oak_log:        { material: OAK_LOG,        name: "&6Tronco de Roble",     buy: 5,   sell: 2 }
+      oak_planks:     { material: OAK_PLANKS,      name: "&6Tablones de Roble",   buy: 4,   sell: 1.5 }
+      birch_log:      { material: BIRCH_LOG,       name: "&eTronco de Abedul",    buy: 5,   sell: 2 }
+      birch_planks:   { material: BIRCH_PLANKS,    name: "&eTablones de Abedul",  buy: 4,   sell: 1.5 }
+      spruce_log:     { material: SPRUCE_LOG,      name: "&2Tronco de Abeto",     buy: 5,   sell: 2 }
+      spruce_planks:  { material: SPRUCE_PLANKS,   name: "&2Tablones de Abeto",   buy: 4,   sell: 1.5 }
+      jungle_log:     { material: JUNGLE_LOG,      name: "&aTronco de Jungla",    buy: 5,   sell: 2 }
+      jungle_planks:  { material: JUNGLE_PLANKS,   name: "&aTablones de Jungla",  buy: 4,   sell: 1.5 }
+      acacia_log:     { material: ACACIA_LOG,      name: "&6Tronco de Acacia",    buy: 5,   sell: 2 }
+      dark_oak_log:   { material: DARK_OAK_LOG,    name: "&8Tronco Oscuro",       buy: 5,   sell: 2 }
+      cherry_log:     { material: CHERRY_LOG,      name: "&dTronco de Cerezo",    buy: 6,   sell: 2.4 }
+      mangrove_log:   { material: MANGROVE_LOG,    name: "&cTronco de Mangle",    buy: 6,   sell: 2.4 }
+      ladder:         { material: LADDER,          name: "&fEscalera de Mano",    buy: 3,   sell: 1 }
+      oak_door:       { material: OAK_DOOR,        name: "&6Puerta de Roble",     buy: 8,   sell: 3 }
+      oak_fence:      { material: OAK_FENCE,       name: "&6Valla de Roble",      buy: 4,   sell: 1.5 }
+      chest:          { material: CHEST,           name: "&6Cofre",               buy: 15,  sell: 6 }
+      barrel:         { material: BARREL,          name: "&6Barril",              buy: 15,  sell: 6 }
+      crafting_table: { material: CRAFTING_TABLE,  name: "&6Mesa de Crafteo",     buy: 10,  sell: 4 }
+      bookshelf:      { material: BOOKSHELF,       name: "&6Estantería",          buy: 18,  sell: 7 }
+      bamboo:         { material: BAMBOO,          name: "&aBambú",               buy: 3,   sell: 1 }
+      boat_oak:       { material: OAK_BOAT,        name: "&6Barca de Roble",      buy: 25,  sell: 10 }
+
+  bloques:
+    display-name: "&7&lBloques"
+    icon: STONE
+    glass: GRAY_STAINED_GLASS_PANE
+    main-menu-slot: 11
+    items:
+      dirt:           { material: DIRT,            name: "&2Tierra",              buy: 1,   sell: 0.5 }
+      grass_block:    { material: GRASS_BLOCK,     name: "&aCésped",              buy: 1,   sell: 0.5 }
+      stone:          { material: STONE,           name: "&7Piedra",              buy: 2,   sell: 1 }
+      cobblestone:    { material: COBBLESTONE,     name: "&7Adoquín",             buy: 2,   sell: 1 }
+      granite:        { material: GRANITE,         name: "&cGranito",             buy: 3,   sell: 1.5 }
+      diorite:        { material: DIORITE,         name: "&fDiorita",             buy: 3,   sell: 1.5 }
+      andesite:       { material: ANDESITE,        name: "&8Andesita",            buy: 3,   sell: 1.5 }
+      sand:           { material: SAND,            name: "&eArena",               buy: 2,   sell: 1 }
+      red_sand:       { material: RED_SAND,        name: "&6Arena Roja",          buy: 2,   sell: 1 }
+      gravel:         { material: GRAVEL,          name: "&7Grava",               buy: 2,   sell: 1 }
+      glass:          { material: GLASS,           name: "&bVidrio",              buy: 6,   sell: 2 }
+      tinted_glass:   { material: TINTED_GLASS,    name: "&8Vidrio Tintado",      buy: 15,  sell: 6 }
+      bricks:         { material: BRICKS,          name: "&cLadrillo",            buy: 10,  sell: 4 }
+      obsidian:       { material: OBSIDIAN,        name: "&5Obsidiana",           buy: 60,  sell: 30 }
+      white_wool:     { material: WHITE_WOOL,      name: "&fLana Blanca",         buy: 10,  sell: 5 }
+      white_concrete: { material: WHITE_CONCRETE,  name: "&fHormigón Blanco",     buy: 12,  sell: 6 }
+      netherrack:     { material: NETHERRACK,      name: "&4Netherrack",          buy: 3,   sell: 1 }
+      end_stone:      { material: END_STONE,       name: "&eEnd Stone",           buy: 20,  sell: 8 }
+      deepslate:      { material: DEEPSLATE,       name: "&8Deepslate",           buy: 5,   sell: 2 }
+      snow_block:     { material: SNOW_BLOCK,      name: "&fBloque de Nieve",     buy: 4,   sell: 1.5 }
+      ice:            { material: ICE,             name: "&bHielo",               buy: 10,  sell: 4 }
+      iron_block:     { material: IRON_BLOCK,      name: "&fBloque de Hierro",    buy: 180, sell: 90 }
+      gold_block:     { material: GOLD_BLOCK,      name: "&6Bloque de Oro",       buy: 360, sell: 180 }
+      diamond_block:  { material: DIAMOND_BLOCK,   name: "&bBloque de Diamante",  buy: 1350,sell: 675 }
+
+  minerales:
+    display-name: "&b&lMinerales"
+    icon: DIAMOND_ORE
+    glass: LIGHT_BLUE_STAINED_GLASS_PANE
+    main-menu-slot: 12
+    items:
+      coal:           { material: COAL,            name: "&8Carbón",              buy: 8,    sell: 4 }
+      iron_ingot:     { material: IRON_INGOT,       name: "&fLingote de Hierro",   buy: 20,   sell: 10 }
+      copper_ingot:   { material: COPPER_INGOT,     name: "&6Lingote de Cobre",    buy: 12,   sell: 5 }
+      gold_ingot:     { material: GOLD_INGOT,       name: "&6Lingote de Oro",      buy: 40,   sell: 20 }
+      redstone:       { material: REDSTONE,         name: "&cRedstone",            buy: 15,   sell: 7 }
+      lapis_lazuli:   { material: LAPIS_LAZULI,     name: "&9Lapislázuli",         buy: 12,   sell: 6 }
+      diamond:        { material: DIAMOND,          name: "&bDiamante",            buy: 150,  sell: 75 }
+      emerald:        { material: EMERALD,          name: "&aEsmeralda",           buy: 180,  sell: 90 }
+      quartz:         { material: QUARTZ,           name: "&fCuarzo",              buy: 18,   sell: 9 }
+      netherite_ingot:{ material: NETHERITE_INGOT,  name: "&8Lingote de Netherita",buy: 900,  sell: 450 }
+      raw_iron:       { material: RAW_IRON,         name: "&7Hierro en Bruto",     buy: 14,   sell: 6 }
+      raw_gold:       { material: RAW_GOLD,         name: "&6Oro en Bruto",        buy: 28,   sell: 12 }
+      raw_copper:     { material: RAW_COPPER,       name: "&6Cobre en Bruto",      buy: 10,   sell: 4 }
+      amethyst_shard: { material: AMETHYST_SHARD,   name: "&dFragmento de Amatista", buy: 10, sell: 4 }
+
+  comida:
+    display-name: "&e&lComida"
+    icon: COOKED_BEEF
+    glass: YELLOW_STAINED_GLASS_PANE
+    main-menu-slot: 13
+    items:
+      bread:          { material: BREAD,            name: "&6Pan",                 buy: 10,  sell: 4 }
+      cooked_beef:    { material: COOKED_BEEF,       name: "&6Filete Cocido",       buy: 15,  sell: 7 }
+      cooked_porkchop:{ material: COOKED_PORKCHOP,   name: "&6Chuleta Cocida",      buy: 15,  sell: 7 }
+      cooked_chicken: { material: COOKED_CHICKEN,    name: "&6Pollo Cocido",        buy: 15,  sell: 7 }
+      cooked_salmon:  { material: COOKED_SALMON,     name: "&6Salmón Cocido",       buy: 18,  sell: 8 }
+      carrot:         { material: CARROT,            name: "&6Zanahoria",           buy: 5,   sell: 2 }
+      potato:         { material: POTATO,            name: "&6Papa",                buy: 5,   sell: 2 }
+      baked_potato:   { material: BAKED_POTATO,       name: "&6Papa al Horno",       buy: 12,  sell: 5 }
+      melon_slice:    { material: MELON_SLICE,        name: "&aRebanada de Melón",   buy: 6,   sell: 2 }
+      apple:          { material: APPLE,              name: "&cManzana",             buy: 8,   sell: 3 }
+      golden_apple:   { material: GOLDEN_APPLE,       name: "&6Manzana Dorada",      buy: 250, sell: 120 }
+      egg:            { material: EGG,                name: "&fHuevo",               buy: 5,   sell: 2 }
+      milk_bucket:    { material: MILK_BUCKET,        name: "&fCubo de Leche",       buy: 10,  sell: 4 }
+      cake:           { material: CAKE,               name: "&fPastel",              buy: 80,  sell: -1 }
+      cookie:         { material: COOKIE,             name: "&6Galleta",             buy: 6,   sell: 2 }
+      honey_bottle:   { material: HONEY_BOTTLE,       name: "&6Botella de Miel",     buy: 15,  sell: 6 }
+      sweet_berries:  { material: SWEET_BERRIES,      name: "&cBaya Dulce",          buy: 10,  sell: 4 }
+
+  equipamiento:
+    display-name: "&c&lEquipamiento"
+    icon: DIAMOND_SWORD
+    glass: RED_STAINED_GLASS_PANE
+    main-menu-slot: 14
+    items:
+      iron_sword:        { material: IRON_SWORD,        name: "&fEspada de Hierro",     buy: 100,  sell: 40 }
+      diamond_sword:     { material: DIAMOND_SWORD,     name: "&bEspada de Diamante",   buy: 400,  sell: 160 }
+      netherite_sword:   { material: NETHERITE_SWORD,   name: "&8Espada de Netherita",  buy: 1500, sell: 600 }
+      iron_pickaxe:      { material: IRON_PICKAXE,      name: "&fPico de Hierro",       buy: 100,  sell: 40 }
+      diamond_pickaxe:   { material: DIAMOND_PICKAXE,   name: "&bPico de Diamante",     buy: 400,  sell: 160 }
+      iron_chestplate:   { material: IRON_CHESTPLATE,   name: "&fPechera de Hierro",    buy: 150,  sell: 60 }
+      diamond_chestplate:{ material: DIAMOND_CHESTPLATE,name: "&bPechera de Diamante",  buy: 500,  sell: 200 }
+      netherite_chestplate: { material: NETHERITE_CHESTPLATE, name: "&8Pechera de Netherita", buy: 1800, sell: 720 }
+      bow:               { material: BOW,               name: "&6Arco",                 buy: 80,   sell: 30 }
+      crossbow:          { material: CROSSBOW,          name: "&6Ballesta",             buy: 120,  sell: 50 }
+      arrow:             { material: ARROW,             name: "&7Flecha",               buy: 2,    sell: 0.8 }
+      shield:            { material: SHIELD,            name: "&6Escudo",               buy: 60,   sell: 25 }
+      trident:           { material: TRIDENT,           name: "&bTridente",             buy: 600,  sell: 250 }
+      elytra:            { material: ELYTRA,             name: "&dElytra",               buy: 2500, sell: -1 }
+      fishing_rod:       { material: FISHING_ROD,       name: "&6Caña de Pescar",       buy: 40,   sell: 15 }
+      shears:            { material: SHEARS,             name: "&fTijeras",              buy: 15,   sell: 5 }
+      lead:              { material: LEAD,               name: "&fCorrea",               buy: 10,   sell: 4 }
+
+  mobs:
+    display-name: "&2&lDrops de Mobs"
+    icon: ROTTEN_FLESH
+    glass: GREEN_STAINED_GLASS_PANE
+    main-menu-slot: 15
+    items:
+      gunpowder:       { material: GUNPOWDER,        name: "&7Pólvora",             buy: 15,   sell: 6 }
+      bone:            { material: BONE,              name: "&fHueso",               buy: 10,   sell: 4 }
+      bone_meal:       { material: BONE_MEAL,         name: "&fHarina de Hueso",     buy: 6,    sell: 2 }
+      string:          { material: STRING,            name: "&fCuerda",              buy: 8,    sell: 3 }
+      rotten_flesh:    { material: ROTTEN_FLESH,      name: "&2Carne Podrida",       buy: 2,    sell: 0.5 }
+      spider_eye:      { material: SPIDER_EYE,        name: "&5Ojo de Araña",        buy: 12,   sell: 5 }
+      ender_pearl:     { material: ENDER_PEARL,       name: "&2Perla de Ender",      buy: 250,  sell: 120 }
+      ender_eye:       { material: ENDER_EYE,         name: "&2Ojo de Ender",        buy: 200,  sell: 90 }
+      blaze_rod:       { material: BLAZE_ROD,         name: "&6Vara de Blaze",       buy: 300,  sell: 140 }
+      magma_cream:     { material: MAGMA_CREAM,       name: "&6Crema de Magma",      buy: 120,  sell: 50 }
+      slime_ball:      { material: SLIME_BALL,        name: "&aBaba de Slime",       buy: 40,   sell: 18 }
+      phantom_membrane:{ material: PHANTOM_MEMBRANE,  name: "&fEsencia Fantasma",    buy: 180,  sell: 80 }
+      totem_of_undying:{ material: TOTEM_OF_UNDYING,  name: "&6Totem de Inmortalidad", buy: 1000, sell: 450 }
+      heart_of_the_sea:{ material: HEART_OF_THE_SEA,  name: "&bCorazón del Mar",     buy: 800,  sell: 350 }
+      feather:         { material: FEATHER,           name: "&fPluma",               buy: 6,    sell: 2 }
+      leather:         { material: LEATHER,           name: "&6Cuero",               buy: 12,   sell: 5 }
+
+  spawners:
+    display-name: "&5&lSpawners"
+    icon: SPAWNER
+    glass: PURPLE_STAINED_GLASS_PANE
+    main-menu-slot: 19
+    items:
+      spawner_zombie:  { material: SPAWNER, name: "&2Spawner de Zombie",       buy: 5000,  sell: 2000, entity: ZOMBIE }
+      spawner_skeleton:{ material: SPAWNER, name: "&fSpawner de Esqueleto",    buy: 6000,  sell: 2500, entity: SKELETON }
+      spawner_spider:  { material: SPAWNER, name: "&8Spawner de Araña",        buy: 5500,  sell: 2200, entity: SPIDER }
+      spawner_creeper: { material: SPAWNER, name: "&aSpawner de Creeper",      buy: 8000,  sell: 3200, entity: CREEPER }
+      spawner_enderman:{ material: SPAWNER, name: "&5Spawner de Enderman",     buy: 10000, sell: 4000, entity: ENDERMAN }
+      spawner_blaze:   { material: SPAWNER, name: "&6Spawner de Blaze",        buy: 15000, sell: 6000, entity: BLAZE }
+      spawner_wither_skeleton: { material: SPAWNER, name: "&8Spawner de Wither Skeleton", buy: 18000, sell: 7500, entity: WITHER_SKELETON }
+
+  decoracion:
+    display-name: "&d&lDecoración"
+    icon: PAINTING
+    glass: PINK_STAINED_GLASS_PANE
+    main-menu-slot: 20
+    items:
+      painting:        { material: PAINTING,         name: "&dCuadro",              buy: 15,  sell: 6 }
+      flower_pot:      { material: FLOWER_POT,       name: "&dMaceta",              buy: 10,  sell: 4 }
+      armor_stand:     { material: ARMOR_STAND,      name: "&fArmor Stand",         buy: 25,  sell: 10 }
+      lantern:         { material: LANTERN,          name: "&6Farol",               buy: 12,  sell: 5 }
+      soul_lantern:    { material: SOUL_LANTERN,     name: "&bFarol de Alma",       buy: 15,  sell: 6 }
+      zombie_head:     { material: ZOMBIE_HEAD,      name: "&2Cabeza de Zombie",    buy: 200, sell: 80 }
+      skeleton_skull:  { material: SKELETON_SKULL,   name: "&fCabeza de Esqueleto", buy: 200, sell: 80 }
+      bell:            { material: BELL,             name: "&6Campana",             buy: 40,  sell: 15 }
+      lectern:         { material: LECTERN,          name: "&6Atril",               buy: 20,  sell: 8 }
+      item_frame:      { material: ITEM_FRAME,       name: "&fMarco de Ítem",       buy: 10,  sell: 4 }
+      glow_item_frame: { material: GLOW_ITEM_FRAME,  name: "&eMarco de Ítem Brillante", buy: 20, sell: 8 }
+      sea_lantern:     { material: SEA_LANTERN,      name: "&bLinterna de Mar",     buy: 25,  sell: 10 }
+      shulker_box:     { material: SHULKER_BOX,      name: "&5Shulker Box",         buy: 300, sell: 120 }
+      decorated_pot:   { material: DECORATED_POT,    name: "&6Jarrón Decorado",     buy: 25,  sell: 10 }
+      candle:          { material: CANDLE,           name: "&fVela",                buy: 8,   sell: 3 }
+      tube_coral_block:{ material: TUBE_CORAL_BLOCK, name: "&bBloque de Coral",     buy: 20,  sell: 8 }
+
+  custom:
+    display-name: "&6&lObjetos Custom"
+    icon: FIREWORK_ROCKET
+    glass: ORANGE_STAINED_GLASS_PANE
+    main-menu-slot: 21
+    items:
+      rocket:          { material: FIREWORK_ROCKET,  name: "&6Cohete",                 buy: 30,   sell: -1 }
+      netherite_fragment: { material: NETHERITE_SCRAP, name: "&8Fragmento de Netherita", buy: 300, sell: 150 }
+      nautilus_shell:  { material: NAUTILUS_SHELL,   name: "&bNautilus Shell",         buy: 150,  sell: 60 }
+      name_tag:        { material: NAME_TAG,         name: "&fEtiqueta",               buy: 50,   sell: -1 }
+      experience_bottle:{ material: EXPERIENCE_BOTTLE, name: "&aBotella de Experiencia", buy: 25, sell: -1 }
+      saddle:          { material: SADDLE,           name: "&6Silla de Montar",        buy: 60,   sell: 20 }

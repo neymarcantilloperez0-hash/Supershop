@@ -1,0 +1,32 @@
+name: Build SuperShop
+
+# Se ejecuta cada vez que subes cambios a main, o lo puedes correr a mano
+# desde la pestaña "Actions" de tu repositorio en GitHub.
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: maven
+
+      - name: Compilar con Maven
+        run: mvn -B clean package
+
+      - name: Subir el .jar como artefacto descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: SuperShop-jar
+          path: target/SuperShop.jar
