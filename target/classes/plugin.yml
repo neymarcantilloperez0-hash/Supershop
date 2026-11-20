@@ -1,0 +1,22 @@
+name: SuperShop
+main: mx.network.supershop.SuperShop
+version: '1.0.0'
+api-version: '1.20'
+author: TuServidor
+description: Tienda del servidor con GUI decorado, conectada a Vault y PlaceholderAPI.
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+
+commands:
+  shop:
+    description: Abre la tienda del servidor.
+    usage: /shop [reload]
+    permission: supershop.use
+
+permissions:
+  supershop.use:
+    description: Permite usar /shop
+    default: true
+  supershop.admin:
+    description: Permite recargar la configuración de la tienda
+    default: op

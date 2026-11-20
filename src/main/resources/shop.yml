@@ -1,213 +1,1272 @@
 # =========================================================
-#  SuperShop - Catálogo de la tienda
-#  Cada categoría tiene su propio vidrio de color, ícono y
-#  slot en el menú principal (0-53). Para agregar un ítem
-#  nuevo, copia el bloque de cualquiera y cambia los valores.
+#  SuperShop - Catálogo (10 categorías en rejilla 3-4-3, todo 1.20)
+#  buy: precio de compra | sell: precio de venta (-1 = no se puede)
+#  Menú principal: fila 1 = 11,13,15 | fila 2 = 19,21,23,25 | fila 3 = 29,31,33.
 #
-#  buy: precio de compra  |  sell: precio de venta
-#  Pon "sell: -1" si el ítem NO se puede vender.
-#  Pon "buy: -1"  si el ítem NO se puede comprar (solo venta).
+#  REGLAS DE ESTE ARCHIVO
+#   - Cada ítem vive en UNA sola categoría (sin duplicados, sin arbitraje de precios).
+#   - "Bloques": todos los bloques de construcción de Minecraft (piedra, madera, lana,
+#     terracota, concreto, cristal, cobre, corales, nether, end...). Dentro del menú hay
+#     filtros por tipo (config.yml -> category-filters).
+#   - "Madera": TODO lo de madera (troncos, madera, tallos, tablones, escaleras, losas, vallas,
+#     portones, puertas, trampillas, botones, placas, carteles, barcas, mobiliario). Filtros en config.yml.
+#   - "Decoración": naturaleza (flores, hojas, plantas, hongos), luces, camas, estandartes,
+#     alfombras, velas, carteles, cabezas, cerámica y tintes.
+#   - "Drops de Mobs": solo lo que sueltan los mobs. "Spawners": se activa/desactiva en config.yml
+#     (category-settings.spawners.enabled).
+#   - Minerales, comida, equipamiento, redstone, mobs, spawners y objetos especiales
+#     tienen su propia categoría.
+#   - Prohibidos (no se venden): bedrock, command blocks, barrier, structure blocks,
+#     jigsaw, light, end portal frame, reinforced deepslate, dragon egg, budding amethyst,
+#     bloques infestados y similares.
+#  Los Material son válidos para Minecraft 1.20.x (Spigot/Paper).
 # =========================================================
 
 categories:
 
-  madera:
-    display-name: "&6&lMadera"
-    icon: OAK_LOG
-    glass: BROWN_STAINED_GLASS_PANE
-    main-menu-slot: 10
-    items:
-      oak_log:        { material: OAK_LOG,        name: "&6Tronco de Roble",     buy: 5,   sell: 2 }
-      oak_planks:     { material: OAK_PLANKS,      name: "&6Tablones de Roble",   buy: 4,   sell: 1.5 }
-      birch_log:      { material: BIRCH_LOG,       name: "&eTronco de Abedul",    buy: 5,   sell: 2 }
-      birch_planks:   { material: BIRCH_PLANKS,    name: "&eTablones de Abedul",  buy: 4,   sell: 1.5 }
-      spruce_log:     { material: SPRUCE_LOG,      name: "&2Tronco de Abeto",     buy: 5,   sell: 2 }
-      spruce_planks:  { material: SPRUCE_PLANKS,   name: "&2Tablones de Abeto",   buy: 4,   sell: 1.5 }
-      jungle_log:     { material: JUNGLE_LOG,      name: "&aTronco de Jungla",    buy: 5,   sell: 2 }
-      jungle_planks:  { material: JUNGLE_PLANKS,   name: "&aTablones de Jungla",  buy: 4,   sell: 1.5 }
-      acacia_log:     { material: ACACIA_LOG,      name: "&6Tronco de Acacia",    buy: 5,   sell: 2 }
-      dark_oak_log:   { material: DARK_OAK_LOG,    name: "&8Tronco Oscuro",       buy: 5,   sell: 2 }
-      cherry_log:     { material: CHERRY_LOG,      name: "&dTronco de Cerezo",    buy: 6,   sell: 2.4 }
-      mangrove_log:   { material: MANGROVE_LOG,    name: "&cTronco de Mangle",    buy: 6,   sell: 2.4 }
-      ladder:         { material: LADDER,          name: "&fEscalera de Mano",    buy: 3,   sell: 1 }
-      oak_door:       { material: OAK_DOOR,        name: "&6Puerta de Roble",     buy: 8,   sell: 3 }
-      oak_fence:      { material: OAK_FENCE,       name: "&6Valla de Roble",      buy: 4,   sell: 1.5 }
-      chest:          { material: CHEST,           name: "&6Cofre",               buy: 15,  sell: 6 }
-      barrel:         { material: BARREL,          name: "&6Barril",              buy: 15,  sell: 6 }
-      crafting_table: { material: CRAFTING_TABLE,  name: "&6Mesa de Crafteo",     buy: 10,  sell: 4 }
-      bookshelf:      { material: BOOKSHELF,       name: "&6Estantería",          buy: 18,  sell: 7 }
-      bamboo:         { material: BAMBOO,          name: "&aBambú",               buy: 3,   sell: 1 }
-      boat_oak:       { material: OAK_BOAT,        name: "&6Barca de Roble",      buy: 25,  sell: 10 }
-
   bloques:
     display-name: "&7&lBloques"
-    icon: STONE
+    icon: BRICKS
     glass: GRAY_STAINED_GLASS_PANE
     main-menu-slot: 11
     items:
-      dirt:           { material: DIRT,            name: "&2Tierra",              buy: 1,   sell: 0.5 }
-      grass_block:    { material: GRASS_BLOCK,     name: "&aCésped",              buy: 1,   sell: 0.5 }
-      stone:          { material: STONE,           name: "&7Piedra",              buy: 2,   sell: 1 }
-      cobblestone:    { material: COBBLESTONE,     name: "&7Adoquín",             buy: 2,   sell: 1 }
-      granite:        { material: GRANITE,         name: "&cGranito",             buy: 3,   sell: 1.5 }
-      diorite:        { material: DIORITE,         name: "&fDiorita",             buy: 3,   sell: 1.5 }
-      andesite:       { material: ANDESITE,        name: "&8Andesita",            buy: 3,   sell: 1.5 }
-      sand:           { material: SAND,            name: "&eArena",               buy: 2,   sell: 1 }
-      red_sand:       { material: RED_SAND,        name: "&6Arena Roja",          buy: 2,   sell: 1 }
-      gravel:         { material: GRAVEL,          name: "&7Grava",               buy: 2,   sell: 1 }
-      glass:          { material: GLASS,           name: "&bVidrio",              buy: 6,   sell: 2 }
-      tinted_glass:   { material: TINTED_GLASS,    name: "&8Vidrio Tintado",      buy: 15,  sell: 6 }
-      bricks:         { material: BRICKS,          name: "&cLadrillo",            buy: 10,  sell: 4 }
-      obsidian:       { material: OBSIDIAN,        name: "&5Obsidiana",           buy: 60,  sell: 30 }
-      white_wool:     { material: WHITE_WOOL,      name: "&fLana Blanca",         buy: 10,  sell: 5 }
-      white_concrete: { material: WHITE_CONCRETE,  name: "&fHormigón Blanco",     buy: 12,  sell: 6 }
-      netherrack:     { material: NETHERRACK,      name: "&4Netherrack",          buy: 3,   sell: 1 }
-      end_stone:      { material: END_STONE,       name: "&eEnd Stone",           buy: 20,  sell: 8 }
-      deepslate:      { material: DEEPSLATE,       name: "&8Deepslate",           buy: 5,   sell: 2 }
-      snow_block:     { material: SNOW_BLOCK,      name: "&fBloque de Nieve",     buy: 4,   sell: 1.5 }
-      ice:            { material: ICE,             name: "&bHielo",               buy: 10,  sell: 4 }
-      iron_block:     { material: IRON_BLOCK,      name: "&fBloque de Hierro",    buy: 180, sell: 90 }
-      gold_block:     { material: GOLD_BLOCK,      name: "&6Bloque de Oro",       buy: 360, sell: 180 }
-      diamond_block:  { material: DIAMOND_BLOCK,   name: "&bBloque de Diamante",  buy: 1350,sell: 675 }
+      # ── Tierra, arena y terreno ──
+      dirt: { material: DIRT, name: "&2Tierra", buy: 2, sell: 0.8 }
+      grass_block: { material: GRASS_BLOCK, name: "&aBloque de Césped", buy: 4, sell: 1.6 }
+      coarse_dirt: { material: COARSE_DIRT, name: "&6Tierra Estéril", buy: 3, sell: 1.2 }
+      podzol: { material: PODZOL, name: "&6Podzol", buy: 6, sell: 2.4 }
+      mycelium: { material: MYCELIUM, name: "&5Micelio", buy: 8, sell: 3.2 }
+      rooted_dirt: { material: ROOTED_DIRT, name: "&6Tierra con Raíces", buy: 6, sell: 2.4 }
+      dirt_path: { material: DIRT_PATH, name: "&6Camino de Tierra", buy: 4, sell: 1.6 }
+      farmland: { material: FARMLAND, name: "&6Tierra de Cultivo", buy: 5, sell: 2 }
+      mud: { material: MUD, name: "&8Barro", buy: 4, sell: 1.6 }
+      packed_mud: { material: PACKED_MUD, name: "&6Barro Compactado", buy: 6, sell: 2.4 }
+      clay: { material: CLAY, name: "&7Bloque de Arcilla", buy: 12, sell: 4.8 }
+      moss_block: { material: MOSS_BLOCK, name: "&2Bloque de Musgo", buy: 10, sell: 4 }
+      sand: { material: SAND, name: "&eArena", buy: 3, sell: 1.2 }
+      red_sand: { material: RED_SAND, name: "&cArena Roja", buy: 4, sell: 1.6 }
+      gravel: { material: GRAVEL, name: "&7Grava", buy: 3, sell: 1.2 }
+      suspicious_sand: { material: SUSPICIOUS_SAND, name: "&eArena Sospechosa", buy: 40, sell: 16 }
+      suspicious_gravel: { material: SUSPICIOUS_GRAVEL, name: "&7Grava Sospechosa", buy: 40, sell: 16 }
+      snow_block: { material: SNOW_BLOCK, name: "&fBloque de Nieve", buy: 6, sell: 2.4 }
+      ice: { material: ICE, name: "&bHielo", buy: 8, sell: 3.2 }
+      packed_ice: { material: PACKED_ICE, name: "&bHielo Compacto", buy: 15, sell: 6 }
+      blue_ice: { material: BLUE_ICE, name: "&9Hielo Azul", buy: 40, sell: 16 }
+      pumpkin_b: { material: PUMPKIN, name: "&6Calabaza", buy: 8, sell: 3.2 }
+      melon_b: { material: MELON, name: "&aSandía", buy: 12, sell: 4.8 }
+      hay_block: { material: HAY_BLOCK, name: "&eFardo de Heno", buy: 15, sell: 6 }
+      dried_kelp_block: { material: DRIED_KELP_BLOCK, name: "&2Bloque de Alga Seca", buy: 20, sell: 8 }
+      bone_block: { material: BONE_BLOCK, name: "&fBloque de Hueso", buy: 20, sell: 8 }
+      honeycomb_block: { material: HONEYCOMB_BLOCK, name: "&6Bloque de Panal", buy: 30, sell: 12 }
+      red_mushroom_block: { material: RED_MUSHROOM_BLOCK, name: "&cBloque de Champiñón Rojo", buy: 10, sell: 4 }
+      brown_mushroom_block: { material: BROWN_MUSHROOM_BLOCK, name: "&6Bloque de Champiñón Marrón", buy: 10, sell: 4 }
+      mushroom_stem: { material: MUSHROOM_STEM, name: "&fTallo de Hongo", buy: 6, sell: 2.4 }
+      sponge: { material: SPONGE, name: "&eEsponja", buy: 60, sell: 24 }
+      wet_sponge: { material: WET_SPONGE, name: "&eEsponja Húmeda", buy: 65, sell: 26 }
+      # ── Piedra ──
+      stone: { material: STONE, name: "&7Piedra", buy: 3, sell: 1.2 }
+      stone_stairs: { material: STONE_STAIRS, name: "&7Escaleras de Piedra", buy: 4.5, sell: 1.8 }
+      stone_slab: { material: STONE_SLAB, name: "&7Losa de Piedra", buy: 1.5, sell: 0.6 }
+      smooth_stone: { material: SMOOTH_STONE, name: "&7Piedra Lisa", buy: 5, sell: 2 }
+      smooth_stone_slab: { material: SMOOTH_STONE_SLAB, name: "&7Losa de Piedra Lisa", buy: 2.5, sell: 1 }
+      cobblestone: { material: COBBLESTONE, name: "&7Adoquín", buy: 2, sell: 0.8 }
+      cobblestone_stairs: { material: COBBLESTONE_STAIRS, name: "&7Escaleras de Adoquín", buy: 3, sell: 1.2 }
+      cobblestone_slab: { material: COBBLESTONE_SLAB, name: "&7Losa de Adoquín", buy: 1, sell: 0.4 }
+      cobblestone_wall: { material: COBBLESTONE_WALL, name: "&7Muro de Adoquín", buy: 2, sell: 0.8 }
+      mossy_cobblestone: { material: MOSSY_COBBLESTONE, name: "&2Adoquín Musgoso", buy: 6, sell: 2.4 }
+      mossy_cobblestone_stairs: { material: MOSSY_COBBLESTONE_STAIRS, name: "&2Escaleras de Adoquín Musgoso", buy: 9, sell: 3.6 }
+      mossy_cobblestone_slab: { material: MOSSY_COBBLESTONE_SLAB, name: "&2Losa de Adoquín Musgoso", buy: 3, sell: 1.2 }
+      mossy_cobblestone_wall: { material: MOSSY_COBBLESTONE_WALL, name: "&2Muro de Adoquín Musgoso", buy: 6, sell: 2.4 }
+      stone_bricks: { material: STONE_BRICKS, name: "&7Ladrillos de Piedra", buy: 5, sell: 2 }
+      stone_bricks_stairs: { material: STONE_BRICK_STAIRS, name: "&7Escaleras de Ladrillos de Piedra", buy: 7.5, sell: 3 }
+      stone_bricks_slab: { material: STONE_BRICK_SLAB, name: "&7Losa de Ladrillos de Piedra", buy: 2.5, sell: 1 }
+      stone_bricks_wall: { material: STONE_BRICK_WALL, name: "&7Muro de Ladrillos de Piedra", buy: 5, sell: 2 }
+      mossy_stone_bricks: { material: MOSSY_STONE_BRICKS, name: "&2Ladrillos de Piedra Musgosos", buy: 7, sell: 2.8 }
+      mossy_stone_bricks_stairs: { material: MOSSY_STONE_BRICK_STAIRS, name: "&2Escaleras de Ladrillos de Piedra Musgosos", buy: 10.5, sell: 4.2 }
+      mossy_stone_bricks_slab: { material: MOSSY_STONE_BRICK_SLAB, name: "&2Losa de Ladrillos de Piedra Musgosos", buy: 3.5, sell: 1.4 }
+      mossy_stone_bricks_wall: { material: MOSSY_STONE_BRICK_WALL, name: "&2Muro de Ladrillos de Piedra Musgosos", buy: 7, sell: 2.8 }
+      cracked_stone_bricks: { material: CRACKED_STONE_BRICKS, name: "&7Ladrillos de Piedra Agrietados", buy: 6, sell: 2.4 }
+      chiseled_stone_bricks: { material: CHISELED_STONE_BRICKS, name: "&7Ladrillos de Piedra Cincelados", buy: 7, sell: 2.8 }
+      granite: { material: GRANITE, name: "&cGranito", buy: 3, sell: 1.2 }
+      granite_stairs: { material: GRANITE_STAIRS, name: "&cEscaleras de Granito", buy: 4.5, sell: 1.8 }
+      granite_slab: { material: GRANITE_SLAB, name: "&cLosa de Granito", buy: 1.5, sell: 0.6 }
+      granite_wall: { material: GRANITE_WALL, name: "&cMuro de Granito", buy: 3, sell: 1.2 }
+      polished_granite: { material: POLISHED_GRANITE, name: "&cGranito Pulido", buy: 4, sell: 1.6 }
+      polished_granite_stairs: { material: POLISHED_GRANITE_STAIRS, name: "&cEscaleras de Granito Pulido", buy: 6, sell: 2.4 }
+      polished_granite_slab: { material: POLISHED_GRANITE_SLAB, name: "&cLosa de Granito Pulido", buy: 2, sell: 0.8 }
+      diorite: { material: DIORITE, name: "&fDiorita", buy: 3, sell: 1.2 }
+      diorite_stairs: { material: DIORITE_STAIRS, name: "&fEscaleras de Diorita", buy: 4.5, sell: 1.8 }
+      diorite_slab: { material: DIORITE_SLAB, name: "&fLosa de Diorita", buy: 1.5, sell: 0.6 }
+      diorite_wall: { material: DIORITE_WALL, name: "&fMuro de Diorita", buy: 3, sell: 1.2 }
+      polished_diorite: { material: POLISHED_DIORITE, name: "&fDiorita Pulida", buy: 4, sell: 1.6 }
+      polished_diorite_stairs: { material: POLISHED_DIORITE_STAIRS, name: "&fEscaleras de Diorita Pulida", buy: 6, sell: 2.4 }
+      polished_diorite_slab: { material: POLISHED_DIORITE_SLAB, name: "&fLosa de Diorita Pulida", buy: 2, sell: 0.8 }
+      andesite: { material: ANDESITE, name: "&7Andesita", buy: 3, sell: 1.2 }
+      andesite_stairs: { material: ANDESITE_STAIRS, name: "&7Escaleras de Andesita", buy: 4.5, sell: 1.8 }
+      andesite_slab: { material: ANDESITE_SLAB, name: "&7Losa de Andesita", buy: 1.5, sell: 0.6 }
+      andesite_wall: { material: ANDESITE_WALL, name: "&7Muro de Andesita", buy: 3, sell: 1.2 }
+      polished_andesite: { material: POLISHED_ANDESITE, name: "&7Andesita Pulida", buy: 4, sell: 1.6 }
+      polished_andesite_stairs: { material: POLISHED_ANDESITE_STAIRS, name: "&7Escaleras de Andesita Pulida", buy: 6, sell: 2.4 }
+      polished_andesite_slab: { material: POLISHED_ANDESITE_SLAB, name: "&7Losa de Andesita Pulida", buy: 2, sell: 0.8 }
+      calcite: { material: CALCITE, name: "&fCalcita", buy: 6, sell: 2.4 }
+      tuff: { material: TUFF, name: "&7Toba", buy: 3, sell: 1.2 }
+      dripstone_block: { material: DRIPSTONE_BLOCK, name: "&6Bloque de Espeleotema", buy: 6, sell: 2.4 }
+      # ── Pizarra abisal, basalto y piedra negra ──
+      deepslate: { material: DEEPSLATE, name: "&8Pizarra Abisal", buy: 4, sell: 1.6 }
+      cobbled_deepslate: { material: COBBLED_DEEPSLATE, name: "&8Pizarra Abisal Adoquinada", buy: 3, sell: 1.2 }
+      cobbled_deepslate_stairs: { material: COBBLED_DEEPSLATE_STAIRS, name: "&8Escaleras de Pizarra Abisal Adoquinada", buy: 4.5, sell: 1.8 }
+      cobbled_deepslate_slab: { material: COBBLED_DEEPSLATE_SLAB, name: "&8Losa de Pizarra Abisal Adoquinada", buy: 1.5, sell: 0.6 }
+      cobbled_deepslate_wall: { material: COBBLED_DEEPSLATE_WALL, name: "&8Muro de Pizarra Abisal Adoquinada", buy: 3, sell: 1.2 }
+      polished_deepslate: { material: POLISHED_DEEPSLATE, name: "&8Pizarra Abisal Pulida", buy: 5, sell: 2 }
+      polished_deepslate_stairs: { material: POLISHED_DEEPSLATE_STAIRS, name: "&8Escaleras de Pizarra Abisal Pulida", buy: 7.5, sell: 3 }
+      polished_deepslate_slab: { material: POLISHED_DEEPSLATE_SLAB, name: "&8Losa de Pizarra Abisal Pulida", buy: 2.5, sell: 1 }
+      polished_deepslate_wall: { material: POLISHED_DEEPSLATE_WALL, name: "&8Muro de Pizarra Abisal Pulida", buy: 5, sell: 2 }
+      deepslate_bricks: { material: DEEPSLATE_BRICKS, name: "&8Ladrillos de Pizarra Abisal", buy: 6, sell: 2.4 }
+      deepslate_bricks_stairs: { material: DEEPSLATE_BRICK_STAIRS, name: "&8Escaleras de Ladrillos de Pizarra Abisal", buy: 9, sell: 3.6 }
+      deepslate_bricks_slab: { material: DEEPSLATE_BRICK_SLAB, name: "&8Losa de Ladrillos de Pizarra Abisal", buy: 3, sell: 1.2 }
+      deepslate_bricks_wall: { material: DEEPSLATE_BRICK_WALL, name: "&8Muro de Ladrillos de Pizarra Abisal", buy: 6, sell: 2.4 }
+      cracked_deepslate_bricks: { material: CRACKED_DEEPSLATE_BRICKS, name: "&8Ladrillos de Pizarra Abisal Agrietados", buy: 7, sell: 2.8 }
+      deepslate_tiles: { material: DEEPSLATE_TILES, name: "&8Baldosas de Pizarra Abisal", buy: 6, sell: 2.4 }
+      deepslate_tiles_stairs: { material: DEEPSLATE_TILE_STAIRS, name: "&8Escaleras de Baldosas de Pizarra Abisal", buy: 9, sell: 3.6 }
+      deepslate_tiles_slab: { material: DEEPSLATE_TILE_SLAB, name: "&8Losa de Baldosas de Pizarra Abisal", buy: 3, sell: 1.2 }
+      deepslate_tiles_wall: { material: DEEPSLATE_TILE_WALL, name: "&8Muro de Baldosas de Pizarra Abisal", buy: 6, sell: 2.4 }
+      cracked_deepslate_tiles: { material: CRACKED_DEEPSLATE_TILES, name: "&8Baldosas de Pizarra Abisal Agrietadas", buy: 7, sell: 2.8 }
+      chiseled_deepslate: { material: CHISELED_DEEPSLATE, name: "&8Pizarra Abisal Cincelada", buy: 7, sell: 2.8 }
+      basalt: { material: BASALT, name: "&8Basalto", buy: 4, sell: 1.6 }
+      smooth_basalt: { material: SMOOTH_BASALT, name: "&8Basalto Liso", buy: 5, sell: 2 }
+      polished_basalt: { material: POLISHED_BASALT, name: "&8Basalto Pulido", buy: 5, sell: 2 }
+      blackstone: { material: BLACKSTONE, name: "&8Piedra Negra", buy: 4, sell: 1.6 }
+      blackstone_stairs: { material: BLACKSTONE_STAIRS, name: "&8Escaleras de Piedra Negra", buy: 6, sell: 2.4 }
+      blackstone_slab: { material: BLACKSTONE_SLAB, name: "&8Losa de Piedra Negra", buy: 2, sell: 0.8 }
+      blackstone_wall: { material: BLACKSTONE_WALL, name: "&8Muro de Piedra Negra", buy: 4, sell: 1.6 }
+      gilded_blackstone: { material: GILDED_BLACKSTONE, name: "&6Piedra Negra Dorada", buy: 25, sell: 10 }
+      polished_blackstone: { material: POLISHED_BLACKSTONE, name: "&8Piedra Negra Pulida", buy: 5, sell: 2 }
+      polished_blackstone_stairs: { material: POLISHED_BLACKSTONE_STAIRS, name: "&8Escaleras de Piedra Negra Pulida", buy: 7.5, sell: 3 }
+      polished_blackstone_slab: { material: POLISHED_BLACKSTONE_SLAB, name: "&8Losa de Piedra Negra Pulida", buy: 2.5, sell: 1 }
+      polished_blackstone_wall: { material: POLISHED_BLACKSTONE_WALL, name: "&8Muro de Piedra Negra Pulida", buy: 5, sell: 2 }
+      polished_blackstone_bricks: { material: POLISHED_BLACKSTONE_BRICKS, name: "&8Ladrillos de Piedra Negra Pulida", buy: 6, sell: 2.4 }
+      polished_blackstone_bricks_stairs: { material: POLISHED_BLACKSTONE_BRICK_STAIRS, name: "&8Escaleras de Ladrillos de Piedra Negra Pulida", buy: 9, sell: 3.6 }
+      polished_blackstone_bricks_slab: { material: POLISHED_BLACKSTONE_BRICK_SLAB, name: "&8Losa de Ladrillos de Piedra Negra Pulida", buy: 3, sell: 1.2 }
+      polished_blackstone_bricks_wall: { material: POLISHED_BLACKSTONE_BRICK_WALL, name: "&8Muro de Ladrillos de Piedra Negra Pulida", buy: 6, sell: 2.4 }
+      cracked_polished_blackstone_bricks: { material: CRACKED_POLISHED_BLACKSTONE_BRICKS, name: "&8Ladrillos de Piedra Negra Agrietados", buy: 7, sell: 2.8 }
+      chiseled_polished_blackstone: { material: CHISELED_POLISHED_BLACKSTONE, name: "&8Piedra Negra Pulida Cincelada", buy: 7, sell: 2.8 }
+      obsidian: { material: OBSIDIAN, name: "&5Obsidiana", buy: 40, sell: 16 }
+      crying_obsidian: { material: CRYING_OBSIDIAN, name: "&5Obsidiana Llorona", buy: 90, sell: 36 }
+      # ── Ladrillos ──
+      bricks: { material: BRICKS, name: "&cLadrillos", buy: 8, sell: 3.2 }
+      bricks_stairs: { material: BRICK_STAIRS, name: "&cEscaleras de Ladrillos", buy: 12, sell: 4.8 }
+      bricks_slab: { material: BRICK_SLAB, name: "&cLosa de Ladrillos", buy: 4, sell: 1.6 }
+      bricks_wall: { material: BRICK_WALL, name: "&cMuro de Ladrillos", buy: 8, sell: 3.2 }
+      mud_bricks: { material: MUD_BRICKS, name: "&6Ladrillos de Barro", buy: 8, sell: 3.2 }
+      mud_bricks_stairs: { material: MUD_BRICK_STAIRS, name: "&6Escaleras de Ladrillos de Barro", buy: 12, sell: 4.8 }
+      mud_bricks_slab: { material: MUD_BRICK_SLAB, name: "&6Losa de Ladrillos de Barro", buy: 4, sell: 1.6 }
+      mud_bricks_wall: { material: MUD_BRICK_WALL, name: "&6Muro de Ladrillos de Barro", buy: 8, sell: 3.2 }
+      # ── Arenisca ──
+      sandstone: { material: SANDSTONE, name: "&eArenisca", buy: 5, sell: 2 }
+      sandstone_stairs: { material: SANDSTONE_STAIRS, name: "&eEscaleras de Arenisca", buy: 7.5, sell: 3 }
+      sandstone_slab: { material: SANDSTONE_SLAB, name: "&eLosa de Arenisca", buy: 2.5, sell: 1 }
+      sandstone_wall: { material: SANDSTONE_WALL, name: "&eMuro de Arenisca", buy: 5, sell: 2 }
+      smooth_sandstone: { material: SMOOTH_SANDSTONE, name: "&eArenisca Lisa", buy: 6, sell: 2.4 }
+      smooth_sandstone_stairs: { material: SMOOTH_SANDSTONE_STAIRS, name: "&eEscaleras de Arenisca Lisa", buy: 9, sell: 3.6 }
+      smooth_sandstone_slab: { material: SMOOTH_SANDSTONE_SLAB, name: "&eLosa de Arenisca Lisa", buy: 3, sell: 1.2 }
+      cut_sandstone: { material: CUT_SANDSTONE, name: "&eArenisca Cortada", buy: 6, sell: 2.4 }
+      cut_sandstone_slab: { material: CUT_SANDSTONE_SLAB, name: "&eLosa de Arenisca Cortada", buy: 3, sell: 1.2 }
+      chiseled_sandstone: { material: CHISELED_SANDSTONE, name: "&eArenisca Cincelada", buy: 6, sell: 2.4 }
+      red_sandstone: { material: RED_SANDSTONE, name: "&cArenisca Roja", buy: 5, sell: 2 }
+      red_sandstone_stairs: { material: RED_SANDSTONE_STAIRS, name: "&cEscaleras de Arenisca Roja", buy: 7.5, sell: 3 }
+      red_sandstone_slab: { material: RED_SANDSTONE_SLAB, name: "&cLosa de Arenisca Roja", buy: 2.5, sell: 1 }
+      red_sandstone_wall: { material: RED_SANDSTONE_WALL, name: "&cMuro de Arenisca Roja", buy: 5, sell: 2 }
+      smooth_red_sandstone: { material: SMOOTH_RED_SANDSTONE, name: "&cArenisca Roja Lisa", buy: 6, sell: 2.4 }
+      smooth_red_sandstone_stairs: { material: SMOOTH_RED_SANDSTONE_STAIRS, name: "&cEscaleras de Arenisca Roja Lisa", buy: 9, sell: 3.6 }
+      smooth_red_sandstone_slab: { material: SMOOTH_RED_SANDSTONE_SLAB, name: "&cLosa de Arenisca Roja Lisa", buy: 3, sell: 1.2 }
+      cut_red_sandstone: { material: CUT_RED_SANDSTONE, name: "&cArenisca Roja Cortada", buy: 6, sell: 2.4 }
+      cut_red_sandstone_slab: { material: CUT_RED_SANDSTONE_SLAB, name: "&cLosa de Arenisca Roja Cortada", buy: 3, sell: 1.2 }
+      chiseled_red_sandstone: { material: CHISELED_RED_SANDSTONE, name: "&cArenisca Roja Cincelada", buy: 6, sell: 2.4 }
+      # ── Cuarzo y prismarina ──
+      quartz_block: { material: QUARTZ_BLOCK, name: "&fBloque de Cuarzo", buy: 20, sell: 8 }
+      quartz_block_stairs: { material: QUARTZ_STAIRS, name: "&fEscaleras de Cuarzo", buy: 30, sell: 12 }
+      quartz_block_slab: { material: QUARTZ_SLAB, name: "&fLosa de Cuarzo", buy: 10, sell: 4 }
+      smooth_quartz: { material: SMOOTH_QUARTZ, name: "&fCuarzo Liso", buy: 22, sell: 8.8 }
+      smooth_quartz_stairs: { material: SMOOTH_QUARTZ_STAIRS, name: "&fEscaleras de Cuarzo Liso", buy: 33, sell: 13.2 }
+      smooth_quartz_slab: { material: SMOOTH_QUARTZ_SLAB, name: "&fLosa de Cuarzo Liso", buy: 11, sell: 4.4 }
+      quartz_bricks: { material: QUARTZ_BRICKS, name: "&fLadrillos de Cuarzo", buy: 22, sell: 8.8 }
+      quartz_pillar: { material: QUARTZ_PILLAR, name: "&fPilar de Cuarzo", buy: 22, sell: 8.8 }
+      chiseled_quartz_block: { material: CHISELED_QUARTZ_BLOCK, name: "&fCuarzo Cincelado", buy: 22, sell: 8.8 }
+      prismarine: { material: PRISMARINE, name: "&bPrismarina", buy: 10, sell: 4 }
+      prismarine_stairs: { material: PRISMARINE_STAIRS, name: "&bEscaleras de Prismarina", buy: 15, sell: 6 }
+      prismarine_slab: { material: PRISMARINE_SLAB, name: "&bLosa de Prismarina", buy: 5, sell: 2 }
+      prismarine_wall: { material: PRISMARINE_WALL, name: "&bMuro de Prismarina", buy: 10, sell: 4 }
+      prismarine_bricks: { material: PRISMARINE_BRICKS, name: "&bLadrillos de Prismarina", buy: 14, sell: 5.6 }
+      prismarine_bricks_stairs: { material: PRISMARINE_BRICK_STAIRS, name: "&bEscaleras de Ladrillos de Prismarina", buy: 21, sell: 8.4 }
+      prismarine_bricks_slab: { material: PRISMARINE_BRICK_SLAB, name: "&bLosa de Ladrillos de Prismarina", buy: 7, sell: 2.8 }
+      dark_prismarine: { material: DARK_PRISMARINE, name: "&3Prismarina Oscura", buy: 14, sell: 5.6 }
+      dark_prismarine_stairs: { material: DARK_PRISMARINE_STAIRS, name: "&3Escaleras de Prismarina Oscura", buy: 21, sell: 8.4 }
+      dark_prismarine_slab: { material: DARK_PRISMARINE_SLAB, name: "&3Losa de Prismarina Oscura", buy: 7, sell: 2.8 }
+      sea_lantern: { material: SEA_LANTERN, name: "&bLinterna de Mar", buy: 25, sell: 10 }
+      # ── Nether ──
+      netherrack: { material: NETHERRACK, name: "&cNetherrack", buy: 2, sell: 0.8 }
+      nether_bricks: { material: NETHER_BRICKS, name: "&4Ladrillos del Nether", buy: 8, sell: 3.2 }
+      nether_bricks_stairs: { material: NETHER_BRICK_STAIRS, name: "&4Escaleras de Ladrillos del Nether", buy: 12, sell: 4.8 }
+      nether_bricks_slab: { material: NETHER_BRICK_SLAB, name: "&4Losa de Ladrillos del Nether", buy: 4, sell: 1.6 }
+      nether_bricks_wall: { material: NETHER_BRICK_WALL, name: "&4Muro de Ladrillos del Nether", buy: 8, sell: 3.2 }
+      nether_brick_fence: { material: NETHER_BRICK_FENCE, name: "&4Valla de Ladrillos del Nether", buy: 10, sell: 4 }
+      red_nether_bricks: { material: RED_NETHER_BRICKS, name: "&4Ladrillos Rojos del Nether", buy: 10, sell: 4 }
+      red_nether_bricks_stairs: { material: RED_NETHER_BRICK_STAIRS, name: "&4Escaleras de Ladrillos Rojos del Nether", buy: 15, sell: 6 }
+      red_nether_bricks_slab: { material: RED_NETHER_BRICK_SLAB, name: "&4Losa de Ladrillos Rojos del Nether", buy: 5, sell: 2 }
+      red_nether_bricks_wall: { material: RED_NETHER_BRICK_WALL, name: "&4Muro de Ladrillos Rojos del Nether", buy: 10, sell: 4 }
+      cracked_nether_bricks: { material: CRACKED_NETHER_BRICKS, name: "&4Ladrillos del Nether Agrietados", buy: 9, sell: 3.6 }
+      chiseled_nether_bricks: { material: CHISELED_NETHER_BRICKS, name: "&4Ladrillos del Nether Cincelados", buy: 9, sell: 3.6 }
+      soul_sand: { material: SOUL_SAND, name: "&6Arena de Almas", buy: 6, sell: 2.4 }
+      soul_soil: { material: SOUL_SOIL, name: "&6Tierra de Almas", buy: 6, sell: 2.4 }
+      magma_block: { material: MAGMA_BLOCK, name: "&cBloque de Magma", buy: 15, sell: 6 }
+      glowstone: { material: GLOWSTONE, name: "&eGlowstone", buy: 20, sell: 8 }
+      shroomlight: { material: SHROOMLIGHT, name: "&6Luz Hongo", buy: 20, sell: 8 }
+      crimson_nylium: { material: CRIMSON_NYLIUM, name: "&cNylium Carmesí", buy: 12, sell: 4.8 }
+      warped_nylium: { material: WARPED_NYLIUM, name: "&3Nylium Distorsionado", buy: 12, sell: 4.8 }
+      nether_wart_block: { material: NETHER_WART_BLOCK, name: "&cBloque de Verruga del Nether", buy: 15, sell: 6 }
+      warped_wart_block: { material: WARPED_WART_BLOCK, name: "&3Bloque de Verruga Distorsionada", buy: 15, sell: 6 }
+      ochre_froglight: { material: OCHRE_FROGLIGHT, name: "&eLuz de Rana Ocre", buy: 150, sell: 60 }
+      verdant_froglight: { material: VERDANT_FROGLIGHT, name: "&aLuz de Rana Verde", buy: 150, sell: 60 }
+      pearlescent_froglight: { material: PEARLESCENT_FROGLIGHT, name: "&dLuz de Rana Nacarada", buy: 150, sell: 60 }
+      # ── End ──
+      end_stone: { material: END_STONE, name: "&eEnd Stone", buy: 6, sell: 2.4 }
+      end_stone_bricks: { material: END_STONE_BRICKS, name: "&eLadrillos de End Stone", buy: 8, sell: 3.2 }
+      end_stone_bricks_stairs: { material: END_STONE_BRICK_STAIRS, name: "&eEscaleras de Ladrillos de End Stone", buy: 12, sell: 4.8 }
+      end_stone_bricks_slab: { material: END_STONE_BRICK_SLAB, name: "&eLosa de Ladrillos de End Stone", buy: 4, sell: 1.6 }
+      end_stone_bricks_wall: { material: END_STONE_BRICK_WALL, name: "&eMuro de Ladrillos de End Stone", buy: 8, sell: 3.2 }
+      purpur_block: { material: PURPUR_BLOCK, name: "&dBloque de Purpur", buy: 10, sell: 4 }
+      purpur_block_stairs: { material: PURPUR_STAIRS, name: "&dEscaleras de Purpur", buy: 15, sell: 6 }
+      purpur_block_slab: { material: PURPUR_SLAB, name: "&dLosa de Purpur", buy: 5, sell: 2 }
+      purpur_pillar: { material: PURPUR_PILLAR, name: "&dPilar de Purpur", buy: 10, sell: 4 }
+      # ── Sculk y amatista ──
+      sculk: { material: SCULK, name: "&3Sculk", buy: 30, sell: 12 }
+      sculk_catalyst: { material: SCULK_CATALYST, name: "&3Catalizador Sculk", buy: 200, sell: 80 }
+      sculk_shrieker: { material: SCULK_SHRIEKER, name: "&3Aullador Sculk", buy: 200, sell: 80 }
+      amethyst_block: { material: AMETHYST_BLOCK, name: "&dBloque de Amatista", buy: 40, sell: 16 }
+      # ── Lana ──
+      white_wool: { material: WHITE_WOOL, name: "&fLana Blanca", buy: 10, sell: 4 }
+      orange_wool: { material: ORANGE_WOOL, name: "&6Lana Naranja", buy: 10, sell: 4 }
+      magenta_wool: { material: MAGENTA_WOOL, name: "&dLana Magenta", buy: 10, sell: 4 }
+      light_blue_wool: { material: LIGHT_BLUE_WOOL, name: "&bLana Celeste", buy: 10, sell: 4 }
+      yellow_wool: { material: YELLOW_WOOL, name: "&eLana Amarilla", buy: 10, sell: 4 }
+      lime_wool: { material: LIME_WOOL, name: "&aLana Lima", buy: 10, sell: 4 }
+      pink_wool: { material: PINK_WOOL, name: "&dLana Rosa", buy: 10, sell: 4 }
+      gray_wool: { material: GRAY_WOOL, name: "&8Lana Gris", buy: 10, sell: 4 }
+      light_gray_wool: { material: LIGHT_GRAY_WOOL, name: "&7Lana Gris Clara", buy: 10, sell: 4 }
+      cyan_wool: { material: CYAN_WOOL, name: "&3Lana Cian", buy: 10, sell: 4 }
+      purple_wool: { material: PURPLE_WOOL, name: "&5Lana Morada", buy: 10, sell: 4 }
+      blue_wool: { material: BLUE_WOOL, name: "&9Lana Azul", buy: 10, sell: 4 }
+      brown_wool: { material: BROWN_WOOL, name: "&6Lana Marrón", buy: 10, sell: 4 }
+      green_wool: { material: GREEN_WOOL, name: "&2Lana Verde", buy: 10, sell: 4 }
+      red_wool: { material: RED_WOOL, name: "&cLana Roja", buy: 10, sell: 4 }
+      black_wool: { material: BLACK_WOOL, name: "&8Lana Negra", buy: 10, sell: 4 }
+      # ── Terracota ──
+      terracotta: { material: TERRACOTTA, name: "&6Terracota", buy: 8, sell: 3.2 }
+      white_terracotta: { material: WHITE_TERRACOTTA, name: "&fTerracota Blanca", buy: 9, sell: 3.6 }
+      orange_terracotta: { material: ORANGE_TERRACOTTA, name: "&6Terracota Naranja", buy: 9, sell: 3.6 }
+      magenta_terracotta: { material: MAGENTA_TERRACOTTA, name: "&dTerracota Magenta", buy: 9, sell: 3.6 }
+      light_blue_terracotta: { material: LIGHT_BLUE_TERRACOTTA, name: "&bTerracota Celeste", buy: 9, sell: 3.6 }
+      yellow_terracotta: { material: YELLOW_TERRACOTTA, name: "&eTerracota Amarilla", buy: 9, sell: 3.6 }
+      lime_terracotta: { material: LIME_TERRACOTTA, name: "&aTerracota Lima", buy: 9, sell: 3.6 }
+      pink_terracotta: { material: PINK_TERRACOTTA, name: "&dTerracota Rosa", buy: 9, sell: 3.6 }
+      gray_terracotta: { material: GRAY_TERRACOTTA, name: "&8Terracota Gris", buy: 9, sell: 3.6 }
+      light_gray_terracotta: { material: LIGHT_GRAY_TERRACOTTA, name: "&7Terracota Gris Clara", buy: 9, sell: 3.6 }
+      cyan_terracotta: { material: CYAN_TERRACOTTA, name: "&3Terracota Cian", buy: 9, sell: 3.6 }
+      purple_terracotta: { material: PURPLE_TERRACOTTA, name: "&5Terracota Morada", buy: 9, sell: 3.6 }
+      blue_terracotta: { material: BLUE_TERRACOTTA, name: "&9Terracota Azul", buy: 9, sell: 3.6 }
+      brown_terracotta: { material: BROWN_TERRACOTTA, name: "&6Terracota Marrón", buy: 9, sell: 3.6 }
+      green_terracotta: { material: GREEN_TERRACOTTA, name: "&2Terracota Verde", buy: 9, sell: 3.6 }
+      red_terracotta: { material: RED_TERRACOTTA, name: "&cTerracota Roja", buy: 9, sell: 3.6 }
+      black_terracotta: { material: BLACK_TERRACOTTA, name: "&8Terracota Negra", buy: 9, sell: 3.6 }
+      # ── Terracota vidriada ──
+      white_glazed_terracotta: { material: WHITE_GLAZED_TERRACOTTA, name: "&fTerracota Vidriada Blanca", buy: 14, sell: 5.6 }
+      orange_glazed_terracotta: { material: ORANGE_GLAZED_TERRACOTTA, name: "&6Terracota Vidriada Naranja", buy: 14, sell: 5.6 }
+      magenta_glazed_terracotta: { material: MAGENTA_GLAZED_TERRACOTTA, name: "&dTerracota Vidriada Magenta", buy: 14, sell: 5.6 }
+      light_blue_glazed_terracotta: { material: LIGHT_BLUE_GLAZED_TERRACOTTA, name: "&bTerracota Vidriada Celeste", buy: 14, sell: 5.6 }
+      yellow_glazed_terracotta: { material: YELLOW_GLAZED_TERRACOTTA, name: "&eTerracota Vidriada Amarilla", buy: 14, sell: 5.6 }
+      lime_glazed_terracotta: { material: LIME_GLAZED_TERRACOTTA, name: "&aTerracota Vidriada Lima", buy: 14, sell: 5.6 }
+      pink_glazed_terracotta: { material: PINK_GLAZED_TERRACOTTA, name: "&dTerracota Vidriada Rosa", buy: 14, sell: 5.6 }
+      gray_glazed_terracotta: { material: GRAY_GLAZED_TERRACOTTA, name: "&8Terracota Vidriada Gris", buy: 14, sell: 5.6 }
+      light_gray_glazed_terracotta: { material: LIGHT_GRAY_GLAZED_TERRACOTTA, name: "&7Terracota Vidriada Gris Clara", buy: 14, sell: 5.6 }
+      cyan_glazed_terracotta: { material: CYAN_GLAZED_TERRACOTTA, name: "&3Terracota Vidriada Cian", buy: 14, sell: 5.6 }
+      purple_glazed_terracotta: { material: PURPLE_GLAZED_TERRACOTTA, name: "&5Terracota Vidriada Morada", buy: 14, sell: 5.6 }
+      blue_glazed_terracotta: { material: BLUE_GLAZED_TERRACOTTA, name: "&9Terracota Vidriada Azul", buy: 14, sell: 5.6 }
+      brown_glazed_terracotta: { material: BROWN_GLAZED_TERRACOTTA, name: "&6Terracota Vidriada Marrón", buy: 14, sell: 5.6 }
+      green_glazed_terracotta: { material: GREEN_GLAZED_TERRACOTTA, name: "&2Terracota Vidriada Verde", buy: 14, sell: 5.6 }
+      red_glazed_terracotta: { material: RED_GLAZED_TERRACOTTA, name: "&cTerracota Vidriada Roja", buy: 14, sell: 5.6 }
+      black_glazed_terracotta: { material: BLACK_GLAZED_TERRACOTTA, name: "&8Terracota Vidriada Negra", buy: 14, sell: 5.6 }
+      # ── Concreto ──
+      white_concrete: { material: WHITE_CONCRETE, name: "&fConcreto Blanco", buy: 10, sell: 4 }
+      orange_concrete: { material: ORANGE_CONCRETE, name: "&6Concreto Naranja", buy: 10, sell: 4 }
+      magenta_concrete: { material: MAGENTA_CONCRETE, name: "&dConcreto Magenta", buy: 10, sell: 4 }
+      light_blue_concrete: { material: LIGHT_BLUE_CONCRETE, name: "&bConcreto Celeste", buy: 10, sell: 4 }
+      yellow_concrete: { material: YELLOW_CONCRETE, name: "&eConcreto Amarillo", buy: 10, sell: 4 }
+      lime_concrete: { material: LIME_CONCRETE, name: "&aConcreto Lima", buy: 10, sell: 4 }
+      pink_concrete: { material: PINK_CONCRETE, name: "&dConcreto Rosa", buy: 10, sell: 4 }
+      gray_concrete: { material: GRAY_CONCRETE, name: "&8Concreto Gris", buy: 10, sell: 4 }
+      light_gray_concrete: { material: LIGHT_GRAY_CONCRETE, name: "&7Concreto Gris Claro", buy: 10, sell: 4 }
+      cyan_concrete: { material: CYAN_CONCRETE, name: "&3Concreto Cian", buy: 10, sell: 4 }
+      purple_concrete: { material: PURPLE_CONCRETE, name: "&5Concreto Morado", buy: 10, sell: 4 }
+      blue_concrete: { material: BLUE_CONCRETE, name: "&9Concreto Azul", buy: 10, sell: 4 }
+      brown_concrete: { material: BROWN_CONCRETE, name: "&6Concreto Marrón", buy: 10, sell: 4 }
+      green_concrete: { material: GREEN_CONCRETE, name: "&2Concreto Verde", buy: 10, sell: 4 }
+      red_concrete: { material: RED_CONCRETE, name: "&cConcreto Rojo", buy: 10, sell: 4 }
+      black_concrete: { material: BLACK_CONCRETE, name: "&8Concreto Negro", buy: 10, sell: 4 }
+      # ── Polvo de concreto ──
+      white_concrete_powder: { material: WHITE_CONCRETE_POWDER, name: "&fCemento en Polvo Blanco", buy: 8, sell: 3.2 }
+      orange_concrete_powder: { material: ORANGE_CONCRETE_POWDER, name: "&6Cemento en Polvo Naranja", buy: 8, sell: 3.2 }
+      magenta_concrete_powder: { material: MAGENTA_CONCRETE_POWDER, name: "&dCemento en Polvo Magenta", buy: 8, sell: 3.2 }
+      light_blue_concrete_powder: { material: LIGHT_BLUE_CONCRETE_POWDER, name: "&bCemento en Polvo Celeste", buy: 8, sell: 3.2 }
+      yellow_concrete_powder: { material: YELLOW_CONCRETE_POWDER, name: "&eCemento en Polvo Amarillo", buy: 8, sell: 3.2 }
+      lime_concrete_powder: { material: LIME_CONCRETE_POWDER, name: "&aCemento en Polvo Lima", buy: 8, sell: 3.2 }
+      pink_concrete_powder: { material: PINK_CONCRETE_POWDER, name: "&dCemento en Polvo Rosa", buy: 8, sell: 3.2 }
+      gray_concrete_powder: { material: GRAY_CONCRETE_POWDER, name: "&8Cemento en Polvo Gris", buy: 8, sell: 3.2 }
+      light_gray_concrete_powder: { material: LIGHT_GRAY_CONCRETE_POWDER, name: "&7Cemento en Polvo Gris Claro", buy: 8, sell: 3.2 }
+      cyan_concrete_powder: { material: CYAN_CONCRETE_POWDER, name: "&3Cemento en Polvo Cian", buy: 8, sell: 3.2 }
+      purple_concrete_powder: { material: PURPLE_CONCRETE_POWDER, name: "&5Cemento en Polvo Morado", buy: 8, sell: 3.2 }
+      blue_concrete_powder: { material: BLUE_CONCRETE_POWDER, name: "&9Cemento en Polvo Azul", buy: 8, sell: 3.2 }
+      brown_concrete_powder: { material: BROWN_CONCRETE_POWDER, name: "&6Cemento en Polvo Marrón", buy: 8, sell: 3.2 }
+      green_concrete_powder: { material: GREEN_CONCRETE_POWDER, name: "&2Cemento en Polvo Verde", buy: 8, sell: 3.2 }
+      red_concrete_powder: { material: RED_CONCRETE_POWDER, name: "&cCemento en Polvo Rojo", buy: 8, sell: 3.2 }
+      black_concrete_powder: { material: BLACK_CONCRETE_POWDER, name: "&8Cemento en Polvo Negro", buy: 8, sell: 3.2 }
+      # ── Cristal ──
+      glass: { material: GLASS, name: "&fVidrio", buy: 6, sell: 2.4 }
+      tinted_glass: { material: TINTED_GLASS, name: "&5Vidrio Tintado", buy: 40, sell: 16 }
+      white_stained_glass: { material: WHITE_STAINED_GLASS, name: "&fVidrio Blanco", buy: 8, sell: 3.2 }
+      orange_stained_glass: { material: ORANGE_STAINED_GLASS, name: "&6Vidrio Naranja", buy: 8, sell: 3.2 }
+      magenta_stained_glass: { material: MAGENTA_STAINED_GLASS, name: "&dVidrio Magenta", buy: 8, sell: 3.2 }
+      light_blue_stained_glass: { material: LIGHT_BLUE_STAINED_GLASS, name: "&bVidrio Celeste", buy: 8, sell: 3.2 }
+      yellow_stained_glass: { material: YELLOW_STAINED_GLASS, name: "&eVidrio Amarillo", buy: 8, sell: 3.2 }
+      lime_stained_glass: { material: LIME_STAINED_GLASS, name: "&aVidrio Lima", buy: 8, sell: 3.2 }
+      pink_stained_glass: { material: PINK_STAINED_GLASS, name: "&dVidrio Rosa", buy: 8, sell: 3.2 }
+      gray_stained_glass: { material: GRAY_STAINED_GLASS, name: "&8Vidrio Gris", buy: 8, sell: 3.2 }
+      light_gray_stained_glass: { material: LIGHT_GRAY_STAINED_GLASS, name: "&7Vidrio Gris Claro", buy: 8, sell: 3.2 }
+      cyan_stained_glass: { material: CYAN_STAINED_GLASS, name: "&3Vidrio Cian", buy: 8, sell: 3.2 }
+      purple_stained_glass: { material: PURPLE_STAINED_GLASS, name: "&5Vidrio Morado", buy: 8, sell: 3.2 }
+      blue_stained_glass: { material: BLUE_STAINED_GLASS, name: "&9Vidrio Azul", buy: 8, sell: 3.2 }
+      brown_stained_glass: { material: BROWN_STAINED_GLASS, name: "&6Vidrio Marrón", buy: 8, sell: 3.2 }
+      green_stained_glass: { material: GREEN_STAINED_GLASS, name: "&2Vidrio Verde", buy: 8, sell: 3.2 }
+      red_stained_glass: { material: RED_STAINED_GLASS, name: "&cVidrio Rojo", buy: 8, sell: 3.2 }
+      black_stained_glass: { material: BLACK_STAINED_GLASS, name: "&8Vidrio Negro", buy: 8, sell: 3.2 }
+      glass_pane: { material: GLASS_PANE, name: "&fPanel de Vidrio", buy: 2, sell: 0.8 }
+      white_stained_glass_pane: { material: WHITE_STAINED_GLASS_PANE, name: "&fPanel de Vidrio Blanco", buy: 3, sell: 1.2 }
+      orange_stained_glass_pane: { material: ORANGE_STAINED_GLASS_PANE, name: "&6Panel de Vidrio Naranja", buy: 3, sell: 1.2 }
+      magenta_stained_glass_pane: { material: MAGENTA_STAINED_GLASS_PANE, name: "&dPanel de Vidrio Magenta", buy: 3, sell: 1.2 }
+      light_blue_stained_glass_pane: { material: LIGHT_BLUE_STAINED_GLASS_PANE, name: "&bPanel de Vidrio Celeste", buy: 3, sell: 1.2 }
+      yellow_stained_glass_pane: { material: YELLOW_STAINED_GLASS_PANE, name: "&ePanel de Vidrio Amarillo", buy: 3, sell: 1.2 }
+      lime_stained_glass_pane: { material: LIME_STAINED_GLASS_PANE, name: "&aPanel de Vidrio Lima", buy: 3, sell: 1.2 }
+      pink_stained_glass_pane: { material: PINK_STAINED_GLASS_PANE, name: "&dPanel de Vidrio Rosa", buy: 3, sell: 1.2 }
+      gray_stained_glass_pane: { material: GRAY_STAINED_GLASS_PANE, name: "&8Panel de Vidrio Gris", buy: 3, sell: 1.2 }
+      light_gray_stained_glass_pane: { material: LIGHT_GRAY_STAINED_GLASS_PANE, name: "&7Panel de Vidrio Gris Claro", buy: 3, sell: 1.2 }
+      cyan_stained_glass_pane: { material: CYAN_STAINED_GLASS_PANE, name: "&3Panel de Vidrio Cian", buy: 3, sell: 1.2 }
+      purple_stained_glass_pane: { material: PURPLE_STAINED_GLASS_PANE, name: "&5Panel de Vidrio Morado", buy: 3, sell: 1.2 }
+      blue_stained_glass_pane: { material: BLUE_STAINED_GLASS_PANE, name: "&9Panel de Vidrio Azul", buy: 3, sell: 1.2 }
+      brown_stained_glass_pane: { material: BROWN_STAINED_GLASS_PANE, name: "&6Panel de Vidrio Marrón", buy: 3, sell: 1.2 }
+      green_stained_glass_pane: { material: GREEN_STAINED_GLASS_PANE, name: "&2Panel de Vidrio Verde", buy: 3, sell: 1.2 }
+      red_stained_glass_pane: { material: RED_STAINED_GLASS_PANE, name: "&cPanel de Vidrio Rojo", buy: 3, sell: 1.2 }
+      black_stained_glass_pane: { material: BLACK_STAINED_GLASS_PANE, name: "&8Panel de Vidrio Negro", buy: 3, sell: 1.2 }
+      # ── Cobre ──
+      copper_block: { material: COPPER_BLOCK, name: "&6Bloque de Cobre", buy: 50, sell: 20 }
+      exposed_copper_block: { material: EXPOSED_COPPER, name: "&eBloque de Cobre Expuesto", buy: 50, sell: 20 }
+      weathered_copper_block: { material: WEATHERED_COPPER, name: "&2Bloque de Cobre Desgastado", buy: 50, sell: 20 }
+      oxidized_copper_block: { material: OXIDIZED_COPPER, name: "&3Bloque de Cobre Oxidado", buy: 50, sell: 20 }
+      cut_copper: { material: CUT_COPPER, name: "&6Cobre Cortado", buy: 55, sell: 22 }
+      cut_copper_stairs: { material: CUT_COPPER_STAIRS, name: "&6Escaleras de Cobre Cortado", buy: 55, sell: 22 }
+      cut_copper_slab: { material: CUT_COPPER_SLAB, name: "&6Losa de Cobre Cortado", buy: 28, sell: 11.2 }
+      exposed_cut_copper: { material: EXPOSED_CUT_COPPER, name: "&eCobre Cortado Expuesto", buy: 55, sell: 22 }
+      exposed_cut_copper_stairs: { material: EXPOSED_CUT_COPPER_STAIRS, name: "&eEscaleras de Cobre Cortado Expuestas", buy: 55, sell: 22 }
+      exposed_cut_copper_slab: { material: EXPOSED_CUT_COPPER_SLAB, name: "&eLosa de Cobre Cortado Expuesta", buy: 28, sell: 11.2 }
+      weathered_cut_copper: { material: WEATHERED_CUT_COPPER, name: "&2Cobre Cortado Desgastado", buy: 55, sell: 22 }
+      weathered_cut_copper_stairs: { material: WEATHERED_CUT_COPPER_STAIRS, name: "&2Escaleras de Cobre Cortado Desgastadas", buy: 55, sell: 22 }
+      weathered_cut_copper_slab: { material: WEATHERED_CUT_COPPER_SLAB, name: "&2Losa de Cobre Cortado Desgastada", buy: 28, sell: 11.2 }
+      oxidized_cut_copper: { material: OXIDIZED_CUT_COPPER, name: "&3Cobre Cortado Oxidado", buy: 55, sell: 22 }
+      oxidized_cut_copper_stairs: { material: OXIDIZED_CUT_COPPER_STAIRS, name: "&3Escaleras de Cobre Cortado Oxidadas", buy: 55, sell: 22 }
+      oxidized_cut_copper_slab: { material: OXIDIZED_CUT_COPPER_SLAB, name: "&3Losa de Cobre Cortado Oxidada", buy: 28, sell: 11.2 }
+      # ── Cobre encerado ──
+      waxed_copper_block: { material: WAXED_COPPER_BLOCK, name: "&6Bloque de Cobre Encerado", buy: 60, sell: 24 }
+      waxed_exposed_copper_block: { material: WAXED_EXPOSED_COPPER, name: "&eBloque de Cobre Expuesto Encerado", buy: 60, sell: 24 }
+      waxed_weathered_copper_block: { material: WAXED_WEATHERED_COPPER, name: "&2Bloque de Cobre Desgastado Encerado", buy: 60, sell: 24 }
+      waxed_oxidized_copper_block: { material: WAXED_OXIDIZED_COPPER, name: "&3Bloque de Cobre Oxidado Encerado", buy: 60, sell: 24 }
+      waxed_cut_copper: { material: WAXED_CUT_COPPER, name: "&6Cobre Cortado Encerado", buy: 65, sell: 26 }
+      waxed_cut_copper_stairs: { material: WAXED_CUT_COPPER_STAIRS, name: "&6Escaleras de Cobre Cortado Enceradas", buy: 65, sell: 26 }
+      waxed_cut_copper_slab: { material: WAXED_CUT_COPPER_SLAB, name: "&6Losa de Cobre Cortado Encerada", buy: 33, sell: 13.2 }
+      waxed_exposed_cut_copper: { material: WAXED_EXPOSED_CUT_COPPER, name: "&eCobre Cortado Expuesto Encerado", buy: 65, sell: 26 }
+      waxed_exposed_cut_copper_stairs: { material: WAXED_EXPOSED_CUT_COPPER_STAIRS, name: "&eEscaleras de Cobre Cortado Expuestas Enceradas", buy: 65, sell: 26 }
+      waxed_exposed_cut_copper_slab: { material: WAXED_EXPOSED_CUT_COPPER_SLAB, name: "&eLosa de Cobre Cortado Expuesta Encerada", buy: 33, sell: 13.2 }
+      waxed_weathered_cut_copper: { material: WAXED_WEATHERED_CUT_COPPER, name: "&2Cobre Cortado Desgastado Encerado", buy: 65, sell: 26 }
+      waxed_weathered_cut_copper_stairs: { material: WAXED_WEATHERED_CUT_COPPER_STAIRS, name: "&2Escaleras de Cobre Cortado Desgastadas Enceradas", buy: 65, sell: 26 }
+      waxed_weathered_cut_copper_slab: { material: WAXED_WEATHERED_CUT_COPPER_SLAB, name: "&2Losa de Cobre Cortado Desgastada Encerada", buy: 33, sell: 13.2 }
+      waxed_oxidized_cut_copper: { material: WAXED_OXIDIZED_CUT_COPPER, name: "&3Cobre Cortado Oxidado Encerado", buy: 65, sell: 26 }
+      waxed_oxidized_cut_copper_stairs: { material: WAXED_OXIDIZED_CUT_COPPER_STAIRS, name: "&3Escaleras de Cobre Cortado Oxidadas Enceradas", buy: 65, sell: 26 }
+      waxed_oxidized_cut_copper_slab: { material: WAXED_OXIDIZED_CUT_COPPER_SLAB, name: "&3Losa de Cobre Cortado Oxidada Encerada", buy: 33, sell: 13.2 }
+      # ── Corales vivos ──
+      tube_coral_block: { material: TUBE_CORAL_BLOCK, name: "&9Bloque de Coral de Tubo", buy: 20, sell: 8 }
+      tube_coral: { material: TUBE_CORAL, name: "&9Coral de Tubo", buy: 15, sell: 6 }
+      tube_coral_fan: { material: TUBE_CORAL_FAN, name: "&9Abanico de Coral de Tubo", buy: 15, sell: 6 }
+      brain_coral_block: { material: BRAIN_CORAL_BLOCK, name: "&dBloque de Coral de Cerebro", buy: 20, sell: 8 }
+      brain_coral: { material: BRAIN_CORAL, name: "&dCoral de Cerebro", buy: 15, sell: 6 }
+      brain_coral_fan: { material: BRAIN_CORAL_FAN, name: "&dAbanico de Coral de Cerebro", buy: 15, sell: 6 }
+      bubble_coral_block: { material: BUBBLE_CORAL_BLOCK, name: "&5Bloque de Coral de Burbuja", buy: 20, sell: 8 }
+      bubble_coral: { material: BUBBLE_CORAL, name: "&5Coral de Burbuja", buy: 15, sell: 6 }
+      bubble_coral_fan: { material: BUBBLE_CORAL_FAN, name: "&5Abanico de Coral de Burbuja", buy: 15, sell: 6 }
+      fire_coral_block: { material: FIRE_CORAL_BLOCK, name: "&cBloque de Coral de Fuego", buy: 20, sell: 8 }
+      fire_coral: { material: FIRE_CORAL, name: "&cCoral de Fuego", buy: 15, sell: 6 }
+      fire_coral_fan: { material: FIRE_CORAL_FAN, name: "&cAbanico de Coral de Fuego", buy: 15, sell: 6 }
+      horn_coral_block: { material: HORN_CORAL_BLOCK, name: "&eBloque de Coral de Cuerno", buy: 20, sell: 8 }
+      horn_coral: { material: HORN_CORAL, name: "&eCoral de Cuerno", buy: 15, sell: 6 }
+      horn_coral_fan: { material: HORN_CORAL_FAN, name: "&eAbanico de Coral de Cuerno", buy: 15, sell: 6 }
+      # ── Corales muertos ──
+      dead_tube_coral_block: { material: DEAD_TUBE_CORAL_BLOCK, name: "&7Bloque de Coral Muerto de Tubo", buy: 10, sell: 4 }
+      dead_tube_coral: { material: DEAD_TUBE_CORAL, name: "&7Coral Muerto de Tubo", buy: 8, sell: 3.2 }
+      dead_tube_coral_fan: { material: DEAD_TUBE_CORAL_FAN, name: "&7Abanico de Coral Muerto de Tubo", buy: 8, sell: 3.2 }
+      dead_brain_coral_block: { material: DEAD_BRAIN_CORAL_BLOCK, name: "&7Bloque de Coral Muerto de Cerebro", buy: 10, sell: 4 }
+      dead_brain_coral: { material: DEAD_BRAIN_CORAL, name: "&7Coral Muerto de Cerebro", buy: 8, sell: 3.2 }
+      dead_brain_coral_fan: { material: DEAD_BRAIN_CORAL_FAN, name: "&7Abanico de Coral Muerto de Cerebro", buy: 8, sell: 3.2 }
+      dead_bubble_coral_block: { material: DEAD_BUBBLE_CORAL_BLOCK, name: "&7Bloque de Coral Muerto de Burbuja", buy: 10, sell: 4 }
+      dead_bubble_coral: { material: DEAD_BUBBLE_CORAL, name: "&7Coral Muerto de Burbuja", buy: 8, sell: 3.2 }
+      dead_bubble_coral_fan: { material: DEAD_BUBBLE_CORAL_FAN, name: "&7Abanico de Coral Muerto de Burbuja", buy: 8, sell: 3.2 }
+      dead_fire_coral_block: { material: DEAD_FIRE_CORAL_BLOCK, name: "&7Bloque de Coral Muerto de Fuego", buy: 10, sell: 4 }
+      dead_fire_coral: { material: DEAD_FIRE_CORAL, name: "&7Coral Muerto de Fuego", buy: 8, sell: 3.2 }
+      dead_fire_coral_fan: { material: DEAD_FIRE_CORAL_FAN, name: "&7Abanico de Coral Muerto de Fuego", buy: 8, sell: 3.2 }
+      dead_horn_coral_block: { material: DEAD_HORN_CORAL_BLOCK, name: "&7Bloque de Coral Muerto de Cuerno", buy: 10, sell: 4 }
+      dead_horn_coral: { material: DEAD_HORN_CORAL, name: "&7Coral Muerto de Cuerno", buy: 8, sell: 3.2 }
+      dead_horn_coral_fan: { material: DEAD_HORN_CORAL_FAN, name: "&7Abanico de Coral Muerto de Cuerno", buy: 8, sell: 3.2 }
 
-  minerales:
-    display-name: "&b&lMinerales"
-    icon: DIAMOND_ORE
-    glass: LIGHT_BLUE_STAINED_GLASS_PANE
-    main-menu-slot: 12
-    items:
-      coal:           { material: COAL,            name: "&8Carbón",              buy: 8,    sell: 4 }
-      iron_ingot:     { material: IRON_INGOT,       name: "&fLingote de Hierro",   buy: 20,   sell: 10 }
-      copper_ingot:   { material: COPPER_INGOT,     name: "&6Lingote de Cobre",    buy: 12,   sell: 5 }
-      gold_ingot:     { material: GOLD_INGOT,       name: "&6Lingote de Oro",      buy: 40,   sell: 20 }
-      redstone:       { material: REDSTONE,         name: "&cRedstone",            buy: 15,   sell: 7 }
-      lapis_lazuli:   { material: LAPIS_LAZULI,     name: "&9Lapislázuli",         buy: 12,   sell: 6 }
-      diamond:        { material: DIAMOND,          name: "&bDiamante",            buy: 150,  sell: 75 }
-      emerald:        { material: EMERALD,          name: "&aEsmeralda",           buy: 180,  sell: 90 }
-      quartz:         { material: QUARTZ,           name: "&fCuarzo",              buy: 18,   sell: 9 }
-      netherite_ingot: { material: NETHERITE_INGOT,  name: "&8Lingote de Netherita",buy: 900,  sell: 450 }
-      raw_iron:       { material: RAW_IRON,         name: "&7Hierro en Bruto",     buy: 14,   sell: 6 }
-      raw_gold:       { material: RAW_GOLD,         name: "&6Oro en Bruto",        buy: 28,   sell: 12 }
-      raw_copper:     { material: RAW_COPPER,       name: "&6Cobre en Bruto",      buy: 10,   sell: 4 }
-      amethyst_shard: { material: AMETHYST_SHARD,   name: "&dFragmento de Amatista", buy: 10, sell: 4 }
-
-  comida:
-    display-name: "&e&lComida"
-    icon: COOKED_BEEF
-    glass: YELLOW_STAINED_GLASS_PANE
+  madera:
+    display-name: "&6&lMadera"
+    icon: OAK_LOG
+    glass: ORANGE_STAINED_GLASS_PANE
     main-menu-slot: 13
     items:
-      bread:          { material: BREAD,            name: "&6Pan",                 buy: 10,  sell: 4 }
-      cooked_beef:    { material: COOKED_BEEF,       name: "&6Filete Cocido",       buy: 15,  sell: 7 }
-      cooked_porkchop: { material: COOKED_PORKCHOP,   name: "&6Chuleta Cocida",      buy: 15,  sell: 7 }
-      cooked_chicken: { material: COOKED_CHICKEN,    name: "&6Pollo Cocido",        buy: 15,  sell: 7 }
-      cooked_salmon:  { material: COOKED_SALMON,     name: "&6Salmón Cocido",       buy: 18,  sell: 8 }
-      carrot:         { material: CARROT,            name: "&6Zanahoria",           buy: 5,   sell: 2 }
-      potato:         { material: POTATO,            name: "&6Papa",                buy: 5,   sell: 2 }
-      baked_potato:   { material: BAKED_POTATO,       name: "&6Papa al Horno",       buy: 12,  sell: 5 }
-      melon_slice:    { material: MELON_SLICE,        name: "&aRebanada de Melón",   buy: 6,   sell: 2 }
-      apple:          { material: APPLE,              name: "&cManzana",             buy: 8,   sell: 3 }
-      golden_apple:   { material: GOLDEN_APPLE,       name: "&6Manzana Dorada",      buy: 250, sell: 120 }
-      egg:            { material: EGG,                name: "&fHuevo",               buy: 5,   sell: 2 }
-      milk_bucket:    { material: MILK_BUCKET,        name: "&fCubo de Leche",       buy: 10,  sell: 4 }
-      cake:           { material: CAKE,               name: "&fPastel",              buy: 80,  sell: -1 }
-      cookie:         { material: COOKIE,             name: "&6Galleta",             buy: 6,   sell: 2 }
-      honey_bottle:   { material: HONEY_BOTTLE,       name: "&6Botella de Miel",     buy: 15,  sell: 6 }
-      sweet_berries:  { material: SWEET_BERRIES,      name: "&cBaya Dulce",          buy: 10,  sell: 4 }
-
-  equipamiento:
-    display-name: "&c&lEquipamiento"
-    icon: DIAMOND_SWORD
-    glass: RED_STAINED_GLASS_PANE
-    main-menu-slot: 14
-    items:
-      iron_sword:        { material: IRON_SWORD,        name: "&fEspada de Hierro",     buy: 100,  sell: 40 }
-      diamond_sword:     { material: DIAMOND_SWORD,     name: "&bEspada de Diamante",   buy: 400,  sell: 160 }
-      netherite_sword:   { material: NETHERITE_SWORD,   name: "&8Espada de Netherita",  buy: 1500, sell: 600 }
-      iron_pickaxe:      { material: IRON_PICKAXE,      name: "&fPico de Hierro",       buy: 100,  sell: 40 }
-      diamond_pickaxe:   { material: DIAMOND_PICKAXE,   name: "&bPico de Diamante",     buy: 400,  sell: 160 }
-      iron_chestplate:   { material: IRON_CHESTPLATE,   name: "&fPechera de Hierro",    buy: 150,  sell: 60 }
-      diamond_chestplate: { material: DIAMOND_CHESTPLATE,name: "&bPechera de Diamante",  buy: 500,  sell: 200 }
-      netherite_chestplate: { material: NETHERITE_CHESTPLATE, name: "&8Pechera de Netherita", buy: 1800, sell: 720 }
-      bow:               { material: BOW,               name: "&6Arco",                 buy: 80,   sell: 30 }
-      crossbow:          { material: CROSSBOW,          name: "&6Ballesta",             buy: 120,  sell: 50 }
-      arrow:             { material: ARROW,             name: "&7Flecha",               buy: 2,    sell: 0.8 }
-      shield:            { material: SHIELD,            name: "&6Escudo",               buy: 60,   sell: 25 }
-      trident:           { material: TRIDENT,           name: "&bTridente",             buy: 600,  sell: 250 }
-      elytra:            { material: ELYTRA,             name: "&dElytra",               buy: 2500, sell: -1 }
-      fishing_rod:       { material: FISHING_ROD,       name: "&6Caña de Pescar",       buy: 40,   sell: 15 }
-      shears:            { material: SHEARS,             name: "&fTijeras",              buy: 15,   sell: 5 }
-      lead:              { material: LEAD,               name: "&fCorrea",               buy: 10,   sell: 4 }
-
-  mobs:
-    display-name: "&2&lDrops de Mobs"
-    icon: ROTTEN_FLESH
-    glass: GREEN_STAINED_GLASS_PANE
-    main-menu-slot: 15
-    items:
-      gunpowder:       { material: GUNPOWDER,        name: "&7Pólvora",             buy: 15,   sell: 6 }
-      bone:            { material: BONE,              name: "&fHueso",               buy: 10,   sell: 4 }
-      bone_meal:       { material: BONE_MEAL,         name: "&fHarina de Hueso",     buy: 6,    sell: 2 }
-      string:          { material: STRING,            name: "&fCuerda",              buy: 8,    sell: 3 }
-      rotten_flesh:    { material: ROTTEN_FLESH,      name: "&2Carne Podrida",       buy: 2,    sell: 0.5 }
-      spider_eye:      { material: SPIDER_EYE,        name: "&5Ojo de Araña",        buy: 12,   sell: 5 }
-      ender_pearl:     { material: ENDER_PEARL,       name: "&2Perla de Ender",      buy: 250,  sell: 120 }
-      ender_eye:       { material: ENDER_EYE,         name: "&2Ojo de Ender",        buy: 200,  sell: 90 }
-      blaze_rod:       { material: BLAZE_ROD,         name: "&6Vara de Blaze",       buy: 300,  sell: 140 }
-      magma_cream:     { material: MAGMA_CREAM,       name: "&6Crema de Magma",      buy: 120,  sell: 50 }
-      slime_ball:      { material: SLIME_BALL,        name: "&aBaba de Slime",       buy: 40,   sell: 18 }
-      phantom_membrane: { material: PHANTOM_MEMBRANE,  name: "&fEsencia Fantasma",    buy: 180,  sell: 80 }
-      totem_of_undying: { material: TOTEM_OF_UNDYING,  name: "&6Totem de Inmortalidad", buy: 1000, sell: 450 }
-      heart_of_the_sea: { material: HEART_OF_THE_SEA,  name: "&bCorazón del Mar",     buy: 800,  sell: 350 }
-      feather:         { material: FEATHER,           name: "&fPluma",               buy: 6,    sell: 2 }
-      leather:         { material: LEATHER,           name: "&6Cuero",               buy: 12,   sell: 5 }
-
-  spawners:
-    display-name: "&5&lSpawners"
-    icon: SPAWNER
-    glass: PURPLE_STAINED_GLASS_PANE
-    main-menu-slot: 19
-    items:
-      spawner_zombie:  { material: SPAWNER, name: "&2Spawner de Zombie",       buy: 5000,  sell: 2000, entity: ZOMBIE }
-      spawner_skeleton: { material: SPAWNER, name: "&fSpawner de Esqueleto",    buy: 6000,  sell: 2500, entity: SKELETON }
-      spawner_spider:  { material: SPAWNER, name: "&8Spawner de Araña",        buy: 5500,  sell: 2200, entity: SPIDER }
-      spawner_creeper: { material: SPAWNER, name: "&aSpawner de Creeper",      buy: 8000,  sell: 3200, entity: CREEPER }
-      spawner_enderman: { material: SPAWNER, name: "&5Spawner de Enderman",     buy: 10000, sell: 4000, entity: ENDERMAN }
-      spawner_blaze:   { material: SPAWNER, name: "&6Spawner de Blaze",        buy: 15000, sell: 6000, entity: BLAZE }
-      spawner_wither_skeleton: { material: SPAWNER, name: "&8Spawner de Wither Skeleton", buy: 18000, sell: 7500, entity: WITHER_SKELETON }
+      # ── Madera de Roble ──
+      oak_log: { material: OAK_LOG, name: "&6Tronco de Roble", buy: 5, sell: 2 }
+      stripped_oak_log: { material: STRIPPED_OAK_LOG, name: "&6Tronco sin Corteza de Roble", buy: 6, sell: 2.4 }
+      oak_wood: { material: OAK_WOOD, name: "&6Madera de Roble", buy: 6, sell: 2.4 }
+      stripped_oak_wood: { material: STRIPPED_OAK_WOOD, name: "&6Madera sin Corteza de Roble", buy: 6, sell: 2.4 }
+      oak_planks: { material: OAK_PLANKS, name: "&6Tablones de Roble", buy: 4, sell: 1.6 }
+      oak_stairs: { material: OAK_STAIRS, name: "&6Escaleras de Roble", buy: 6, sell: 2.4 }
+      oak_slab: { material: OAK_SLAB, name: "&6Losa de Roble", buy: 3, sell: 1.2 }
+      oak_fence: { material: OAK_FENCE, name: "&6Valla de Roble", buy: 5, sell: 2 }
+      oak_fence_gate: { material: OAK_FENCE_GATE, name: "&6Portón de Roble", buy: 8, sell: 3.2 }
+      oak_door: { material: OAK_DOOR, name: "&6Puerta de Roble", buy: 8, sell: 3.2 }
+      oak_trapdoor: { material: OAK_TRAPDOOR, name: "&6Trampilla de Roble", buy: 8, sell: 3.2 }
+      oak_button: { material: OAK_BUTTON, name: "&6Botón de Roble", buy: 3, sell: 1.2 }
+      oak_pressure_plate: { material: OAK_PRESSURE_PLATE, name: "&6Placa de Presión de Roble", buy: 6, sell: 2.4 }
+      oak_sign: { material: OAK_SIGN, name: "&6Cartel de Roble", buy: 8, sell: 3.2 }
+      oak_hanging_sign: { material: OAK_HANGING_SIGN, name: "&6Cartel Colgante de Roble", buy: 12, sell: 4.8 }
+      oak_boat: { material: OAK_BOAT, name: "&6Barca de Roble", buy: 25, sell: 10 }
+      oak_chest_boat: { material: OAK_CHEST_BOAT, name: "&6Barca con Cofre de Roble", buy: 40, sell: 16 }
+      # ── Madera de Abeto ──
+      spruce_log: { material: SPRUCE_LOG, name: "&2Tronco de Abeto", buy: 5, sell: 2 }
+      stripped_spruce_log: { material: STRIPPED_SPRUCE_LOG, name: "&2Tronco sin Corteza de Abeto", buy: 6, sell: 2.4 }
+      spruce_wood: { material: SPRUCE_WOOD, name: "&2Madera de Abeto", buy: 6, sell: 2.4 }
+      stripped_spruce_wood: { material: STRIPPED_SPRUCE_WOOD, name: "&2Madera sin Corteza de Abeto", buy: 6, sell: 2.4 }
+      spruce_planks: { material: SPRUCE_PLANKS, name: "&2Tablones de Abeto", buy: 4, sell: 1.6 }
+      spruce_stairs: { material: SPRUCE_STAIRS, name: "&2Escaleras de Abeto", buy: 6, sell: 2.4 }
+      spruce_slab: { material: SPRUCE_SLAB, name: "&2Losa de Abeto", buy: 3, sell: 1.2 }
+      spruce_fence: { material: SPRUCE_FENCE, name: "&2Valla de Abeto", buy: 5, sell: 2 }
+      spruce_fence_gate: { material: SPRUCE_FENCE_GATE, name: "&2Portón de Abeto", buy: 8, sell: 3.2 }
+      spruce_door: { material: SPRUCE_DOOR, name: "&2Puerta de Abeto", buy: 8, sell: 3.2 }
+      spruce_trapdoor: { material: SPRUCE_TRAPDOOR, name: "&2Trampilla de Abeto", buy: 8, sell: 3.2 }
+      spruce_button: { material: SPRUCE_BUTTON, name: "&2Botón de Abeto", buy: 3, sell: 1.2 }
+      spruce_pressure_plate: { material: SPRUCE_PRESSURE_PLATE, name: "&2Placa de Presión de Abeto", buy: 6, sell: 2.4 }
+      spruce_sign: { material: SPRUCE_SIGN, name: "&2Cartel de Abeto", buy: 8, sell: 3.2 }
+      spruce_hanging_sign: { material: SPRUCE_HANGING_SIGN, name: "&2Cartel Colgante de Abeto", buy: 12, sell: 4.8 }
+      spruce_boat: { material: SPRUCE_BOAT, name: "&2Barca de Abeto", buy: 25, sell: 10 }
+      spruce_chest_boat: { material: SPRUCE_CHEST_BOAT, name: "&2Barca con Cofre de Abeto", buy: 40, sell: 16 }
+      # ── Madera de Abedul ──
+      birch_log: { material: BIRCH_LOG, name: "&eTronco de Abedul", buy: 5, sell: 2 }
+      stripped_birch_log: { material: STRIPPED_BIRCH_LOG, name: "&eTronco sin Corteza de Abedul", buy: 6, sell: 2.4 }
+      birch_wood: { material: BIRCH_WOOD, name: "&eMadera de Abedul", buy: 6, sell: 2.4 }
+      stripped_birch_wood: { material: STRIPPED_BIRCH_WOOD, name: "&eMadera sin Corteza de Abedul", buy: 6, sell: 2.4 }
+      birch_planks: { material: BIRCH_PLANKS, name: "&eTablones de Abedul", buy: 4, sell: 1.6 }
+      birch_stairs: { material: BIRCH_STAIRS, name: "&eEscaleras de Abedul", buy: 6, sell: 2.4 }
+      birch_slab: { material: BIRCH_SLAB, name: "&eLosa de Abedul", buy: 3, sell: 1.2 }
+      birch_fence: { material: BIRCH_FENCE, name: "&eValla de Abedul", buy: 5, sell: 2 }
+      birch_fence_gate: { material: BIRCH_FENCE_GATE, name: "&ePortón de Abedul", buy: 8, sell: 3.2 }
+      birch_door: { material: BIRCH_DOOR, name: "&ePuerta de Abedul", buy: 8, sell: 3.2 }
+      birch_trapdoor: { material: BIRCH_TRAPDOOR, name: "&eTrampilla de Abedul", buy: 8, sell: 3.2 }
+      birch_button: { material: BIRCH_BUTTON, name: "&eBotón de Abedul", buy: 3, sell: 1.2 }
+      birch_pressure_plate: { material: BIRCH_PRESSURE_PLATE, name: "&ePlaca de Presión de Abedul", buy: 6, sell: 2.4 }
+      birch_sign: { material: BIRCH_SIGN, name: "&eCartel de Abedul", buy: 8, sell: 3.2 }
+      birch_hanging_sign: { material: BIRCH_HANGING_SIGN, name: "&eCartel Colgante de Abedul", buy: 12, sell: 4.8 }
+      birch_boat: { material: BIRCH_BOAT, name: "&eBarca de Abedul", buy: 25, sell: 10 }
+      birch_chest_boat: { material: BIRCH_CHEST_BOAT, name: "&eBarca con Cofre de Abedul", buy: 40, sell: 16 }
+      # ── Madera de Jungla ──
+      jungle_log: { material: JUNGLE_LOG, name: "&aTronco de Jungla", buy: 5, sell: 2 }
+      stripped_jungle_log: { material: STRIPPED_JUNGLE_LOG, name: "&aTronco sin Corteza de Jungla", buy: 6, sell: 2.4 }
+      jungle_wood: { material: JUNGLE_WOOD, name: "&aMadera de Jungla", buy: 6, sell: 2.4 }
+      stripped_jungle_wood: { material: STRIPPED_JUNGLE_WOOD, name: "&aMadera sin Corteza de Jungla", buy: 6, sell: 2.4 }
+      jungle_planks: { material: JUNGLE_PLANKS, name: "&aTablones de Jungla", buy: 4, sell: 1.6 }
+      jungle_stairs: { material: JUNGLE_STAIRS, name: "&aEscaleras de Jungla", buy: 6, sell: 2.4 }
+      jungle_slab: { material: JUNGLE_SLAB, name: "&aLosa de Jungla", buy: 3, sell: 1.2 }
+      jungle_fence: { material: JUNGLE_FENCE, name: "&aValla de Jungla", buy: 5, sell: 2 }
+      jungle_fence_gate: { material: JUNGLE_FENCE_GATE, name: "&aPortón de Jungla", buy: 8, sell: 3.2 }
+      jungle_door: { material: JUNGLE_DOOR, name: "&aPuerta de Jungla", buy: 8, sell: 3.2 }
+      jungle_trapdoor: { material: JUNGLE_TRAPDOOR, name: "&aTrampilla de Jungla", buy: 8, sell: 3.2 }
+      jungle_button: { material: JUNGLE_BUTTON, name: "&aBotón de Jungla", buy: 3, sell: 1.2 }
+      jungle_pressure_plate: { material: JUNGLE_PRESSURE_PLATE, name: "&aPlaca de Presión de Jungla", buy: 6, sell: 2.4 }
+      jungle_sign: { material: JUNGLE_SIGN, name: "&aCartel de Jungla", buy: 8, sell: 3.2 }
+      jungle_hanging_sign: { material: JUNGLE_HANGING_SIGN, name: "&aCartel Colgante de Jungla", buy: 12, sell: 4.8 }
+      jungle_boat: { material: JUNGLE_BOAT, name: "&aBarca de Jungla", buy: 25, sell: 10 }
+      jungle_chest_boat: { material: JUNGLE_CHEST_BOAT, name: "&aBarca con Cofre de Jungla", buy: 40, sell: 16 }
+      # ── Madera de Acacia ──
+      acacia_log: { material: ACACIA_LOG, name: "&cTronco de Acacia", buy: 5, sell: 2 }
+      stripped_acacia_log: { material: STRIPPED_ACACIA_LOG, name: "&cTronco sin Corteza de Acacia", buy: 6, sell: 2.4 }
+      acacia_wood: { material: ACACIA_WOOD, name: "&cMadera de Acacia", buy: 6, sell: 2.4 }
+      stripped_acacia_wood: { material: STRIPPED_ACACIA_WOOD, name: "&cMadera sin Corteza de Acacia", buy: 6, sell: 2.4 }
+      acacia_planks: { material: ACACIA_PLANKS, name: "&cTablones de Acacia", buy: 4, sell: 1.6 }
+      acacia_stairs: { material: ACACIA_STAIRS, name: "&cEscaleras de Acacia", buy: 6, sell: 2.4 }
+      acacia_slab: { material: ACACIA_SLAB, name: "&cLosa de Acacia", buy: 3, sell: 1.2 }
+      acacia_fence: { material: ACACIA_FENCE, name: "&cValla de Acacia", buy: 5, sell: 2 }
+      acacia_fence_gate: { material: ACACIA_FENCE_GATE, name: "&cPortón de Acacia", buy: 8, sell: 3.2 }
+      acacia_door: { material: ACACIA_DOOR, name: "&cPuerta de Acacia", buy: 8, sell: 3.2 }
+      acacia_trapdoor: { material: ACACIA_TRAPDOOR, name: "&cTrampilla de Acacia", buy: 8, sell: 3.2 }
+      acacia_button: { material: ACACIA_BUTTON, name: "&cBotón de Acacia", buy: 3, sell: 1.2 }
+      acacia_pressure_plate: { material: ACACIA_PRESSURE_PLATE, name: "&cPlaca de Presión de Acacia", buy: 6, sell: 2.4 }
+      acacia_sign: { material: ACACIA_SIGN, name: "&cCartel de Acacia", buy: 8, sell: 3.2 }
+      acacia_hanging_sign: { material: ACACIA_HANGING_SIGN, name: "&cCartel Colgante de Acacia", buy: 12, sell: 4.8 }
+      acacia_boat: { material: ACACIA_BOAT, name: "&cBarca de Acacia", buy: 25, sell: 10 }
+      acacia_chest_boat: { material: ACACIA_CHEST_BOAT, name: "&cBarca con Cofre de Acacia", buy: 40, sell: 16 }
+      # ── Madera de Roble Oscuro ──
+      dark_oak_log: { material: DARK_OAK_LOG, name: "&8Tronco de Roble Oscuro", buy: 5, sell: 2 }
+      stripped_dark_oak_log: { material: STRIPPED_DARK_OAK_LOG, name: "&8Tronco sin Corteza de Roble Oscuro", buy: 6, sell: 2.4 }
+      dark_oak_wood: { material: DARK_OAK_WOOD, name: "&8Madera de Roble Oscuro", buy: 6, sell: 2.4 }
+      stripped_dark_oak_wood: { material: STRIPPED_DARK_OAK_WOOD, name: "&8Madera sin Corteza de Roble Oscuro", buy: 6, sell: 2.4 }
+      dark_oak_planks: { material: DARK_OAK_PLANKS, name: "&8Tablones de Roble Oscuro", buy: 4, sell: 1.6 }
+      dark_oak_stairs: { material: DARK_OAK_STAIRS, name: "&8Escaleras de Roble Oscuro", buy: 6, sell: 2.4 }
+      dark_oak_slab: { material: DARK_OAK_SLAB, name: "&8Losa de Roble Oscuro", buy: 3, sell: 1.2 }
+      dark_oak_fence: { material: DARK_OAK_FENCE, name: "&8Valla de Roble Oscuro", buy: 5, sell: 2 }
+      dark_oak_fence_gate: { material: DARK_OAK_FENCE_GATE, name: "&8Portón de Roble Oscuro", buy: 8, sell: 3.2 }
+      dark_oak_door: { material: DARK_OAK_DOOR, name: "&8Puerta de Roble Oscuro", buy: 8, sell: 3.2 }
+      dark_oak_trapdoor: { material: DARK_OAK_TRAPDOOR, name: "&8Trampilla de Roble Oscuro", buy: 8, sell: 3.2 }
+      dark_oak_button: { material: DARK_OAK_BUTTON, name: "&8Botón de Roble Oscuro", buy: 3, sell: 1.2 }
+      dark_oak_pressure_plate: { material: DARK_OAK_PRESSURE_PLATE, name: "&8Placa de Presión de Roble Oscuro", buy: 6, sell: 2.4 }
+      dark_oak_sign: { material: DARK_OAK_SIGN, name: "&8Cartel de Roble Oscuro", buy: 8, sell: 3.2 }
+      dark_oak_hanging_sign: { material: DARK_OAK_HANGING_SIGN, name: "&8Cartel Colgante de Roble Oscuro", buy: 12, sell: 4.8 }
+      dark_oak_boat: { material: DARK_OAK_BOAT, name: "&8Barca de Roble Oscuro", buy: 25, sell: 10 }
+      dark_oak_chest_boat: { material: DARK_OAK_CHEST_BOAT, name: "&8Barca con Cofre de Roble Oscuro", buy: 40, sell: 16 }
+      # ── Madera de Mangle ──
+      mangrove_log: { material: MANGROVE_LOG, name: "&4Tronco de Mangle", buy: 6, sell: 2.4 }
+      stripped_mangrove_log: { material: STRIPPED_MANGROVE_LOG, name: "&4Tronco sin Corteza de Mangle", buy: 7, sell: 2.8 }
+      mangrove_wood: { material: MANGROVE_WOOD, name: "&4Madera de Mangle", buy: 7, sell: 2.8 }
+      stripped_mangrove_wood: { material: STRIPPED_MANGROVE_WOOD, name: "&4Madera sin Corteza de Mangle", buy: 6, sell: 2.4 }
+      mangrove_planks: { material: MANGROVE_PLANKS, name: "&4Tablones de Mangle", buy: 4, sell: 1.6 }
+      mangrove_stairs: { material: MANGROVE_STAIRS, name: "&4Escaleras de Mangle", buy: 6, sell: 2.4 }
+      mangrove_slab: { material: MANGROVE_SLAB, name: "&4Losa de Mangle", buy: 3, sell: 1.2 }
+      mangrove_fence: { material: MANGROVE_FENCE, name: "&4Valla de Mangle", buy: 5, sell: 2 }
+      mangrove_fence_gate: { material: MANGROVE_FENCE_GATE, name: "&4Portón de Mangle", buy: 8, sell: 3.2 }
+      mangrove_door: { material: MANGROVE_DOOR, name: "&4Puerta de Mangle", buy: 8, sell: 3.2 }
+      mangrove_trapdoor: { material: MANGROVE_TRAPDOOR, name: "&4Trampilla de Mangle", buy: 8, sell: 3.2 }
+      mangrove_button: { material: MANGROVE_BUTTON, name: "&4Botón de Mangle", buy: 3, sell: 1.2 }
+      mangrove_pressure_plate: { material: MANGROVE_PRESSURE_PLATE, name: "&4Placa de Presión de Mangle", buy: 6, sell: 2.4 }
+      mangrove_sign: { material: MANGROVE_SIGN, name: "&4Cartel de Mangle", buy: 8, sell: 3.2 }
+      mangrove_hanging_sign: { material: MANGROVE_HANGING_SIGN, name: "&4Cartel Colgante de Mangle", buy: 12, sell: 4.8 }
+      mangrove_boat: { material: MANGROVE_BOAT, name: "&4Barca de Mangle", buy: 25, sell: 10 }
+      mangrove_chest_boat: { material: MANGROVE_CHEST_BOAT, name: "&4Barca con Cofre de Mangle", buy: 40, sell: 16 }
+      # ── Madera de Cerezo ──
+      cherry_log: { material: CHERRY_LOG, name: "&dTronco de Cerezo", buy: 6, sell: 2.4 }
+      stripped_cherry_log: { material: STRIPPED_CHERRY_LOG, name: "&dTronco sin Corteza de Cerezo", buy: 7, sell: 2.8 }
+      cherry_wood: { material: CHERRY_WOOD, name: "&dMadera de Cerezo", buy: 7, sell: 2.8 }
+      stripped_cherry_wood: { material: STRIPPED_CHERRY_WOOD, name: "&dMadera sin Corteza de Cerezo", buy: 6, sell: 2.4 }
+      cherry_planks: { material: CHERRY_PLANKS, name: "&dTablones de Cerezo", buy: 4, sell: 1.6 }
+      cherry_stairs: { material: CHERRY_STAIRS, name: "&dEscaleras de Cerezo", buy: 6, sell: 2.4 }
+      cherry_slab: { material: CHERRY_SLAB, name: "&dLosa de Cerezo", buy: 3, sell: 1.2 }
+      cherry_fence: { material: CHERRY_FENCE, name: "&dValla de Cerezo", buy: 5, sell: 2 }
+      cherry_fence_gate: { material: CHERRY_FENCE_GATE, name: "&dPortón de Cerezo", buy: 8, sell: 3.2 }
+      cherry_door: { material: CHERRY_DOOR, name: "&dPuerta de Cerezo", buy: 8, sell: 3.2 }
+      cherry_trapdoor: { material: CHERRY_TRAPDOOR, name: "&dTrampilla de Cerezo", buy: 8, sell: 3.2 }
+      cherry_button: { material: CHERRY_BUTTON, name: "&dBotón de Cerezo", buy: 3, sell: 1.2 }
+      cherry_pressure_plate: { material: CHERRY_PRESSURE_PLATE, name: "&dPlaca de Presión de Cerezo", buy: 6, sell: 2.4 }
+      cherry_sign: { material: CHERRY_SIGN, name: "&dCartel de Cerezo", buy: 8, sell: 3.2 }
+      cherry_hanging_sign: { material: CHERRY_HANGING_SIGN, name: "&dCartel Colgante de Cerezo", buy: 12, sell: 4.8 }
+      cherry_boat: { material: CHERRY_BOAT, name: "&dBarca de Cerezo", buy: 25, sell: 10 }
+      cherry_chest_boat: { material: CHERRY_CHEST_BOAT, name: "&dBarca con Cofre de Cerezo", buy: 40, sell: 16 }
+      # ── Madera de Carmesí ──
+      crimson_stem: { material: CRIMSON_STEM, name: "&cTallo de Carmesí", buy: 6, sell: 2.4 }
+      stripped_crimson_stem: { material: STRIPPED_CRIMSON_STEM, name: "&cTallo sin Corteza de Carmesí", buy: 7, sell: 2.8 }
+      crimson_hyphae: { material: CRIMSON_HYPHAE, name: "&cHifa de Carmesí", buy: 7, sell: 2.8 }
+      stripped_crimson_hyphae: { material: STRIPPED_CRIMSON_HYPHAE, name: "&cHifa sin Corteza de Carmesí", buy: 7, sell: 2.8 }
+      crimson_planks: { material: CRIMSON_PLANKS, name: "&cTablones de Carmesí", buy: 4, sell: 1.6 }
+      crimson_stairs: { material: CRIMSON_STAIRS, name: "&cEscaleras de Carmesí", buy: 6, sell: 2.4 }
+      crimson_slab: { material: CRIMSON_SLAB, name: "&cLosa de Carmesí", buy: 3, sell: 1.2 }
+      crimson_fence: { material: CRIMSON_FENCE, name: "&cValla de Carmesí", buy: 5, sell: 2 }
+      crimson_fence_gate: { material: CRIMSON_FENCE_GATE, name: "&cPortón de Carmesí", buy: 8, sell: 3.2 }
+      crimson_door: { material: CRIMSON_DOOR, name: "&cPuerta de Carmesí", buy: 8, sell: 3.2 }
+      crimson_trapdoor: { material: CRIMSON_TRAPDOOR, name: "&cTrampilla de Carmesí", buy: 8, sell: 3.2 }
+      crimson_button: { material: CRIMSON_BUTTON, name: "&cBotón de Carmesí", buy: 3, sell: 1.2 }
+      crimson_pressure_plate: { material: CRIMSON_PRESSURE_PLATE, name: "&cPlaca de Presión de Carmesí", buy: 6, sell: 2.4 }
+      crimson_sign: { material: CRIMSON_SIGN, name: "&cCartel de Carmesí", buy: 8, sell: 3.2 }
+      crimson_hanging_sign: { material: CRIMSON_HANGING_SIGN, name: "&cCartel Colgante de Carmesí", buy: 12, sell: 4.8 }
+      # ── Madera de Distorsionado ──
+      warped_stem: { material: WARPED_STEM, name: "&3Tallo de Distorsionado", buy: 6, sell: 2.4 }
+      stripped_warped_stem: { material: STRIPPED_WARPED_STEM, name: "&3Tallo sin Corteza de Distorsionado", buy: 7, sell: 2.8 }
+      warped_hyphae: { material: WARPED_HYPHAE, name: "&3Hifa de Distorsionado", buy: 7, sell: 2.8 }
+      stripped_warped_hyphae: { material: STRIPPED_WARPED_HYPHAE, name: "&3Hifa sin Corteza de Distorsionado", buy: 7, sell: 2.8 }
+      warped_planks: { material: WARPED_PLANKS, name: "&3Tablones de Distorsionado", buy: 4, sell: 1.6 }
+      warped_stairs: { material: WARPED_STAIRS, name: "&3Escaleras de Distorsionado", buy: 6, sell: 2.4 }
+      warped_slab: { material: WARPED_SLAB, name: "&3Losa de Distorsionado", buy: 3, sell: 1.2 }
+      warped_fence: { material: WARPED_FENCE, name: "&3Valla de Distorsionado", buy: 5, sell: 2 }
+      warped_fence_gate: { material: WARPED_FENCE_GATE, name: "&3Portón de Distorsionado", buy: 8, sell: 3.2 }
+      warped_door: { material: WARPED_DOOR, name: "&3Puerta de Distorsionado", buy: 8, sell: 3.2 }
+      warped_trapdoor: { material: WARPED_TRAPDOOR, name: "&3Trampilla de Distorsionado", buy: 8, sell: 3.2 }
+      warped_button: { material: WARPED_BUTTON, name: "&3Botón de Distorsionado", buy: 3, sell: 1.2 }
+      warped_pressure_plate: { material: WARPED_PRESSURE_PLATE, name: "&3Placa de Presión de Distorsionado", buy: 6, sell: 2.4 }
+      warped_sign: { material: WARPED_SIGN, name: "&3Cartel de Distorsionado", buy: 8, sell: 3.2 }
+      warped_hanging_sign: { material: WARPED_HANGING_SIGN, name: "&3Cartel Colgante de Distorsionado", buy: 12, sell: 4.8 }
+      # ── Madera de Bambú ──
+      bamboo_block: { material: BAMBOO_BLOCK, name: "&aBloque de Bambú", buy: 6, sell: 2.4 }
+      stripped_bamboo_block: { material: STRIPPED_BAMBOO_BLOCK, name: "&aBloque de Bambú sin Corteza", buy: 7, sell: 2.8 }
+      bamboo_planks: { material: BAMBOO_PLANKS, name: "&aTablones de Bambú", buy: 4, sell: 1.6 }
+      bamboo_mosaic: { material: BAMBOO_MOSAIC, name: "&aMosaico de Bambú", buy: 6, sell: 2.4 }
+      bamboo_mosaic_stairs: { material: BAMBOO_MOSAIC_STAIRS, name: "&aEscaleras de Mosaico de Bambú", buy: 8, sell: 3.2 }
+      bamboo_mosaic_slab: { material: BAMBOO_MOSAIC_SLAB, name: "&aLosa de Mosaico de Bambú", buy: 4, sell: 1.6 }
+      bamboo_stairs: { material: BAMBOO_STAIRS, name: "&aEscaleras de Bambú", buy: 6, sell: 2.4 }
+      bamboo_slab: { material: BAMBOO_SLAB, name: "&aLosa de Bambú", buy: 3, sell: 1.2 }
+      bamboo_fence: { material: BAMBOO_FENCE, name: "&aValla de Bambú", buy: 5, sell: 2 }
+      bamboo_fence_gate: { material: BAMBOO_FENCE_GATE, name: "&aPortón de Bambú", buy: 8, sell: 3.2 }
+      bamboo_door: { material: BAMBOO_DOOR, name: "&aPuerta de Bambú", buy: 8, sell: 3.2 }
+      bamboo_trapdoor: { material: BAMBOO_TRAPDOOR, name: "&aTrampilla de Bambú", buy: 8, sell: 3.2 }
+      bamboo_button: { material: BAMBOO_BUTTON, name: "&aBotón de Bambú", buy: 3, sell: 1.2 }
+      bamboo_pressure_plate: { material: BAMBOO_PRESSURE_PLATE, name: "&aPlaca de Presión de Bambú", buy: 6, sell: 2.4 }
+      bamboo_sign: { material: BAMBOO_SIGN, name: "&aCartel de Bambú", buy: 8, sell: 3.2 }
+      bamboo_hanging_sign: { material: BAMBOO_HANGING_SIGN, name: "&aCartel Colgante de Bambú", buy: 12, sell: 4.8 }
+      bamboo_raft: { material: BAMBOO_RAFT, name: "&aBalsa de Bambú", buy: 25, sell: 10 }
+      bamboo_chest_raft: { material: BAMBOO_CHEST_RAFT, name: "&aBalsa con Cofre de Bambú", buy: 40, sell: 16 }
+      # ── Mobiliario y estaciones de madera ──
+      chest: { material: CHEST, name: "&6Cofre", buy: 15, sell: 6 }
+      trapped_chest: { material: TRAPPED_CHEST, name: "&6Cofre Trampa", buy: 25, sell: 10 }
+      barrel: { material: BARREL, name: "&6Barril", buy: 15, sell: 6 }
+      crafting_table: { material: CRAFTING_TABLE, name: "&6Mesa de Crafteo", buy: 10, sell: 4 }
+      ladder: { material: LADDER, name: "&fEscalera de Mano", buy: 3, sell: 1.2 }
+      bookshelf_d: { material: BOOKSHELF, name: "&6Estantería", buy: 18, sell: 7.2 }
+      chiseled_bookshelf_d: { material: CHISELED_BOOKSHELF, name: "&6Estantería Cincelada", buy: 22, sell: 8.8 }
+      lectern_d: { material: LECTERN, name: "&6Atril", buy: 20, sell: 8 }
+      loom_d: { material: LOOM, name: "&fTelar", buy: 14, sell: 5.6 }
+      composter: { material: COMPOSTER, name: "&aCompostera", buy: 12, sell: 4.8 }
+      cartography_table: { material: CARTOGRAPHY_TABLE, name: "&6Mesa de Cartografía", buy: 14, sell: 5.6 }
+      fletching_table: { material: FLETCHING_TABLE, name: "&6Mesa de Flechas", buy: 14, sell: 5.6 }
+      jukebox: { material: JUKEBOX, name: "&6Tocadiscos", buy: 80, sell: 32 }
+      note_block: { material: NOTE_BLOCK, name: "&6Bloque de Notas", buy: 20, sell: 8 }
+      # ── Palos ──
+      stick: { material: STICK, name: "&6Palo", buy: 1, sell: 0.4 }
 
   decoracion:
     display-name: "&d&lDecoración"
     icon: PAINTING
     glass: PINK_STAINED_GLASS_PANE
-    main-menu-slot: 20
+    main-menu-slot: 15
     items:
-      painting:        { material: PAINTING,         name: "&dCuadro",              buy: 15,  sell: 6 }
-      flower_pot:      { material: FLOWER_POT,       name: "&dMaceta",              buy: 10,  sell: 4 }
-      armor_stand:     { material: ARMOR_STAND,      name: "&fArmor Stand",         buy: 25,  sell: 10 }
-      lantern:         { material: LANTERN,          name: "&6Farol",               buy: 12,  sell: 5 }
-      soul_lantern:    { material: SOUL_LANTERN,     name: "&bFarol de Alma",       buy: 15,  sell: 6 }
-      zombie_head:     { material: ZOMBIE_HEAD,      name: "&2Cabeza de Zombie",    buy: 200, sell: 80 }
-      skeleton_skull:  { material: SKELETON_SKULL,   name: "&fCabeza de Esqueleto", buy: 200, sell: 80 }
-      bell:            { material: BELL,             name: "&6Campana",             buy: 40,  sell: 15 }
-      lectern:         { material: LECTERN,          name: "&6Atril",               buy: 20,  sell: 8 }
-      item_frame:      { material: ITEM_FRAME,       name: "&fMarco de Ítem",       buy: 10,  sell: 4 }
-      glow_item_frame: { material: GLOW_ITEM_FRAME,  name: "&eMarco de Ítem Brillante", buy: 20, sell: 8 }
-      sea_lantern:     { material: SEA_LANTERN,      name: "&bLinterna de Mar",     buy: 25,  sell: 10 }
-      shulker_box:     { material: SHULKER_BOX,      name: "&5Shulker Box",         buy: 300, sell: 120 }
-      decorated_pot:   { material: DECORATED_POT,    name: "&6Jarrón Decorado",     buy: 25,  sell: 10 }
-      candle:          { material: CANDLE,           name: "&fVela",                buy: 8,   sell: 3 }
-      tube_coral_block: { material: TUBE_CORAL_BLOCK, name: "&bBloque de Coral",     buy: 20,  sell: 8 }
+      painting: { material: PAINTING, name: "&dCuadro", buy: 15, sell: 6 }
+      flower_pot: { material: FLOWER_POT, name: "&dMaceta", buy: 10, sell: 4 }
+      armor_stand: { material: ARMOR_STAND, name: "&fArmor Stand", buy: 25, sell: 10 }
+      item_frame: { material: ITEM_FRAME, name: "&fMarco de Ítem", buy: 10, sell: 4 }
+      glow_item_frame: { material: GLOW_ITEM_FRAME, name: "&eMarco de Ítem Brillante", buy: 20, sell: 8 }
+      torch: { material: TORCH, name: "&6Antorcha", buy: 2, sell: 0.8 }
+      soul_torch: { material: SOUL_TORCH, name: "&bAntorcha de Almas", buy: 4, sell: 1.6 }
+      lantern: { material: LANTERN, name: "&6Farol", buy: 12, sell: 4.8 }
+      soul_lantern: { material: SOUL_LANTERN, name: "&bFarol de Alma", buy: 15, sell: 6 }
+      campfire: { material: CAMPFIRE, name: "&6Fogata", buy: 15, sell: 6 }
+      soul_campfire: { material: SOUL_CAMPFIRE, name: "&bFogata de Almas", buy: 18, sell: 7.2 }
+      end_rod: { material: END_ROD, name: "&fVara del End", buy: 15, sell: 6 }
+      chain: { material: CHAIN, name: "&8Cadena", buy: 8, sell: 3.2 }
+      decorated_pot: { material: DECORATED_POT, name: "&6Jarrón Decorado", buy: 25, sell: 10 }
+      iron_bars: { material: IRON_BARS, name: "&7Barrotes de Hierro", buy: 8, sell: 3.2 }
+      zombie_head: { material: ZOMBIE_HEAD, name: "&2Cabeza de Zombie", buy: 200, sell: 80 }
+      skeleton_skull: { material: SKELETON_SKULL, name: "&fCráneo de Esqueleto", buy: 200, sell: 80 }
+      creeper_head: { material: CREEPER_HEAD, name: "&aCabeza de Creeper", buy: 250, sell: 100 }
+      piglin_head: { material: PIGLIN_HEAD, name: "&6Cabeza de Piglin", buy: 250, sell: 100 }
+      dragon_head: { material: DRAGON_HEAD, name: "&5Cabeza de Dragón", buy: 5000, sell: 2000 }
+      shulker_box: { material: SHULKER_BOX, name: "&5Shulker Box", buy: 300, sell: 120 }
+      cobweb: { material: COBWEB, name: "&fTelaraña", buy: 20, sell: 8 }
+      flower_banner_pattern: { material: FLOWER_BANNER_PATTERN, name: "&fPatrón de Flor", buy: 50, sell: 20 }
+      creeper_banner_pattern: { material: CREEPER_BANNER_PATTERN, name: "&aPatrón de Creeper", buy: 50, sell: 20 }
+      skull_banner_pattern: { material: SKULL_BANNER_PATTERN, name: "&fPatrón de Cráneo", buy: 80, sell: 32 }
+      globe_banner_pattern: { material: GLOBE_BANNER_PATTERN, name: "&bPatrón de Globo", buy: 50, sell: 20 }
+      white_bed: { material: WHITE_BED, name: "&fCama Blanca", buy: 30, sell: 12 }
+      orange_bed: { material: ORANGE_BED, name: "&6Cama Naranja", buy: 30, sell: 12 }
+      magenta_bed: { material: MAGENTA_BED, name: "&dCama Magenta", buy: 30, sell: 12 }
+      light_blue_bed: { material: LIGHT_BLUE_BED, name: "&bCama Celeste", buy: 30, sell: 12 }
+      yellow_bed: { material: YELLOW_BED, name: "&eCama Amarilla", buy: 30, sell: 12 }
+      lime_bed: { material: LIME_BED, name: "&aCama Lima", buy: 30, sell: 12 }
+      pink_bed: { material: PINK_BED, name: "&dCama Rosa", buy: 30, sell: 12 }
+      gray_bed: { material: GRAY_BED, name: "&8Cama Gris", buy: 30, sell: 12 }
+      light_gray_bed: { material: LIGHT_GRAY_BED, name: "&7Cama Gris Clara", buy: 30, sell: 12 }
+      cyan_bed: { material: CYAN_BED, name: "&3Cama Cian", buy: 30, sell: 12 }
+      purple_bed: { material: PURPLE_BED, name: "&5Cama Morada", buy: 30, sell: 12 }
+      blue_bed: { material: BLUE_BED, name: "&9Cama Azul", buy: 30, sell: 12 }
+      brown_bed: { material: BROWN_BED, name: "&6Cama Marrón", buy: 30, sell: 12 }
+      green_bed: { material: GREEN_BED, name: "&2Cama Verde", buy: 30, sell: 12 }
+      red_bed: { material: RED_BED, name: "&cCama Roja", buy: 30, sell: 12 }
+      black_bed: { material: BLACK_BED, name: "&8Cama Negra", buy: 30, sell: 12 }
+      white_shulker_box: { material: WHITE_SHULKER_BOX, name: "&fShulker Box Blanco", buy: 330, sell: 132 }
+      orange_shulker_box: { material: ORANGE_SHULKER_BOX, name: "&6Shulker Box Naranja", buy: 330, sell: 132 }
+      magenta_shulker_box: { material: MAGENTA_SHULKER_BOX, name: "&dShulker Box Magenta", buy: 330, sell: 132 }
+      light_blue_shulker_box: { material: LIGHT_BLUE_SHULKER_BOX, name: "&bShulker Box Celeste", buy: 330, sell: 132 }
+      yellow_shulker_box: { material: YELLOW_SHULKER_BOX, name: "&eShulker Box Amarillo", buy: 330, sell: 132 }
+      lime_shulker_box: { material: LIME_SHULKER_BOX, name: "&aShulker Box Lima", buy: 330, sell: 132 }
+      pink_shulker_box: { material: PINK_SHULKER_BOX, name: "&dShulker Box Rosa", buy: 330, sell: 132 }
+      gray_shulker_box: { material: GRAY_SHULKER_BOX, name: "&8Shulker Box Gris", buy: 330, sell: 132 }
+      light_gray_shulker_box: { material: LIGHT_GRAY_SHULKER_BOX, name: "&7Shulker Box Gris Claro", buy: 330, sell: 132 }
+      cyan_shulker_box: { material: CYAN_SHULKER_BOX, name: "&3Shulker Box Cian", buy: 330, sell: 132 }
+      purple_shulker_box: { material: PURPLE_SHULKER_BOX, name: "&5Shulker Box Morado", buy: 330, sell: 132 }
+      blue_shulker_box: { material: BLUE_SHULKER_BOX, name: "&9Shulker Box Azul", buy: 330, sell: 132 }
+      brown_shulker_box: { material: BROWN_SHULKER_BOX, name: "&6Shulker Box Marrón", buy: 330, sell: 132 }
+      green_shulker_box: { material: GREEN_SHULKER_BOX, name: "&2Shulker Box Verde", buy: 330, sell: 132 }
+      red_shulker_box: { material: RED_SHULKER_BOX, name: "&cShulker Box Rojo", buy: 330, sell: 132 }
+      black_shulker_box: { material: BLACK_SHULKER_BOX, name: "&8Shulker Box Negro", buy: 330, sell: 132 }
+      angler_pottery_sherd: { material: ANGLER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Pescador", buy: 120, sell: 48 }
+      archer_pottery_sherd: { material: ARCHER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Arquero", buy: 120, sell: 48 }
+      arms_up_pottery_sherd: { material: ARMS_UP_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Brazos Arriba", buy: 120, sell: 48 }
+      blade_pottery_sherd: { material: BLADE_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Hoja", buy: 120, sell: 48 }
+      brewer_pottery_sherd: { material: BREWER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Cervecero", buy: 120, sell: 48 }
+      burn_pottery_sherd: { material: BURN_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Quemadura", buy: 120, sell: 48 }
+      danger_pottery_sherd: { material: DANGER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Peligro", buy: 120, sell: 48 }
+      explorer_pottery_sherd: { material: EXPLORER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Explorador", buy: 120, sell: 48 }
+      friend_pottery_sherd: { material: FRIEND_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Amigo", buy: 120, sell: 48 }
+      heart_pottery_sherd: { material: HEART_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Corazón", buy: 120, sell: 48 }
+      heartbreak_pottery_sherd: { material: HEARTBREAK_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Corazón Roto", buy: 120, sell: 48 }
+      howl_pottery_sherd: { material: HOWL_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Aullido", buy: 120, sell: 48 }
+      miner_pottery_sherd: { material: MINER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Minero", buy: 120, sell: 48 }
+      mourner_pottery_sherd: { material: MOURNER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Doliente", buy: 120, sell: 48 }
+      plenty_pottery_sherd: { material: PLENTY_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Abundancia", buy: 120, sell: 48 }
+      prize_pottery_sherd: { material: PRIZE_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Premio", buy: 120, sell: 48 }
+      sheaf_pottery_sherd: { material: SHEAF_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Gavilla", buy: 120, sell: 48 }
+      shelter_pottery_sherd: { material: SHELTER_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Refugio", buy: 120, sell: 48 }
+      skull_pottery_sherd: { material: SKULL_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Cráneo", buy: 120, sell: 48 }
+      snort_pottery_sherd: { material: SNORT_POTTERY_SHERD, name: "&6Fragmento de Cerámica: Resoplido", buy: 120, sell: 48 }
+      piglin_banner_pattern: { material: PIGLIN_BANNER_PATTERN, name: "&6Patrón de Piglin", buy: 80, sell: 32 }
+      mojang_banner_pattern: { material: MOJANG_BANNER_PATTERN, name: "&cPatrón de Mojang", buy: 300, sell: 120 }
+      player_head: { material: PLAYER_HEAD, name: "&fCabeza de Jugador", buy: 300, sell: 120 }
+      brick: { material: BRICK, name: "&cLadrillo", buy: 3, sell: 1.2 }
+      nether_brick: { material: NETHER_BRICK, name: "&4Ladrillo del Nether", buy: 4, sell: 1.6 }
+      glow_lichen_d: { material: GLOW_LICHEN, name: "&aLiquen Luminoso", buy: 8, sell: 3.2 }
+      jack_o_lantern_d: { material: JACK_O_LANTERN, name: "&6Linterna de Calabaza", buy: 15, sell: 6 }
+      moss_carpet_d: { material: MOSS_CARPET, name: "&2Alfombra de Musgo", buy: 6, sell: 2.4 }
+      candle: { material: CANDLE, name: "&fVela", buy: 8, sell: 3.2 }
+      white_candle: { material: WHITE_CANDLE, name: "&fVela Blanca", buy: 9, sell: 3.6 }
+      orange_candle: { material: ORANGE_CANDLE, name: "&6Vela Naranja", buy: 9, sell: 3.6 }
+      magenta_candle: { material: MAGENTA_CANDLE, name: "&dVela Magenta", buy: 9, sell: 3.6 }
+      light_blue_candle: { material: LIGHT_BLUE_CANDLE, name: "&bVela Celeste", buy: 9, sell: 3.6 }
+      yellow_candle: { material: YELLOW_CANDLE, name: "&eVela Amarilla", buy: 9, sell: 3.6 }
+      lime_candle: { material: LIME_CANDLE, name: "&aVela Lima", buy: 9, sell: 3.6 }
+      pink_candle: { material: PINK_CANDLE, name: "&dVela Rosa", buy: 9, sell: 3.6 }
+      gray_candle: { material: GRAY_CANDLE, name: "&8Vela Gris", buy: 9, sell: 3.6 }
+      light_gray_candle: { material: LIGHT_GRAY_CANDLE, name: "&7Vela Gris Clara", buy: 9, sell: 3.6 }
+      cyan_candle: { material: CYAN_CANDLE, name: "&3Vela Cian", buy: 9, sell: 3.6 }
+      purple_candle: { material: PURPLE_CANDLE, name: "&5Vela Morada", buy: 9, sell: 3.6 }
+      blue_candle: { material: BLUE_CANDLE, name: "&9Vela Azul", buy: 9, sell: 3.6 }
+      brown_candle: { material: BROWN_CANDLE, name: "&6Vela Marrón", buy: 9, sell: 3.6 }
+      green_candle: { material: GREEN_CANDLE, name: "&2Vela Verde", buy: 9, sell: 3.6 }
+      red_candle: { material: RED_CANDLE, name: "&cVela Roja", buy: 9, sell: 3.6 }
+      black_candle: { material: BLACK_CANDLE, name: "&8Vela Negra", buy: 9, sell: 3.6 }
+      white_carpet: { material: WHITE_CARPET, name: "&fAlfombra Blanca", buy: 5, sell: 2 }
+      orange_carpet: { material: ORANGE_CARPET, name: "&6Alfombra Naranja", buy: 5, sell: 2 }
+      magenta_carpet: { material: MAGENTA_CARPET, name: "&dAlfombra Magenta", buy: 5, sell: 2 }
+      light_blue_carpet: { material: LIGHT_BLUE_CARPET, name: "&bAlfombra Celeste", buy: 5, sell: 2 }
+      yellow_carpet: { material: YELLOW_CARPET, name: "&eAlfombra Amarilla", buy: 5, sell: 2 }
+      lime_carpet: { material: LIME_CARPET, name: "&aAlfombra Lima", buy: 5, sell: 2 }
+      pink_carpet: { material: PINK_CARPET, name: "&dAlfombra Rosa", buy: 5, sell: 2 }
+      gray_carpet: { material: GRAY_CARPET, name: "&8Alfombra Gris", buy: 5, sell: 2 }
+      light_gray_carpet: { material: LIGHT_GRAY_CARPET, name: "&7Alfombra Gris Clara", buy: 5, sell: 2 }
+      cyan_carpet: { material: CYAN_CARPET, name: "&3Alfombra Cian", buy: 5, sell: 2 }
+      purple_carpet: { material: PURPLE_CARPET, name: "&5Alfombra Morada", buy: 5, sell: 2 }
+      blue_carpet: { material: BLUE_CARPET, name: "&9Alfombra Azul", buy: 5, sell: 2 }
+      brown_carpet: { material: BROWN_CARPET, name: "&6Alfombra Marrón", buy: 5, sell: 2 }
+      green_carpet: { material: GREEN_CARPET, name: "&2Alfombra Verde", buy: 5, sell: 2 }
+      red_carpet: { material: RED_CARPET, name: "&cAlfombra Roja", buy: 5, sell: 2 }
+      black_carpet: { material: BLACK_CARPET, name: "&8Alfombra Negra", buy: 5, sell: 2 }
+      sea_pickle: { material: SEA_PICKLE, name: "&aPepino de Mar", buy: 10, sell: 4 }
+      seagrass: { material: SEAGRASS, name: "&2Hierba Marina", buy: 3, sell: 1.2 }
+      kelp: { material: KELP, name: "&2Alga", buy: 3, sell: 1.2 }
+      white_banner: { material: WHITE_BANNER, name: "&fEstandarte Blanco", buy: 20, sell: 8 }
+      orange_banner: { material: ORANGE_BANNER, name: "&6Estandarte Naranja", buy: 20, sell: 8 }
+      magenta_banner: { material: MAGENTA_BANNER, name: "&dEstandarte Magenta", buy: 20, sell: 8 }
+      light_blue_banner: { material: LIGHT_BLUE_BANNER, name: "&bEstandarte Celeste", buy: 20, sell: 8 }
+      yellow_banner: { material: YELLOW_BANNER, name: "&eEstandarte Amarillo", buy: 20, sell: 8 }
+      lime_banner: { material: LIME_BANNER, name: "&aEstandarte Lima", buy: 20, sell: 8 }
+      pink_banner: { material: PINK_BANNER, name: "&dEstandarte Rosa", buy: 20, sell: 8 }
+      gray_banner: { material: GRAY_BANNER, name: "&8Estandarte Gris", buy: 20, sell: 8 }
+      light_gray_banner: { material: LIGHT_GRAY_BANNER, name: "&7Estandarte Gris Claro", buy: 20, sell: 8 }
+      cyan_banner: { material: CYAN_BANNER, name: "&3Estandarte Cian", buy: 20, sell: 8 }
+      purple_banner: { material: PURPLE_BANNER, name: "&5Estandarte Morado", buy: 20, sell: 8 }
+      blue_banner: { material: BLUE_BANNER, name: "&9Estandarte Azul", buy: 20, sell: 8 }
+      brown_banner: { material: BROWN_BANNER, name: "&6Estandarte Marrón", buy: 20, sell: 8 }
+      green_banner: { material: GREEN_BANNER, name: "&2Estandarte Verde", buy: 20, sell: 8 }
+      red_banner: { material: RED_BANNER, name: "&cEstandarte Rojo", buy: 20, sell: 8 }
+      black_banner: { material: BLACK_BANNER, name: "&8Estandarte Negro", buy: 20, sell: 8 }
+      azalea: { material: AZALEA, name: "&aAzalea", buy: 12, sell: 4.8 }
+      flowering_azalea: { material: FLOWERING_AZALEA, name: "&dAzalea Florecida", buy: 14, sell: 5.6 }
+      dandelion: { material: DANDELION, name: "&eDiente de León", buy: 3, sell: 1.2 }
+      poppy: { material: POPPY, name: "&cAmapola", buy: 3, sell: 1.2 }
+      blue_orchid: { material: BLUE_ORCHID, name: "&bOrquídea Azul", buy: 4, sell: 1.6 }
+      allium: { material: ALLIUM, name: "&dAllium", buy: 4, sell: 1.6 }
+      azure_bluet: { material: AZURE_BLUET, name: "&fHoustonia", buy: 3, sell: 1.2 }
+      red_tulip: { material: RED_TULIP, name: "&cTulipán Rojo", buy: 3, sell: 1.2 }
+      orange_tulip: { material: ORANGE_TULIP, name: "&6Tulipán Naranja", buy: 3, sell: 1.2 }
+      white_tulip: { material: WHITE_TULIP, name: "&fTulipán Blanco", buy: 3, sell: 1.2 }
+      pink_tulip: { material: PINK_TULIP, name: "&dTulipán Rosa", buy: 3, sell: 1.2 }
+      oxeye_daisy: { material: OXEYE_DAISY, name: "&fMargarita", buy: 3, sell: 1.2 }
+      cornflower: { material: CORNFLOWER, name: "&9Aciano", buy: 3, sell: 1.2 }
+      lily_of_the_valley: { material: LILY_OF_THE_VALLEY, name: "&fLirio del Valle", buy: 4, sell: 1.6 }
+      sunflower: { material: SUNFLOWER, name: "&eGirasol", buy: 5, sell: 2 }
+      lilac: { material: LILAC, name: "&dLila", buy: 5, sell: 2 }
+      rose_bush: { material: ROSE_BUSH, name: "&cRosal", buy: 5, sell: 2 }
+      peony: { material: PEONY, name: "&dPeonía", buy: 5, sell: 2 }
+      wither_rose: { material: WITHER_ROSE, name: "&8Rosa Wither", buy: 100, sell: 40 }
+      torchflower: { material: TORCHFLOWER, name: "&6Flor Antorcha", buy: 20, sell: 8 }
+      pitcher_plant: { material: PITCHER_PLANT, name: "&aPlanta Jarro", buy: 25, sell: 10 }
+      pink_petals: { material: PINK_PETALS, name: "&dPétalos Rosas", buy: 8, sell: 3.2 }
+      spore_blossom: { material: SPORE_BLOSSOM, name: "&dFlor de Esporas", buy: 20, sell: 8 }
+      big_dripleaf: { material: BIG_DRIPLEAF, name: "&aHoja Goteante Grande", buy: 12, sell: 4.8 }
+      small_dripleaf: { material: SMALL_DRIPLEAF, name: "&aHoja Goteante Pequeña", buy: 10, sell: 4 }
+      carved_pumpkin: { material: CARVED_PUMPKIN, name: "&6Calabaza Tallada", buy: 12, sell: 4.8 }
+      bee_nest: { material: BEE_NEST, name: "&eNido de Abejas", buy: 80, sell: 32 }
+      beehive: { material: BEEHIVE, name: "&6Colmena", buy: 60, sell: 24 }
+      dripstone_n: { material: POINTED_DRIPSTONE, name: "&6Espeleotema Puntiagudo", buy: 8, sell: 3.2 }
+      small_amethyst_bud: { material: SMALL_AMETHYST_BUD, name: "&dBrote de Amatista Pequeño", buy: 20, sell: 8 }
+      medium_amethyst_bud: { material: MEDIUM_AMETHYST_BUD, name: "&dBrote de Amatista Mediano", buy: 30, sell: 12 }
+      large_amethyst_bud: { material: LARGE_AMETHYST_BUD, name: "&dBrote de Amatista Grande", buy: 40, sell: 16 }
+      amethyst_cluster_n: { material: AMETHYST_CLUSTER, name: "&dRacimo de Amatista", buy: 60, sell: 24 }
+      oak_leaves: { material: OAK_LEAVES, name: "&6Hojas de Roble", buy: 3, sell: 1.2 }
+      spruce_leaves: { material: SPRUCE_LEAVES, name: "&2Hojas de Abeto", buy: 3, sell: 1.2 }
+      birch_leaves: { material: BIRCH_LEAVES, name: "&eHojas de Abedul", buy: 3, sell: 1.2 }
+      jungle_leaves: { material: JUNGLE_LEAVES, name: "&aHojas de Jungla", buy: 3, sell: 1.2 }
+      acacia_leaves: { material: ACACIA_LEAVES, name: "&cHojas de Acacia", buy: 3, sell: 1.2 }
+      dark_oak_leaves: { material: DARK_OAK_LEAVES, name: "&8Hojas de Roble Oscuro", buy: 3, sell: 1.2 }
+      mangrove_leaves: { material: MANGROVE_LEAVES, name: "&4Hojas de Mangle", buy: 3, sell: 1.2 }
+      cherry_leaves: { material: CHERRY_LEAVES, name: "&dHojas de Cerezo", buy: 3, sell: 1.2 }
+      azalea_leaves: { material: AZALEA_LEAVES, name: "&aHojas de Azalea", buy: 4, sell: 1.6 }
+      flowering_azalea_leaves: { material: FLOWERING_AZALEA_LEAVES, name: "&dHojas de Azalea Florecida", buy: 5, sell: 2 }
+      oak_sapling: { material: OAK_SAPLING, name: "&6Brote de Roble", buy: 8, sell: 3.2 }
+      spruce_sapling: { material: SPRUCE_SAPLING, name: "&2Brote de Abeto", buy: 8, sell: 3.2 }
+      birch_sapling: { material: BIRCH_SAPLING, name: "&eBrote de Abedul", buy: 8, sell: 3.2 }
+      jungle_sapling: { material: JUNGLE_SAPLING, name: "&aBrote de Jungla", buy: 8, sell: 3.2 }
+      acacia_sapling: { material: ACACIA_SAPLING, name: "&cBrote de Acacia", buy: 8, sell: 3.2 }
+      dark_oak_sapling: { material: DARK_OAK_SAPLING, name: "&8Brote de Roble Oscuro", buy: 8, sell: 3.2 }
+      mangrove_propagule: { material: MANGROVE_PROPAGULE, name: "&4Propágulo de Mangle", buy: 8, sell: 3.2 }
+      cherry_sapling: { material: CHERRY_SAPLING, name: "&dBrote de Cerezo", buy: 10, sell: 4 }
+      fern: { material: FERN, name: "&2Helecho", buy: 2, sell: 0.8 }
+      large_fern: { material: LARGE_FERN, name: "&2Helecho Grande", buy: 3, sell: 1.2 }
+      tall_grass: { material: TALL_GRASS, name: "&aHierba Alta", buy: 3, sell: 1.2 }
+      dead_bush: { material: DEAD_BUSH, name: "&6Arbusto Seco", buy: 2, sell: 0.8 }
+      vine: { material: VINE, name: "&2Enredadera", buy: 4, sell: 1.6 }
+      lily_pad: { material: LILY_PAD, name: "&aNenúfar", buy: 5, sell: 2 }
+      cactus: { material: CACTUS, name: "&2Cactus", buy: 4, sell: 1.6 }
+      sugar_cane: { material: SUGAR_CANE, name: "&aCaña de Azúcar", buy: 3, sell: 1.2 }
+      red_mushroom: { material: RED_MUSHROOM, name: "&cSeta Roja", buy: 5, sell: 2 }
+      brown_mushroom: { material: BROWN_MUSHROOM, name: "&6Seta Marrón", buy: 5, sell: 2 }
+      crimson_fungus: { material: CRIMSON_FUNGUS, name: "&cHongo Carmesí", buy: 10, sell: 4 }
+      warped_fungus: { material: WARPED_FUNGUS, name: "&3Hongo Distorsionado", buy: 10, sell: 4 }
+      hanging_roots: { material: HANGING_ROOTS, name: "&6Raíces Colgantes", buy: 4, sell: 1.6 }
+      twisting_vines: { material: TWISTING_VINES, name: "&3Enredaderas Retorcidas", buy: 8, sell: 3.2 }
+      weeping_vines: { material: WEEPING_VINES, name: "&cEnredaderas Llorosas", buy: 8, sell: 3.2 }
+      mangrove_roots: { material: MANGROVE_ROOTS, name: "&4Raíces de Mangle", buy: 8, sell: 3.2 }
+      muddy_mangrove_roots: { material: MUDDY_MANGROVE_ROOTS, name: "&6Raíces de Mangle Fangosas", buy: 10, sell: 4 }
+      crimson_roots: { material: CRIMSON_ROOTS, name: "&cRaíces Carmesí", buy: 6, sell: 2.4 }
+      warped_roots: { material: WARPED_ROOTS, name: "&3Raíces Distorsionadas", buy: 6, sell: 2.4 }
+      nether_sprouts: { material: NETHER_SPROUTS, name: "&3Brotes del Nether", buy: 6, sell: 2.4 }
+      chorus_flower: { material: CHORUS_FLOWER, name: "&dFlor de Chorus", buy: 30, sell: 12 }
+      torchflower_seeds_n: { material: TORCHFLOWER_SEEDS, name: "&6Semillas de Flor Antorcha", buy: 15, sell: 6 }
+      pitcher_pod_n: { material: PITCHER_POD, name: "&aVaina de Planta Jarro", buy: 15, sell: 6 }
+      bamboo_n: { material: BAMBOO, name: "&aBambú", buy: 3, sell: 1.2 }
+      frogspawn: { material: FROGSPAWN, name: "&aHuevas de Rana", buy: 40, sell: 16 }
+      sculk_vein_n: { material: SCULK_VEIN, name: "&3Vena de Sculk", buy: 15, sell: 6 }
+      snow_n: { material: SNOW, name: "&fNieve", buy: 2, sell: 0.8 }
+      white_dye: { material: WHITE_DYE, name: "&fTinte Blanco", buy: 6, sell: 2.4 }
+      orange_dye: { material: ORANGE_DYE, name: "&6Tinte Naranja", buy: 6, sell: 2.4 }
+      magenta_dye: { material: MAGENTA_DYE, name: "&dTinte Magenta", buy: 6, sell: 2.4 }
+      light_blue_dye: { material: LIGHT_BLUE_DYE, name: "&bTinte Celeste", buy: 6, sell: 2.4 }
+      yellow_dye: { material: YELLOW_DYE, name: "&eTinte Amarillo", buy: 6, sell: 2.4 }
+      lime_dye: { material: LIME_DYE, name: "&aTinte Lima", buy: 6, sell: 2.4 }
+      pink_dye: { material: PINK_DYE, name: "&dTinte Rosa", buy: 6, sell: 2.4 }
+      gray_dye: { material: GRAY_DYE, name: "&8Tinte Gris", buy: 6, sell: 2.4 }
+      light_gray_dye: { material: LIGHT_GRAY_DYE, name: "&7Tinte Gris Claro", buy: 6, sell: 2.4 }
+      cyan_dye: { material: CYAN_DYE, name: "&3Tinte Cian", buy: 6, sell: 2.4 }
+      purple_dye: { material: PURPLE_DYE, name: "&5Tinte Morado", buy: 6, sell: 2.4 }
+      blue_dye: { material: BLUE_DYE, name: "&9Tinte Azul", buy: 6, sell: 2.4 }
+      brown_dye: { material: BROWN_DYE, name: "&6Tinte Marrón", buy: 6, sell: 2.4 }
+      green_dye: { material: GREEN_DYE, name: "&2Tinte Verde", buy: 6, sell: 2.4 }
+      red_dye: { material: RED_DYE, name: "&cTinte Rojo", buy: 6, sell: 2.4 }
+      black_dye: { material: BLACK_DYE, name: "&8Tinte Negro", buy: 6, sell: 2.4 }
 
-  custom:
-    display-name: "&6&lObjetos Custom"
-    icon: FIREWORK_ROCKET
-    glass: ORANGE_STAINED_GLASS_PANE
+  minerales:
+    display-name: "&b&lMinerales"
+    icon: DIAMOND_ORE
+    glass: LIGHT_BLUE_STAINED_GLASS_PANE
+    main-menu-slot: 19
+    items:
+      coal: { material: COAL, name: "&8Carbón", buy: 6, sell: 2.4 }
+      charcoal: { material: CHARCOAL, name: "&8Carbón Vegetal", buy: 5, sell: 2 }
+      iron_ingot: { material: IRON_INGOT, name: "&fLingote de Hierro", buy: 20, sell: 8 }
+      copper_ingot: { material: COPPER_INGOT, name: "&6Lingote de Cobre", buy: 10, sell: 4 }
+      gold_ingot: { material: GOLD_INGOT, name: "&eLingote de Oro", buy: 35, sell: 14 }
+      redstone: { material: REDSTONE, name: "&cRedstone", buy: 10, sell: 4 }
+      lapis_lazuli: { material: LAPIS_LAZULI, name: "&9Lapislázuli", buy: 12, sell: 4.8 }
+      diamond: { material: DIAMOND, name: "&bDiamante", buy: 150, sell: 60 }
+      emerald: { material: EMERALD, name: "&aEsmeralda", buy: 100, sell: 40 }
+      quartz: { material: QUARTZ, name: "&fCuarzo", buy: 15, sell: 6 }
+      netherite_ingot: { material: NETHERITE_INGOT, name: "&8Lingote de Netherita", buy: 1500, sell: 600 }
+      netherite_scrap: { material: NETHERITE_SCRAP, name: "&8Chatarra de Netherita", buy: 300, sell: 120 }
+      raw_iron: { material: RAW_IRON, name: "&fHierro en Bruto", buy: 15, sell: 6 }
+      raw_gold: { material: RAW_GOLD, name: "&eOro en Bruto", buy: 28, sell: 11.2 }
+      raw_copper: { material: RAW_COPPER, name: "&6Cobre en Bruto", buy: 8, sell: 3.2 }
+      amethyst_shard: { material: AMETHYST_SHARD, name: "&dFragmento de Amatista", buy: 15, sell: 6 }
+      iron_nugget: { material: IRON_NUGGET, name: "&fPepita de Hierro", buy: 2, sell: 0.8 }
+      gold_nugget: { material: GOLD_NUGGET, name: "&ePepita de Oro", buy: 4, sell: 1.6 }
+      coal_block: { material: COAL_BLOCK, name: "&8Bloque de Carbón", buy: 54, sell: 21.6 }
+      iron_block: { material: IRON_BLOCK, name: "&fBloque de Hierro", buy: 180, sell: 72 }
+      gold_block: { material: GOLD_BLOCK, name: "&eBloque de Oro", buy: 315, sell: 126 }
+      redstone_block: { material: REDSTONE_BLOCK, name: "&cBloque de Redstone", buy: 90, sell: 36 }
+      lapis_block: { material: LAPIS_BLOCK, name: "&9Bloque de Lapislázuli", buy: 108, sell: 43.2 }
+      diamond_block: { material: DIAMOND_BLOCK, name: "&bBloque de Diamante", buy: 1350, sell: 540 }
+      emerald_block: { material: EMERALD_BLOCK, name: "&aBloque de Esmeralda", buy: 900, sell: 360 }
+      netherite_block: { material: NETHERITE_BLOCK, name: "&8Bloque de Netherita", buy: 13500, sell: 5400 }
+      raw_iron_block: { material: RAW_IRON_BLOCK, name: "&fBloque de Hierro en Bruto", buy: 135, sell: 54 }
+      raw_gold_block: { material: RAW_GOLD_BLOCK, name: "&eBloque de Oro en Bruto", buy: 252, sell: 100.8 }
+      raw_copper_block: { material: RAW_COPPER_BLOCK, name: "&6Bloque de Cobre en Bruto", buy: 72, sell: 28.8 }
+      coal_ore: { material: COAL_ORE, name: "&8Mena de Carbón", buy: 8, sell: 3.2 }
+      iron_ore: { material: IRON_ORE, name: "&fMena de Hierro", buy: 18, sell: 7.2 }
+      copper_ore: { material: COPPER_ORE, name: "&6Mena de Cobre", buy: 10, sell: 4 }
+      gold_ore: { material: GOLD_ORE, name: "&eMena de Oro", buy: 32, sell: 12.8 }
+      redstone_ore: { material: REDSTONE_ORE, name: "&cMena de Redstone", buy: 12, sell: 4.8 }
+      lapis_ore: { material: LAPIS_ORE, name: "&9Mena de Lapislázuli", buy: 14, sell: 5.6 }
+      diamond_ore: { material: DIAMOND_ORE, name: "&bMena de Diamante", buy: 160, sell: 64 }
+      emerald_ore: { material: EMERALD_ORE, name: "&aMena de Esmeralda", buy: 110, sell: 44 }
+      deepslate_coal_ore: { material: DEEPSLATE_COAL_ORE, name: "&8Mena de Carbón Abisal", buy: 10, sell: 4 }
+      deepslate_iron_ore: { material: DEEPSLATE_IRON_ORE, name: "&fMena de Hierro Abisal", buy: 20, sell: 8 }
+      deepslate_copper_ore: { material: DEEPSLATE_COPPER_ORE, name: "&6Mena de Cobre Abisal", buy: 12, sell: 4.8 }
+      deepslate_gold_ore: { material: DEEPSLATE_GOLD_ORE, name: "&eMena de Oro Abisal", buy: 35, sell: 14 }
+      deepslate_redstone_ore: { material: DEEPSLATE_REDSTONE_ORE, name: "&cMena de Redstone Abisal", buy: 14, sell: 5.6 }
+      deepslate_lapis_ore: { material: DEEPSLATE_LAPIS_ORE, name: "&9Mena de Lapislázuli Abisal", buy: 16, sell: 6.4 }
+      deepslate_diamond_ore: { material: DEEPSLATE_DIAMOND_ORE, name: "&bMena de Diamante Abisal", buy: 170, sell: 68 }
+      deepslate_emerald_ore: { material: DEEPSLATE_EMERALD_ORE, name: "&aMena de Esmeralda Abisal", buy: 120, sell: 48 }
+      nether_quartz_ore: { material: NETHER_QUARTZ_ORE, name: "&fMena de Cuarzo", buy: 18, sell: 7.2 }
+      nether_gold_ore: { material: NETHER_GOLD_ORE, name: "&eMena de Oro del Nether", buy: 20, sell: 8 }
+      ancient_debris: { material: ANCIENT_DEBRIS, name: "&8Restos Antiguos", buy: 350, sell: 140 }
+      glowstone_dust: { material: GLOWSTONE_DUST, name: "&ePolvo de Piedra Luminosa", buy: 8, sell: 3.2 }
+      flint: { material: FLINT, name: "&8Pedernal", buy: 4, sell: 1.6 }
+
+  comida:
+    display-name: "&e&lComida"
+    icon: COOKED_BEEF
+    glass: YELLOW_STAINED_GLASS_PANE
     main-menu-slot: 21
     items:
-      rocket:          { material: FIREWORK_ROCKET,  name: "&6Cohete",                 buy: 30,   sell: -1 }
-      netherite_fragment: { material: NETHERITE_SCRAP, name: "&8Fragmento de Netherita", buy: 300, sell: 150 }
-      nautilus_shell:  { material: NAUTILUS_SHELL,   name: "&bNautilus Shell",         buy: 150,  sell: 60 }
-      name_tag:        { material: NAME_TAG,         name: "&fEtiqueta",               buy: 50,   sell: -1 }
+      bread: { material: BREAD, name: "&6Pan", buy: 8, sell: 3.2 }
+      cooked_beef: { material: COOKED_BEEF, name: "&6Filete Cocinado", buy: 12, sell: 4.8 }
+      cooked_porkchop: { material: COOKED_PORKCHOP, name: "&6Chuleta de Cerdo Cocinada", buy: 12, sell: 4.8 }
+      cooked_chicken: { material: COOKED_CHICKEN, name: "&6Pollo Cocinado", buy: 10, sell: 4 }
+      cooked_mutton: { material: COOKED_MUTTON, name: "&6Cordero Cocinado", buy: 10, sell: 4 }
+      cooked_rabbit: { material: COOKED_RABBIT, name: "&6Conejo Cocinado", buy: 10, sell: 4 }
+      cooked_cod: { material: COOKED_COD, name: "&6Bacalao Cocinado", buy: 8, sell: 3.2 }
+      cooked_salmon: { material: COOKED_SALMON, name: "&cSalmón Cocinado", buy: 10, sell: 4 }
+      beef: { material: BEEF, name: "&cCarne de Vaca Cruda", buy: 6, sell: 2.4 }
+      porkchop: { material: PORKCHOP, name: "&cChuleta de Cerdo Cruda", buy: 6, sell: 2.4 }
+      chicken: { material: CHICKEN, name: "&cPollo Crudo", buy: 5, sell: 2 }
+      mutton: { material: MUTTON, name: "&cCordero Crudo", buy: 5, sell: 2 }
+      rabbit: { material: RABBIT, name: "&cConejo Crudo", buy: 5, sell: 2 }
+      cod: { material: COD, name: "&bBacalao Crudo", buy: 4, sell: 1.6 }
+      salmon: { material: SALMON, name: "&cSalmón Crudo", buy: 5, sell: 2 }
+      tropical_fish: { material: TROPICAL_FISH, name: "&6Pez Tropical", buy: 6, sell: 2.4 }
+      pufferfish: { material: PUFFERFISH, name: "&ePez Globo", buy: 8, sell: 3.2 }
+      carrot: { material: CARROT, name: "&6Zanahoria", buy: 4, sell: 1.6 }
+      golden_carrot: { material: GOLDEN_CARROT, name: "&6Zanahoria Dorada", buy: 30, sell: 12 }
+      potato: { material: POTATO, name: "&ePatata", buy: 4, sell: 1.6 }
+      baked_potato: { material: BAKED_POTATO, name: "&ePatata Asada", buy: 7, sell: 2.8 }
+      poisonous_potato: { material: POISONOUS_POTATO, name: "&2Patata Venenosa", buy: 3, sell: 1.2 }
+      beetroot: { material: BEETROOT, name: "&cRemolacha", buy: 4, sell: 1.6 }
+      beetroot_soup: { material: BEETROOT_SOUP, name: "&cSopa de Remolacha", buy: 12, sell: 4.8 }
+      melon_slice: { material: MELON_SLICE, name: "&aRodaja de Sandía", buy: 3, sell: 1.2 }
+      glistering_melon: { material: GLISTERING_MELON_SLICE, name: "&6Sandía Brillante", buy: 25, sell: 10 }
+      apple: { material: APPLE, name: "&cManzana", buy: 6, sell: 2.4 }
+      golden_apple: { material: GOLDEN_APPLE, name: "&6Manzana Dorada", buy: 200, sell: 80 }
+      enchanted_golden_apple: { material: ENCHANTED_GOLDEN_APPLE, name: "&dManzana Dorada Encantada", buy: 5000, sell: 2000 }
+      pumpkin_pie: { material: PUMPKIN_PIE, name: "&6Pastel de Calabaza", buy: 14, sell: 5.6 }
+      mushroom_stew: { material: MUSHROOM_STEW, name: "&cEstofado de Champiñón", buy: 10, sell: 4 }
+      rabbit_stew: { material: RABBIT_STEW, name: "&6Estofado de Conejo", buy: 20, sell: 8 }
+      dried_kelp: { material: DRIED_KELP, name: "&2Alga Seca", buy: 2, sell: 0.8 }
+      sweet_berries: { material: SWEET_BERRIES, name: "&cBayas Dulces", buy: 3, sell: 1.2 }
+      glow_berries: { material: GLOW_BERRIES, name: "&eBayas Luminosas", buy: 4, sell: 1.6 }
+      chorus_fruit: { material: CHORUS_FRUIT, name: "&dFruto de Chorus", buy: 10, sell: 4 }
+      egg: { material: EGG, name: "&fHuevo", buy: 3, sell: 1.2 }
+      milk_bucket: { material: MILK_BUCKET, name: "&fCubeta de Leche", buy: 12, sell: 4.8 }
+      cake: { material: CAKE, name: "&dPastel", buy: 30, sell: 12 }
+      cookie: { material: COOKIE, name: "&6Galleta", buy: 3, sell: 1.2 }
+      honey_bottle: { material: HONEY_BOTTLE, name: "&6Botella de Miel", buy: 12, sell: 4.8 }
+      wheat: { material: WHEAT, name: "&eTrigo", buy: 3, sell: 1.2 }
+      sugar: { material: SUGAR, name: "&fAzúcar", buy: 3, sell: 1.2 }
+      cocoa_beans: { material: COCOA_BEANS, name: "&6Granos de Cacao", buy: 4, sell: 1.6 }
+      wheat_seeds: { material: WHEAT_SEEDS, name: "&aSemillas de Trigo", buy: 1, sell: 0.4 }
+      beetroot_seeds: { material: BEETROOT_SEEDS, name: "&cSemillas de Remolacha", buy: 1, sell: 0.4 }
+      melon_seeds: { material: MELON_SEEDS, name: "&aSemillas de Sandía", buy: 2, sell: 0.8 }
+      pumpkin_seeds: { material: PUMPKIN_SEEDS, name: "&6Semillas de Calabaza", buy: 2, sell: 0.8 }
+      bowl: { material: BOWL, name: "&6Cuenco", buy: 2, sell: 0.8 }
+      suspicious_stew: { material: SUSPICIOUS_STEW, name: "&eEstofado Sospechoso", buy: 20, sell: 8 }
+      nether_wart_m: { material: NETHER_WART, name: "&cVerruga del Nether", buy: 8, sell: 3.2 }
+
+  equipamiento:
+    display-name: "&c&lEquipamiento"
+    icon: DIAMOND_SWORD
+    glass: RED_STAINED_GLASS_PANE
+    main-menu-slot: 23
+    items:
+      wooden_sword: { material: WOODEN_SWORD, name: "&6Espada de Madera", buy: 8, sell: 3.2 }
+      wooden_pickaxe: { material: WOODEN_PICKAXE, name: "&6Pico de Madera", buy: 10.4, sell: 4.16 }
+      wooden_axe: { material: WOODEN_AXE, name: "&6Hacha de Madera", buy: 9.6, sell: 3.84 }
+      wooden_shovel: { material: WOODEN_SHOVEL, name: "&6Pala de Madera", buy: 4, sell: 1.6 }
+      wooden_hoe: { material: WOODEN_HOE, name: "&6Azada de Madera", buy: 5.6, sell: 2.24 }
+      stone_sword: { material: STONE_SWORD, name: "&7Espada de Piedra", buy: 14, sell: 5.6 }
+      stone_pickaxe: { material: STONE_PICKAXE, name: "&7Pico de Piedra", buy: 18.2, sell: 7.28 }
+      stone_axe: { material: STONE_AXE, name: "&7Hacha de Piedra", buy: 16.8, sell: 6.72 }
+      stone_shovel: { material: STONE_SHOVEL, name: "&7Pala de Piedra", buy: 7, sell: 2.8 }
+      stone_hoe: { material: STONE_HOE, name: "&7Azada de Piedra", buy: 9.8, sell: 3.92 }
+      iron_sword: { material: IRON_SWORD, name: "&fEspada de Hierro", buy: 60, sell: 24 }
+      iron_pickaxe: { material: IRON_PICKAXE, name: "&fPico de Hierro", buy: 78, sell: 31.2 }
+      iron_axe: { material: IRON_AXE, name: "&fHacha de Hierro", buy: 72, sell: 28.8 }
+      iron_shovel: { material: IRON_SHOVEL, name: "&fPala de Hierro", buy: 30, sell: 12 }
+      iron_hoe: { material: IRON_HOE, name: "&fAzada de Hierro", buy: 42, sell: 16.8 }
+      golden_sword: { material: GOLDEN_SWORD, name: "&eEspada de Oro", buy: 70, sell: 28 }
+      golden_pickaxe: { material: GOLDEN_PICKAXE, name: "&ePico de Oro", buy: 91, sell: 36.4 }
+      golden_axe: { material: GOLDEN_AXE, name: "&eHacha de Oro", buy: 84, sell: 33.6 }
+      golden_shovel: { material: GOLDEN_SHOVEL, name: "&ePala de Oro", buy: 35, sell: 14 }
+      golden_hoe: { material: GOLDEN_HOE, name: "&eAzada de Oro", buy: 49, sell: 19.6 }
+      diamond_sword: { material: DIAMOND_SWORD, name: "&bEspada de Diamante", buy: 400, sell: 160 }
+      diamond_pickaxe: { material: DIAMOND_PICKAXE, name: "&bPico de Diamante", buy: 520, sell: 208 }
+      diamond_axe: { material: DIAMOND_AXE, name: "&bHacha de Diamante", buy: 480, sell: 192 }
+      diamond_shovel: { material: DIAMOND_SHOVEL, name: "&bPala de Diamante", buy: 200, sell: 80 }
+      diamond_hoe: { material: DIAMOND_HOE, name: "&bAzada de Diamante", buy: 280, sell: 112 }
+      netherite_sword: { material: NETHERITE_SWORD, name: "&8Espada de Netherita", buy: 1500, sell: 600 }
+      netherite_pickaxe: { material: NETHERITE_PICKAXE, name: "&8Pico de Netherita", buy: 1950, sell: 780 }
+      netherite_axe: { material: NETHERITE_AXE, name: "&8Hacha de Netherita", buy: 1800, sell: 720 }
+      netherite_shovel: { material: NETHERITE_SHOVEL, name: "&8Pala de Netherita", buy: 750, sell: 300 }
+      netherite_hoe: { material: NETHERITE_HOE, name: "&8Azada de Netherita", buy: 1050, sell: 420 }
+      leather_helmet: { material: LEATHER_HELMET, name: "&6Casco de Cuero", buy: 16, sell: 6.4 }
+      leather_chestplate: { material: LEATHER_CHESTPLATE, name: "&6Pechera de Cuero", buy: 28, sell: 11.2 }
+      leather_leggings: { material: LEATHER_LEGGINGS, name: "&6Pantalones de Cuero", buy: 24, sell: 9.6 }
+      leather_boots: { material: LEATHER_BOOTS, name: "&6Botas de Cuero", buy: 14, sell: 5.6 }
+      chainmail_helmet: { material: CHAINMAIL_HELMET, name: "&7Casco de Malla", buy: 96, sell: 38.4 }
+      chainmail_chestplate: { material: CHAINMAIL_CHESTPLATE, name: "&7Pechera de Malla", buy: 168, sell: 67.2 }
+      chainmail_leggings: { material: CHAINMAIL_LEGGINGS, name: "&7Pantalones de Malla", buy: 144, sell: 57.6 }
+      chainmail_boots: { material: CHAINMAIL_BOOTS, name: "&7Botas de Malla", buy: 84, sell: 33.6 }
+      iron_helmet: { material: IRON_HELMET, name: "&fCasco de Hierro", buy: 120, sell: 48 }
+      iron_chestplate: { material: IRON_CHESTPLATE, name: "&fPechera de Hierro", buy: 210, sell: 84 }
+      iron_leggings: { material: IRON_LEGGINGS, name: "&fPantalones de Hierro", buy: 180, sell: 72 }
+      iron_boots: { material: IRON_BOOTS, name: "&fBotas de Hierro", buy: 105, sell: 42 }
+      golden_helmet: { material: GOLDEN_HELMET, name: "&eCasco de Oro", buy: 136, sell: 54.4 }
+      golden_chestplate: { material: GOLDEN_CHESTPLATE, name: "&ePechera de Oro", buy: 238, sell: 95.2 }
+      golden_leggings: { material: GOLDEN_LEGGINGS, name: "&ePantalones de Oro", buy: 204, sell: 81.6 }
+      golden_boots: { material: GOLDEN_BOOTS, name: "&eBotas de Oro", buy: 119, sell: 47.6 }
+      diamond_helmet: { material: DIAMOND_HELMET, name: "&bCasco de Diamante", buy: 640, sell: 256 }
+      diamond_chestplate: { material: DIAMOND_CHESTPLATE, name: "&bPechera de Diamante", buy: 1120, sell: 448 }
+      diamond_leggings: { material: DIAMOND_LEGGINGS, name: "&bPantalones de Diamante", buy: 960, sell: 384 }
+      diamond_boots: { material: DIAMOND_BOOTS, name: "&bBotas de Diamante", buy: 560, sell: 224 }
+      netherite_helmet: { material: NETHERITE_HELMET, name: "&8Casco de Netherita", buy: 2000, sell: 800 }
+      netherite_chestplate: { material: NETHERITE_CHESTPLATE, name: "&8Pechera de Netherita", buy: 3500, sell: 1400 }
+      netherite_leggings: { material: NETHERITE_LEGGINGS, name: "&8Pantalones de Netherita", buy: 3000, sell: 1200 }
+      netherite_boots: { material: NETHERITE_BOOTS, name: "&8Botas de Netherita", buy: 1750, sell: 700 }
+      turtle_helmet: { material: TURTLE_HELMET, name: "&aCasco de Tortuga", buy: 150, sell: 60 }
+      bow: { material: BOW, name: "&6Arco", buy: 40, sell: 16 }
+      crossbow: { material: CROSSBOW, name: "&6Ballesta", buy: 60, sell: 24 }
+      arrow: { material: ARROW, name: "&fFlecha", buy: 2, sell: 0.8 }
+      spectral_arrow: { material: SPECTRAL_ARROW, name: "&eFlecha Espectral", buy: 6, sell: 2.4 }
+      shield: { material: SHIELD, name: "&6Escudo", buy: 35, sell: 14 }
+      trident: { material: TRIDENT, name: "&bTridente", buy: 2500, sell: 1000 }
+      elytra: { material: ELYTRA, name: "&dÉlitros", buy: 5000, sell: 2000 }
+      fishing_rod: { material: FISHING_ROD, name: "&6Caña de Pescar", buy: 25, sell: 10 }
+      carrot_on_a_stick: { material: CARROT_ON_A_STICK, name: "&6Caña con Zanahoria", buy: 25, sell: 10 }
+      shears: { material: SHEARS, name: "&fTijeras", buy: 30, sell: 12 }
+      flint_and_steel: { material: FLINT_AND_STEEL, name: "&7Mechero", buy: 25, sell: 10 }
+      spyglass: { material: SPYGLASS, name: "&6Catalejo", buy: 60, sell: 24 }
+      compass: { material: COMPASS, name: "&fBrújula", buy: 40, sell: 16 }
+      clock: { material: CLOCK, name: "&eReloj", buy: 40, sell: 16 }
+      bucket: { material: BUCKET, name: "&fCubeta", buy: 25, sell: 10 }
+      lead: { material: LEAD, name: "&fRienda", buy: 15, sell: 6 }
+      saddle: { material: SADDLE, name: "&6Silla de Montar", buy: 60, sell: 24 }
+      horse_armor_iron: { material: IRON_HORSE_ARMOR, name: "&fArmadura de Caballo de Hierro", buy: 150, sell: 60 }
+      horse_armor_gold: { material: GOLDEN_HORSE_ARMOR, name: "&eArmadura de Caballo de Oro", buy: 200, sell: 80 }
+      horse_armor_diamond: { material: DIAMOND_HORSE_ARMOR, name: "&bArmadura de Caballo de Diamante", buy: 500, sell: 200 }
+      sentry_armor_trim: { material: SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Centinela", buy: 400, sell: -1 }
+      dune_armor_trim: { material: DUNE_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Duna", buy: 400, sell: -1 }
+      coast_armor_trim: { material: COAST_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Costa", buy: 400, sell: -1 }
+      wild_armor_trim: { material: WILD_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Salvaje", buy: 400, sell: -1 }
+      ward_armor_trim: { material: WARD_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Guardián", buy: 400, sell: -1 }
+      eye_armor_trim: { material: EYE_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Ojo", buy: 400, sell: -1 }
+      vex_armor_trim: { material: VEX_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Vex", buy: 400, sell: -1 }
+      tide_armor_trim: { material: TIDE_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Marea", buy: 400, sell: -1 }
+      snout_armor_trim: { material: SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Hocico", buy: 400, sell: -1 }
+      rib_armor_trim: { material: RIB_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Costilla", buy: 400, sell: -1 }
+      spire_armor_trim: { material: SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Aguja", buy: 400, sell: -1 }
+      silence_armor_trim: { material: SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Silencio", buy: 400, sell: -1 }
+      raiser_armor_trim: { material: RAISER_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Criador", buy: 400, sell: -1 }
+      shaper_armor_trim: { material: SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Moldeador", buy: 400, sell: -1 }
+      host_armor_trim: { material: HOST_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Anfitrión", buy: 400, sell: -1 }
+      wayfinder_armor_trim: { material: WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE, name: "&7Plantilla de Diseño: Guía", buy: 400, sell: -1 }
+      netherite_upgrade: { material: NETHERITE_UPGRADE_SMITHING_TEMPLATE, name: "&8Plantilla de Mejora de Netherita", buy: 2500, sell: -1 }
+      brush: { material: BRUSH, name: "&6Brocha", buy: 40, sell: 16 }
+      warped_fungus_on_a_stick: { material: WARPED_FUNGUS_ON_A_STICK, name: "&3Caña con Hongo Distorsionado", buy: 30, sell: 12 }
+      recovery_compass: { material: RECOVERY_COMPASS, name: "&3Brújula de Recuperación", buy: 300, sell: 120 }
+      leather_horse_armor: { material: LEATHER_HORSE_ARMOR, name: "&6Armadura de Caballo de Cuero", buy: 80, sell: 32 }
+
+  redstone:
+    display-name: "&4&lRedstone y Utilidad"
+    icon: REDSTONE
+    glass: RED_STAINED_GLASS_PANE
+    main-menu-slot: 25
+    items:
+      redstone_torch: { material: REDSTONE_TORCH, name: "&cAntorcha de Redstone", buy: 12, sell: 4.8 }
+      repeater: { material: REPEATER, name: "&cRepetidor", buy: 25, sell: 10 }
+      comparator: { material: COMPARATOR, name: "&cComparador", buy: 50, sell: 20 }
+      piston: { material: PISTON, name: "&6Pistón", buy: 40, sell: 16 }
+      sticky_piston: { material: STICKY_PISTON, name: "&aPistón Pegajoso", buy: 60, sell: 24 }
+      observer: { material: OBSERVER, name: "&7Observador", buy: 50, sell: 20 }
+      hopper: { material: HOPPER, name: "&8Tolva", buy: 45, sell: 18 }
+      dropper: { material: DROPPER, name: "&7Soltador", buy: 25, sell: 10 }
+      dispenser: { material: DISPENSER, name: "&7Dispensador", buy: 35, sell: 14 }
+      lever: { material: LEVER, name: "&6Palanca", buy: 5, sell: 2 }
+      stone_button: { material: STONE_BUTTON, name: "&7Botón de Piedra", buy: 3, sell: 1.2 }
+      stone_pressure_plate: { material: STONE_PRESSURE_PLATE, name: "&7Placa de Presión de Piedra", buy: 5, sell: 2 }
+      polished_blackstone_button: { material: POLISHED_BLACKSTONE_BUTTON, name: "&8Botón de Piedra Negra", buy: 3, sell: 1.2 }
+      polished_blackstone_pressure_plate: { material: POLISHED_BLACKSTONE_PRESSURE_PLATE, name: "&8Placa de Piedra Negra", buy: 5, sell: 2 }
+      heavy_weighted_pressure_plate: { material: HEAVY_WEIGHTED_PRESSURE_PLATE, name: "&fPlaca de Presión Pesada", buy: 40, sell: 16 }
+      light_weighted_pressure_plate: { material: LIGHT_WEIGHTED_PRESSURE_PLATE, name: "&ePlaca de Presión Ligera", buy: 70, sell: 28 }
+      tripwire_hook: { material: TRIPWIRE_HOOK, name: "&fGancho de Cuerda", buy: 8, sell: 3.2 }
+      redstone_lamp: { material: REDSTONE_LAMP, name: "&eLámpara de Redstone", buy: 40, sell: 16 }
+      target: { material: TARGET, name: "&cDiana", buy: 30, sell: 12 }
+      daylight_detector: { material: DAYLIGHT_DETECTOR, name: "&eSensor de Luz Solar", buy: 45, sell: 18 }
+      lightning_rod: { material: LIGHTNING_ROD, name: "&6Pararrayos", buy: 25, sell: 10 }
+      sculk_sensor: { material: SCULK_SENSOR, name: "&3Sensor Sculk", buy: 100, sell: 40 }
+      calibrated_sculk_sensor: { material: CALIBRATED_SCULK_SENSOR, name: "&3Sensor Sculk Calibrado", buy: 160, sell: 64 }
+      tnt: { material: TNT, name: "&cTNT", buy: 120, sell: 48 }
+      tnt_minecart: { material: TNT_MINECART, name: "&cVagoneta con TNT", buy: 150, sell: 60 }
+      rail: { material: RAIL, name: "&7Riel", buy: 4, sell: 1.6 }
+      powered_rail: { material: POWERED_RAIL, name: "&6Riel Propulsor", buy: 12, sell: 4.8 }
+      detector_rail: { material: DETECTOR_RAIL, name: "&7Riel Detector", buy: 10, sell: 4 }
+      activator_rail: { material: ACTIVATOR_RAIL, name: "&cRiel Activador", buy: 10, sell: 4 }
+      minecart: { material: MINECART, name: "&7Vagoneta", buy: 25, sell: 10 }
+      chest_minecart: { material: CHEST_MINECART, name: "&6Vagoneta con Cofre", buy: 35, sell: 14 }
+      hopper_minecart: { material: HOPPER_MINECART, name: "&8Vagoneta con Tolva", buy: 65, sell: 26 }
+      furnace_minecart: { material: FURNACE_MINECART, name: "&7Vagoneta con Horno", buy: 35, sell: 14 }
+      slime_block: { material: SLIME_BLOCK, name: "&aBloque de Slime", buy: 60, sell: 24 }
+      honey_block: { material: HONEY_BLOCK, name: "&6Bloque de Miel", buy: 50, sell: 20 }
+      bell: { material: BELL, name: "&6Campana", buy: 40, sell: 16 }
+      furnace: { material: FURNACE, name: "&7Horno", buy: 12, sell: 4.8 }
+      blast_furnace: { material: BLAST_FURNACE, name: "&8Alto Horno", buy: 80, sell: 32 }
+      smoker: { material: SMOKER, name: "&6Ahumador", buy: 40, sell: 16 }
+      grindstone: { material: GRINDSTONE, name: "&7Piedra de Afilar", buy: 25, sell: 10 }
+      stonecutter: { material: STONECUTTER, name: "&7Cortapiedras", buy: 25, sell: 10 }
+      anvil: { material: ANVIL, name: "&8Yunque", buy: 150, sell: 60 }
+      iron_door: { material: IRON_DOOR, name: "&fPuerta de Hierro", buy: 50, sell: 20 }
+      iron_trapdoor: { material: IRON_TRAPDOOR, name: "&fTrampilla de Hierro", buy: 40, sell: 16 }
+      chipped_anvil: { material: CHIPPED_ANVIL, name: "&8Yunque Astillado", buy: 100, sell: 40 }
+      damaged_anvil: { material: DAMAGED_ANVIL, name: "&8Yunque Dañado", buy: 60, sell: 24 }
+      lodestone_b: { material: LODESTONE, name: "&8Piedra Imán", buy: 400, sell: 160 }
+      brewing_stand: { material: BREWING_STAND, name: "&6Soporte para Pociones", buy: 60, sell: 24 }
+      cauldron: { material: CAULDRON, name: "&8Caldero", buy: 35, sell: 14 }
+      beacon_b: { material: BEACON, name: "&bBaliza", buy: 30000, sell: 12000 }
+      conduit_b: { material: CONDUIT, name: "&bConducto", buy: 8000, sell: 3200 }
+      ender_chest_b: { material: ENDER_CHEST, name: "&5Cofre de Ender", buy: 500, sell: 200 }
+      enchanting_table_b: { material: ENCHANTING_TABLE, name: "&5Mesa de Encantamientos", buy: 500, sell: 200 }
+      respawn_anchor_b: { material: RESPAWN_ANCHOR, name: "&5Ancla de Reaparición", buy: 600, sell: 240 }
+      scaffolding: { material: SCAFFOLDING, name: "&eAndamio", buy: 6, sell: 2.4 }
+      smithing_table: { material: SMITHING_TABLE, name: "&8Mesa de Herrería", buy: 20, sell: 8 }
+
+  mobs:
+    display-name: "&a&lDrops de Mobs"
+    icon: ROTTEN_FLESH
+    glass: GREEN_STAINED_GLASS_PANE
+    main-menu-slot: 29
+    items:
+      gunpowder: { material: GUNPOWDER, name: "&8Pólvora", buy: 15, sell: 6 }
+      bone: { material: BONE, name: "&fHueso", buy: 8, sell: 3.2 }
+      bone_meal: { material: BONE_MEAL, name: "&fHarina de Hueso", buy: 4, sell: 1.6 }
+      string: { material: STRING, name: "&fHilo", buy: 6, sell: 2.4 }
+      rotten_flesh: { material: ROTTEN_FLESH, name: "&cCarne Podrida", buy: 3, sell: 1.2 }
+      spider_eye: { material: SPIDER_EYE, name: "&4Ojo de Araña", buy: 8, sell: 3.2 }
+      fermented_spider_eye: { material: FERMENTED_SPIDER_EYE, name: "&4Ojo de Araña Fermentado", buy: 15, sell: 6 }
+      ender_pearl: { material: ENDER_PEARL, name: "&5Perla de Ender", buy: 60, sell: 24 }
+      ender_eye: { material: ENDER_EYE, name: "&2Ojo de Ender", buy: 90, sell: 36 }
+      blaze_rod: { material: BLAZE_ROD, name: "&6Vara de Blaze", buy: 50, sell: 20 }
+      blaze_powder: { material: BLAZE_POWDER, name: "&6Polvo de Blaze", buy: 25, sell: 10 }
+      magma_cream: { material: MAGMA_CREAM, name: "&6Crema de Magma", buy: 30, sell: 12 }
+      slime_ball: { material: SLIME_BALL, name: "&aBola de Slime", buy: 15, sell: 6 }
+      ghast_tear: { material: GHAST_TEAR, name: "&fLágrima de Ghast", buy: 150, sell: 60 }
+      phantom_membrane: { material: PHANTOM_MEMBRANE, name: "&9Membrana de Phantom", buy: 70, sell: 28 }
+      totem_of_undying: { material: TOTEM_OF_UNDYING, name: "&6Tótem de Inmortalidad", buy: 1000, sell: 400 }
+      feather: { material: FEATHER, name: "&fPluma", buy: 6, sell: 2.4 }
+      leather: { material: LEATHER, name: "&6Cuero", buy: 12, sell: 4.8 }
+      rabbit_hide: { material: RABBIT_HIDE, name: "&6Piel de Conejo", buy: 8, sell: 3.2 }
+      rabbit_foot: { material: RABBIT_FOOT, name: "&6Pata de Conejo", buy: 60, sell: 24 }
+      ink_sac: { material: INK_SAC, name: "&8Saco de Tinta", buy: 8, sell: 3.2 }
+      glow_ink_sac: { material: GLOW_INK_SAC, name: "&bSaco de Tinta Luminosa", buy: 25, sell: 10 }
+      prismarine_shard: { material: PRISMARINE_SHARD, name: "&bFragmento de Prismarina", buy: 12, sell: 4.8 }
+      prismarine_crystals: { material: PRISMARINE_CRYSTALS, name: "&bCristales de Prismarina", buy: 15, sell: 6 }
+      shulker_shell: { material: SHULKER_SHELL, name: "&dCaparazón de Shulker", buy: 250, sell: 100 }
+      nautilus_shell: { material: NAUTILUS_SHELL, name: "&bConcha de Nautilus", buy: 150, sell: 60 }
+      wither_skeleton_skull: { material: WITHER_SKELETON_SKULL, name: "&8Cráneo de Wither Skeleton", buy: 3000, sell: 1200 }
+      nether_star: { material: NETHER_STAR, name: "&fEstrella del Nether", buy: 20000, sell: 8000 }
+      dragon_breath: { material: DRAGON_BREATH, name: "&dAliento de Dragón", buy: 500, sell: 200 }
+      goat_horn: { material: GOAT_HORN, name: "&6Cuerno de Cabra", buy: 100, sell: 40 }
+      honeycomb_m: { material: HONEYCOMB, name: "&6Panal", buy: 15, sell: 6 }
+
+  spawners:
+    display-name: "&5&lSpawners"
+    icon: SPAWNER
+    glass: PURPLE_STAINED_GLASS_PANE
+    main-menu-slot: 31
+    items:
+      spawner_zombie: { material: SPAWNER, name: "&2Spawner de Zombie", buy: 5000, sell: 2000, entity: ZOMBIE }
+      spawner_skeleton: { material: SPAWNER, name: "&fSpawner de Esqueleto", buy: 6000, sell: 2400, entity: SKELETON }
+      spawner_spider: { material: SPAWNER, name: "&8Spawner de Araña", buy: 5500, sell: 2200, entity: SPIDER }
+      spawner_cave_spider: { material: SPAWNER, name: "&3Spawner de Araña de Cueva", buy: 6000, sell: 2400, entity: CAVE_SPIDER }
+      spawner_creeper: { material: SPAWNER, name: "&aSpawner de Creeper", buy: 8000, sell: 3200, entity: CREEPER }
+      spawner_enderman: { material: SPAWNER, name: "&5Spawner de Enderman", buy: 10000, sell: 4000, entity: ENDERMAN }
+      spawner_blaze: { material: SPAWNER, name: "&6Spawner de Blaze", buy: 15000, sell: 6000, entity: BLAZE }
+      spawner_wither_skeleton: { material: SPAWNER, name: "&8Spawner de Wither Skeleton", buy: 18000, sell: 7200, entity: WITHER_SKELETON }
+      spawner_zombified_piglin: { material: SPAWNER, name: "&6Spawner de Piglin Zombificado", buy: 9000, sell: 3600, entity: ZOMBIFIED_PIGLIN }
+      spawner_slime: { material: SPAWNER, name: "&aSpawner de Slime", buy: 7000, sell: 2800, entity: SLIME }
+      spawner_magma_cube: { material: SPAWNER, name: "&cSpawner de Cubo de Magma", buy: 8000, sell: 3200, entity: MAGMA_CUBE }
+      spawner_witch: { material: SPAWNER, name: "&5Spawner de Bruja", buy: 9000, sell: 3600, entity: WITCH }
+      spawner_iron_golem: { material: SPAWNER, name: "&fSpawner de Golem de Hierro", buy: 20000, sell: 8000, entity: IRON_GOLEM }
+      spawner_pig: { material: SPAWNER, name: "&dSpawner de Cerdo", buy: 3500, sell: 1400, entity: PIG }
+      spawner_cow: { material: SPAWNER, name: "&fSpawner de Vaca", buy: 3500, sell: 1400, entity: COW }
+      spawner_sheep: { material: SPAWNER, name: "&fSpawner de Oveja", buy: 3500, sell: 1400, entity: SHEEP }
+      spawner_chicken: { material: SPAWNER, name: "&eSpawner de Gallina", buy: 3000, sell: 1200, entity: CHICKEN }
+      spawner_silverfish: { material: SPAWNER, name: "&7Spawner de Lepisma", buy: 5000, sell: 2000, entity: SILVERFISH }
+
+  custom:
+    display-name: "&6&lObjetos Especiales"
+    icon: FIREWORK_ROCKET
+    glass: ORANGE_STAINED_GLASS_PANE
+    main-menu-slot: 33
+    items:
+      rocket: { material: FIREWORK_ROCKET, name: "&6Cohete", buy: 30, sell: -1 }
+      name_tag: { material: NAME_TAG, name: "&fEtiqueta", buy: 50, sell: -1 }
       experience_bottle: { material: EXPERIENCE_BOTTLE, name: "&aBotella de Experiencia", buy: 25, sell: -1 }
-      saddle:          { material: SADDLE,           name: "&6Silla de Montar",        buy: 60,   sell: 20 }
+      end_crystal: { material: END_CRYSTAL, name: "&dCristal del End", buy: 1500, sell: -1 }
+      book: { material: BOOK, name: "&fLibro", buy: 15, sell: 6 }
+      writable_book: { material: WRITABLE_BOOK, name: "&fLibro y Pluma", buy: 40, sell: 15 }
+      map: { material: MAP, name: "&fMapa Vacío", buy: 30, sell: -1 }
+      music_disc_cat: { material: MUSIC_DISC_CAT, name: "&aDisco: Cat", buy: 300, sell: -1 }
+      music_disc_pigstep: { material: MUSIC_DISC_PIGSTEP, name: "&6Disco: Pigstep", buy: 1500, sell: -1 }
+      music_disc_13: { material: MUSIC_DISC_13, name: "&aDisco: 13", buy: 300, sell: -1 }
+      music_disc_blocks: { material: MUSIC_DISC_BLOCKS, name: "&aDisco: Blocks", buy: 300, sell: -1 }
+      music_disc_chirp: { material: MUSIC_DISC_CHIRP, name: "&aDisco: Chirp", buy: 300, sell: -1 }
+      music_disc_far: { material: MUSIC_DISC_FAR, name: "&aDisco: Far", buy: 300, sell: -1 }
+      music_disc_mall: { material: MUSIC_DISC_MALL, name: "&aDisco: Mall", buy: 300, sell: -1 }
+      music_disc_mellohi: { material: MUSIC_DISC_MELLOHI, name: "&aDisco: Mellohi", buy: 300, sell: -1 }
+      music_disc_stal: { material: MUSIC_DISC_STAL, name: "&aDisco: Stal", buy: 300, sell: -1 }
+      music_disc_strad: { material: MUSIC_DISC_STRAD, name: "&aDisco: Strad", buy: 300, sell: -1 }
+      music_disc_ward: { material: MUSIC_DISC_WARD, name: "&aDisco: Ward", buy: 300, sell: -1 }
+      music_disc_11: { material: MUSIC_DISC_11, name: "&aDisco: 11", buy: 300, sell: -1 }
+      music_disc_wait: { material: MUSIC_DISC_WAIT, name: "&aDisco: Wait", buy: 300, sell: -1 }
+      music_disc_otherside: { material: MUSIC_DISC_OTHERSIDE, name: "&aDisco: Otherside", buy: 1500, sell: -1 }
+      music_disc_5: { material: MUSIC_DISC_5, name: "&aDisco: 5", buy: 1500, sell: -1 }
+      music_disc_relic: { material: MUSIC_DISC_RELIC, name: "&aDisco: Relic", buy: 1500, sell: -1 }
+      disc_fragment_5: { material: DISC_FRAGMENT_5, name: "&7Fragmento de Disco 5", buy: 300, sell: -1 }
+      powder_snow_bucket: { material: POWDER_SNOW_BUCKET, name: "&fCubeta de Nieve en Polvo", buy: 20, sell: 8 }
+      heart_of_the_sea: { material: HEART_OF_THE_SEA, name: "&bCorazón del Mar", buy: 800, sell: 320 }
+      turtle_egg: { material: TURTLE_EGG, name: "&aHuevo de Tortuga", buy: 120, sell: 48 }
+      sniffer_egg: { material: SNIFFER_EGG, name: "&2Huevo de Sniffer", buy: 400, sell: 160 }
+      echo_shard: { material: ECHO_SHARD, name: "&3Fragmento de Eco", buy: 400, sell: 160 }
+

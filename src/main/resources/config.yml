@@ -1,41 +1,68 @@
 # =========================================================
 #  SuperShop - Configuración general
 #  Todo lo que ves acá se puede editar sin recompilar.
-#  Los nombres de Material deben ser válidos para tu versión
-#  de Minecraft (usa /shop reload después de editar).
+#  Usa /shop reload después de editar.
 # =========================================================
 
 gui:
   main-menu:
-    title: "&8&lSuper Shop"
-    # Vidrio que rellena todo el borde del menú principal
+    title: "&8&l✦ &6&lShop &8&l✦"
+    # Marco del menú principal (alterna entre los dos vidrios) y relleno interior
     border-glass: BLACK_STAINED_GLASS_PANE
-    # Slot (0-53) donde va la cabeza con el saldo del jugador
+    border-glass-alt: GRAY_STAINED_GLASS_PANE
+    inner-glass: GRAY_STAINED_GLASS_PANE
+    info-slot: 4
+    info-name: "&6&l✦ TIENDA DEL SERVIDOR ✦"
     balance-head-slot: 49
+    close-slot: 53
 
   category-menu:
-    # Cuántos ítems se muestran por página dentro de una categoría
-    items-per-page: 28
-    # Vidrio de relleno genérico (filas de navegación, huecos)
     filler-glass: BLACK_STAINED_GLASS_PANE
-    # Íconos de los botones de navegación (slots fijos, ver abajo)
     back-to-main-item: NETHER_STAR
     previous-page-item: FEATHER
     next-page-item: FIREWORK_ROCKET
     close-item: BARRIER
     sell-all-item: HOPPER
+    page-info-item: PAPER
     balance-head-slot: 49
     back-to-main-slot: 46
+    filter-slot: 47
     previous-page-slot: 48
-    next-page-slot: 51
     sell-all-slot: 50
+    next-page-slot: 51
+    page-info-slot: 52
     close-slot: 53
+    # Salto de páginas: Shift+clic = primera/última, clic derecho = 5 páginas
+    page-jump: 5
 
-# Cantidad que se compra/vende con shift+clic (ademas de 1x con clic normal)
-clicks:
-  left-click-amount: 1
-  right-click-amount: 64
-  shift-click-sells-all: true
+# Menú donde eliges cuánto comprar/vender (+1 +10 +64, resumen y confirmar)
+purchase-menu:
+  # Cantidad máxima por compra/venta (2304 = 36 stacks de 64)
+  max-amount: 2304
+  # true = el menú se cierra solo después de comprar/vender
+  close-after-confirm: false
+
+# Animaciones de los menús (todo activado por defecto)
+animations:
+  enabled: true
+  # Cada cuántos ticks se mueve el marco (20 ticks = 1 segundo). 3 = fluido, 6 = suave.
+  period-ticks: 3
+  # Los ítems de cada página aparecen fila por fila al abrir el menú
+  reveal-items: true
+  # Ticks entre cada fila al revelar (1 = muy rápido)
+  reveal-delay-ticks: 1
+  # Colores del marco animado del menú principal (se recorren en orden)
+  main-palette:
+    - ORANGE_STAINED_GLASS_PANE
+    - YELLOW_STAINED_GLASS_PANE
+    - LIME_STAINED_GLASS_PANE
+    - LIGHT_BLUE_STAINED_GLASS_PANE
+    - PURPLE_STAINED_GLASS_PANE
+    - MAGENTA_STAINED_GLASS_PANE
+  # Brillo que recorre el marco de los menús de categoría y de compra
+  comet-glass: WHITE_STAINED_GLASS_PANE
+  # Cuántos paneles brillan a la vez
+  comet-length: 3
 
 sounds:
   click: UI_BUTTON_CLICK
@@ -43,6 +70,8 @@ sounds:
   sell: ENTITY_EXPERIENCE_ORB_PICKUP
   error: ENTITY_VILLAGER_NO
   page-turn: ITEM_BOOK_PAGE_TURN
+  open: BLOCK_CHEST_OPEN
+  amount: BLOCK_NOTE_BLOCK_HAT
 
 particles:
   enabled: true
@@ -53,20 +82,408 @@ messages:
   prefix: "&8[&6Shop&8] &r"
   bought: "&a¡Compraste &f{amount}x {item} &apor &f${price}&a!"
   sold: "&a¡Vendiste &f{amount}x {item} &apor &f${price}&a!"
+  sold-all: "&a¡Vendiste &f{amount} ítems &apor &f${price}&a!"
+  nothing-to-sell: "&cNo tienes nada de esta categoría para vender."
   not-enough-money: "&cNo tienes suficiente dinero. Te faltan &f${missing}&c."
   not-enough-items: "&cNo tienes suficientes &f{item} &cpara vender."
+  no-space: "&cNo tienes espacio suficiente en el inventario."
   no-sell: "&cEste ítem no se puede vender."
   no-buy: "&cEste ítem no se puede comprar."
-  reload-success: "&a¡SuperShop recargado correctamente!"
+  reload-success: "&a¡Shop recargado correctamente!"
   no-permission: "&cNo tienes permiso para hacer esto."
   only-players: "&cSolo un jugador puede usar este comando."
+  category-disabled: "&cEsa categoría está deshabilitada por el momento."
 
-# Cabeza que muestra el saldo del jugador (clic central en cualquier menú)
+# Cabeza que muestra el saldo del jugador
 balance-head:
   name: "&6&lTu Saldo"
   lore:
+    - "&8━━━━━━━━━━━━━━━━━━"
     - "&7Balance actual:"
     - "&a${balance}"
     - ""
     - "&7Compra y vende ítems en"
     - "&7las categorías de la tienda."
+
+# =========================================================
+#  FILTROS DENTRO DE CADA CATEGORÍA
+#  Las categorías con muchos ítems (Bloques, Decoración...) muestran un botón de
+#  filtro (embudo) para ver solo un tipo de ítem.
+#
+#  - La clave de cada bloque es la PRIMERA PALABRA del nombre de la categoría,
+#    sin colores, tildes ni mayúsculas (Bloques -> bloques, Decoración -> decoracion).
+#  - match:   lista de expresiones regulares (Java) sobre el nombre del Material.
+#             Si el ítem cumple CUALQUIERA, aparece en el filtro.
+#  - exclude: expresiones que lo sacan del filtro aunque cumpla "match".
+#  - Sin "match" = muestra todo. Máximo 14 filtros por categoría.
+#  - Un ítem puede aparecer en varios filtros (p. ej. las escaleras de roble salen en
+#    "Escaleras y losas" y también en "Todo en madera").
+#  - Un filtro sin ítems en la categoría no se muestra.
+# =========================================================
+category-filters:
+  bloques:
+    todos:
+      name: "&f&lTodos los bloques"
+      icon: NETHER_STAR
+    tierra:
+      name: "&2&lTierra y terreno"
+      icon: GRASS_BLOCK
+      match:
+        - '^(DIRT|GRASS_BLOCK|COARSE_DIRT|PODZOL|MYCELIUM|ROOTED_DIRT|DIRT_PATH|FARMLAND|MUD|PACKED_MUD|CLAY|MOSS_BLOCK)$'
+        - '^(SAND|RED_SAND|GRAVEL|SUSPICIOUS_SAND|SUSPICIOUS_GRAVEL|SNOW_BLOCK|ICE|PACKED_ICE|BLUE_ICE)$'
+        - '^(PUMPKIN|MELON|HAY_BLOCK|DRIED_KELP_BLOCK|BONE_BLOCK|HONEYCOMB_BLOCK|SPONGE|WET_SPONGE)$'
+        - 'MUSHROOM_(BLOCK|STEM)$'
+    piedra:
+      name: "&7&lPiedra"
+      icon: STONE
+      match:
+        - '^(STONE|SMOOTH_STONE|COBBLESTONE|MOSSY_COBBLESTONE|GRANITE|POLISHED_GRANITE|DIORITE|POLISHED_DIORITE|ANDESITE|POLISHED_ANDESITE)$'
+        - '^(CALCITE|TUFF|DRIPSTONE_BLOCK|OBSIDIAN|CRYING_OBSIDIAN|BASALT|SMOOTH_BASALT|POLISHED_BASALT)$'
+        - 'DEEPSLATE'
+        - 'BLACKSTONE'
+      exclude:
+        - '_(STAIRS|SLAB|WALL)$'
+        - 'BRICKS$|TILES$'
+    ladrillos:
+      name: "&c&lLadrillos"
+      icon: BRICKS
+      match:
+        - 'BRICKS?(_|$)'
+        - 'TILES?(_|$)'
+        - '^CHISELED_'
+        - '^CRACKED_'
+      exclude:
+        - '^(STONE|SMOOTH_STONE)_SLAB$'
+    arenisca:
+      name: "&e&lArenisca y cuarzo"
+      icon: SANDSTONE
+      match:
+        - 'SANDSTONE'
+        - 'QUARTZ'
+    colores:
+      name: "&d&lLana y terracota"
+      icon: MAGENTA_WOOL
+      match:
+        - '_WOOL$'
+        - 'TERRACOTTA$'
+    concreto:
+      name: "&b&lConcreto"
+      icon: CYAN_CONCRETE
+      match:
+        - 'CONCRETE'
+    cristal:
+      name: "&f&lCristal"
+      icon: GLASS
+      match:
+        - 'GLASS'
+    cobre:
+      name: "&6&lCobre"
+      icon: CUT_COPPER
+      match:
+        - 'COPPER'
+    nether:
+      name: "&4&lNether, End y Sculk"
+      icon: NETHERRACK
+      match:
+        - '^(NETHERRACK|SOUL_SAND|SOUL_SOIL|MAGMA_BLOCK|GLOWSTONE|SHROOMLIGHT|CRIMSON_NYLIUM|WARPED_NYLIUM|NETHER_WART_BLOCK|WARPED_WART_BLOCK)$'
+        - 'FROGLIGHT$'
+        - '^(RED_)?NETHER_BRICK'
+        - '^END_STONE'
+        - '^PURPUR'
+        - '^SCULK'
+        - '^AMETHYST_BLOCK$'
+    oceano:
+      name: "&3&lOcéano y corales"
+      icon: BRAIN_CORAL_BLOCK
+      match:
+        - 'CORAL'
+        - 'PRISMARINE'
+        - '^SEA_LANTERN$'
+    formas:
+      name: "&a&lEscaleras, losas y muros"
+      icon: STONE_BRICK_STAIRS
+      match:
+        - '_(STAIRS|SLAB|WALL|FENCE|FENCE_GATE)$'
+
+  madera:
+    todos:
+      name: "&f&lTodo en madera"
+      icon: NETHER_STAR
+    troncos:
+      name: "&6&lTroncos y madera"
+      icon: OAK_LOG
+      match:
+        - '_(LOG|WOOD|STEM|HYPHAE)$'
+        - '^(STRIPPED_)?BAMBOO_BLOCK$'
+    tablones:
+      name: "&e&lTablones"
+      icon: OAK_PLANKS
+      match:
+        - '_PLANKS$'
+        - '^BAMBOO_MOSAIC$'
+    formas:
+      name: "&a&lEscaleras y losas"
+      icon: OAK_STAIRS
+      match:
+        - '_(STAIRS|SLAB)$'
+    vallas:
+      name: "&2&lVallas y portones"
+      icon: OAK_FENCE
+      match:
+        - '_(FENCE|FENCE_GATE)$'
+    puertas:
+      name: "&c&lPuertas y trampillas"
+      icon: OAK_DOOR
+      match:
+        - '_(DOOR|TRAPDOOR)$'
+    botones:
+      name: "&b&lBotones y placas"
+      icon: OAK_PRESSURE_PLATE
+      match:
+        - '_(BUTTON|PRESSURE_PLATE)$'
+    carteles:
+      name: "&d&lCarteles"
+      icon: OAK_HANGING_SIGN
+      match:
+        - '_SIGN$'
+    barcas:
+      name: "&3&lBarcas y balsas"
+      icon: OAK_BOAT
+      match:
+        - '_(BOAT|RAFT)$'
+    mobiliario:
+      name: "&5&lMobiliario y estaciones"
+      icon: CRAFTING_TABLE
+      match:
+        - '^(CHEST|TRAPPED_CHEST|BARREL|CRAFTING_TABLE|LADDER|BOOKSHELF|CHISELED_BOOKSHELF|LECTERN|LOOM|COMPOSTER|CARTOGRAPHY_TABLE|FLETCHING_TABLE|JUKEBOX|NOTE_BLOCK|STICK)$'
+
+  decoracion:
+    todos:
+      name: "&f&lTodo"
+      icon: NETHER_STAR
+    flores:
+      name: "&d&lFlores"
+      icon: POPPY
+      match:
+        - '^(DANDELION|POPPY|BLUE_ORCHID|ALLIUM|AZURE_BLUET|OXEYE_DAISY|CORNFLOWER|LILY_OF_THE_VALLEY|SUNFLOWER|LILAC|ROSE_BUSH|PEONY|WITHER_ROSE|TORCHFLOWER|PITCHER_PLANT|PINK_PETALS|SPORE_BLOSSOM)$'
+        - '_TULIP$'
+    arboles:
+      name: "&a&lHojas y brotes"
+      icon: OAK_LEAVES
+      match:
+        - '_LEAVES$'
+        - '_(SAPLING|PROPAGULE)$'
+        - '^(AZALEA|FLOWERING_AZALEA)$'
+    plantas:
+      name: "&2&lPlantas y hongos"
+      icon: FERN
+      match:
+        - '^(FERN|LARGE_FERN|TALL_GRASS|DEAD_BUSH|VINE|LILY_PAD|CACTUS|SUGAR_CANE|BAMBOO|HANGING_ROOTS|TWISTING_VINES|WEEPING_VINES|GLOW_LICHEN|SMALL_DRIPLEAF|BIG_DRIPLEAF|MOSS_CARPET|SEAGRASS|KELP|SEA_PICKLE|FROGSPAWN|TORCHFLOWER_SEEDS|PITCHER_POD)$'
+        - '_(MUSHROOM|FUNGUS|ROOTS|SPROUTS)$'
+        - '^CHORUS_'
+    luces:
+      name: "&e&lLuces"
+      icon: LANTERN
+      match:
+        - 'TORCH$|LANTERN$|CAMPFIRE$|END_ROD|CANDLE$'
+        - '^(JACK_O_LANTERN|CARVED_PUMPKIN|CHAIN)$'
+    camas:
+      name: "&c&lCamas y alfombras"
+      icon: RED_BED
+      match:
+        - '_BED$'
+        - '_CARPET$'
+    estandartes:
+      name: "&b&lEstandartes"
+      icon: WHITE_BANNER
+      match:
+        - '_BANNER$'
+        - 'BANNER_PATTERN$'
+    cabezas:
+      name: "&8&lCabezas y cofres"
+      icon: SKELETON_SKULL
+      match:
+        - '_(HEAD|SKULL)$'
+        - '^PLAYER_HEAD$'
+        - 'SHULKER_BOX$'
+    ceramica:
+      name: "&6&lCerámica y tintes"
+      icon: DECORATED_POT
+      match:
+        - 'POTTERY_SHERD$'
+        - '^(DECORATED_POT|FLOWER_POT|BRICK|NETHER_BRICK)$'
+        - '_DYE$'
+    hogar:
+      name: "&5&lHogar y cristales"
+      icon: PAINTING
+      match:
+        - '^(PAINTING|ARMOR_STAND|ITEM_FRAME|GLOW_ITEM_FRAME|COBWEB|BOOKSHELF|CHISELED_BOOKSHELF|LECTERN|LOOM|CAKE|BEE_NEST|BEEHIVE|IRON_BARS|SNOW|SCULK_VEIN)$'
+        - 'AMETHYST_(CLUSTER|BUD)|POINTED_DRIPSTONE'
+
+  redstone:
+    todos:
+      name: "&f&lTodo"
+      icon: NETHER_STAR
+    mecanismos:
+      name: "&4&lRedstone y pistones"
+      icon: REDSTONE_TORCH
+      match:
+        - '^(REDSTONE_TORCH|REPEATER|COMPARATOR|PISTON|STICKY_PISTON|OBSERVER|HOPPER|DROPPER|DISPENSER|LEVER|TRIPWIRE_HOOK|TARGET|DAYLIGHT_DETECTOR|LIGHTNING_ROD|SCULK_SENSOR|CALIBRATED_SCULK_SENSOR|TNT|NOTE_BLOCK|BELL|REDSTONE_LAMP)$'
+        - '_(BUTTON|PRESSURE_PLATE)$'
+    rieles:
+      name: "&7&lRieles y transporte"
+      icon: RAIL
+      match:
+        - 'RAIL$'
+        - 'MINECART$'
+        - '_(BOAT|RAFT)$'
+    puertas:
+      name: "&6&lPuertas y trampillas"
+      icon: OAK_DOOR
+      match:
+        - '_(DOOR|TRAPDOOR)$'
+    utilidad:
+      name: "&e&lEstaciones de trabajo"
+      icon: CRAFTING_TABLE
+      match:
+        - '^(FURNACE|BLAST_FURNACE|SMOKER|GRINDSTONE|STONECUTTER|BREWING_STAND|CAULDRON|CRAFTING_TABLE|COMPOSTER|CARTOGRAPHY_TABLE|FLETCHING_TABLE|SMITHING_TABLE|JUKEBOX|ENCHANTING_TABLE|BEACON|CONDUIT|LODESTONE|RESPAWN_ANCHOR)$'
+        - 'ANVIL$'
+    almacenaje:
+      name: "&5&lCofres y almacenaje"
+      icon: CHEST
+      match:
+        - '^(CHEST|TRAPPED_CHEST|BARREL|ENDER_CHEST|LADDER|SCAFFOLDING|SLIME_BLOCK|HONEY_BLOCK)$'
+
+  equipamiento:
+    todos:
+      name: "&f&lTodo"
+      icon: NETHER_STAR
+    armaduras:
+      name: "&b&lArmaduras"
+      icon: DIAMOND_CHESTPLATE
+      match:
+        - '_(HELMET|CHESTPLATE|LEGGINGS|BOOTS)$'
+        - '^SHIELD$'
+        - 'HORSE_ARMOR$'
+    armas:
+      name: "&c&lArmas"
+      icon: DIAMOND_SWORD
+      match:
+        - '_SWORD$'
+        - '^(BOW|CROSSBOW|ARROW|SPECTRAL_ARROW|TRIDENT)$'
+    herramientas:
+      name: "&a&lHerramientas"
+      icon: DIAMOND_PICKAXE
+      match:
+        - '_(PICKAXE|AXE|SHOVEL|HOE)$'
+        - '^(SHEARS|FLINT_AND_STEEL|FISHING_ROD|BRUSH|BUCKET)$'
+    mejoras:
+      name: "&d&lPlantillas de diseño"
+      icon: SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE
+      match:
+        - 'SMITHING_TEMPLATE$'
+    otros:
+      name: "&e&lMonturas y útiles"
+      icon: SADDLE
+      match:
+        - '^(ELYTRA|SADDLE|LEAD|COMPASS|RECOVERY_COMPASS|CLOCK|SPYGLASS|CARROT_ON_A_STICK|WARPED_FUNGUS_ON_A_STICK)$'
+
+  comida:
+    todos:
+      name: "&f&lTodo"
+      icon: NETHER_STAR
+    cocinada:
+      name: "&6&lComida cocinada"
+      icon: COOKED_BEEF
+      match:
+        - '^(BREAD|COOKED_.*|BAKED_POTATO|PUMPKIN_PIE|COOKIE|CAKE|BEETROOT_SOUP|MUSHROOM_STEW|RABBIT_STEW|SUSPICIOUS_STEW)$'
+    cruda:
+      name: "&c&lCarne y pescado crudo"
+      icon: BEEF
+      match:
+        - '^(BEEF|PORKCHOP|CHICKEN|MUTTON|RABBIT|COD|SALMON|TROPICAL_FISH|PUFFERFISH)$'
+    cultivos:
+      name: "&a&lCultivos y semillas"
+      icon: WHEAT
+      match:
+        - '^(NETHER_WART|CARROT|GOLDEN_CARROT|POTATO|POISONOUS_POTATO|BEETROOT|WHEAT|SUGAR|COCOA_BEANS|DRIED_KELP|SWEET_BERRIES|GLOW_BERRIES|CHORUS_FRUIT|EGG)$'
+        - '_SEEDS$'
+    frutas:
+      name: "&e&lFrutas y especiales"
+      icon: GOLDEN_APPLE
+      match:
+        - '^(APPLE|GOLDEN_APPLE|ENCHANTED_GOLDEN_APPLE|MELON_SLICE|GLISTERING_MELON_SLICE|HONEY_BOTTLE|MILK_BUCKET|BOWL)$'
+
+# =========================================================
+#  ICONOS DE LAS CATEGORÍAS (cabezas) Y ESTADO DE CADA CATEGORÍA
+#  La clave es la PRIMERA PALABRA del nombre de la categoría (igual que los filtros):
+#    Bloques -> bloques | Madera -> madera | Decoración -> decoracion | Minerales -> minerales
+#    Comida -> comida | Equipamiento -> equipamiento | Redstone y Utilidad -> redstone
+#    Drops de Mobs -> drops | Spawners -> spawners | Objetos Especiales -> objetos
+#
+#  category-icons.<clave>:
+#    texture:  cabeza personalizada. Acepta el HASH de textures.minecraft.net, la URL completa
+#              o el código "Value" en base64 de minecraft-heads.com. Vacío = no usa cabeza.
+#    material: ítem de respaldo (o ítem normal si no hay textura). Ej: ZOMBIE_HEAD, DIAMOND_SWORD.
+#  Para cambiar una cabeza: busca otra en minecraft-heads.com y pega su "Value" en texture.
+# =========================================================
+category-icons:
+  bloques:
+    texture: "d3b5001a67007a93ade6659175e9054a92976b087fc629f042bcd57e7757646a"   # bloque de cuarzo
+    material: QUARTZ_BLOCK
+  madera:
+    texture: "f19e856eab4efe937892701d6964de6abbea4e5d5f2072c3fd6b389cf883b5b9"   # tronco de roble
+    material: OAK_LOG
+  decoracion:
+    texture: "347f3c29a57b8b6a958f5a83d029514cab9ff04826cf427b6d590af0d71283be"   # flor rosa
+    material: PINK_TULIP
+  minerales:
+    texture: "1f74a9644ec3ccbe936ca6294297c0eece4716d25127bb1b12521f3f58df96da"   # bloque de diamante
+    material: DIAMOND
+  comida:
+    texture: "e1cfc7c53b7b70b526fb15fdb2bb3579cd97a8954e712820bab6bd3bcbba9c4"   # filete
+    material: COOKED_BEEF
+  equipamiento:
+    texture: ""
+    material: DIAMOND_SWORD
+  redstone:
+    texture: ""
+    material: REDSTONE
+  drops:
+    texture: ""
+    material: ZOMBIE_HEAD
+  spawners:
+    texture: "647e2e5d55b6d04943519bed2557c6329e33b60b909dee8923cd88b115210"    # spawner
+    material: SPAWNER
+  objetos:
+    texture: "98c8f82ccf8d2acb79008e17834002e8dc56e732ea89cc1db3bde4206658ef7d"   # caja de regalo
+    material: FIREWORK_ROCKET
+
+# Activar / desactivar categorías completas (se aplica con /shop reload).
+# enabled: false -> la categoría sigue en el menú pero bloqueada: nadie puede abrirla ni comprar.
+#   Los spawners vienen creados en shop.yml pero DESHABILITADOS. Para activarlos: enabled: true
+# hidden: true  -> además la oculta del menú principal.
+category-settings:
+  bloques:      { enabled: true }
+  madera:       { enabled: true }
+  decoracion:   { enabled: true }
+  minerales:    { enabled: true }
+  comida:       { enabled: true }
+  equipamiento: { enabled: true }
+  redstone:     { enabled: true }
+  drops:        { enabled: true }
+  spawners:
+    enabled: false
+    hidden: false
+  objetos:      { enabled: true }
+
+# Cómo se ve una categoría deshabilitada en el menú principal
+disabled-category:
+  icon: BARRIER
+  name: "{name} &8(&c&lDeshabilitada&8)"
+  lore:
+    - "&8━━━━━━━━━━━━━━━━━━"
+    - "&cEsta categoría está desactivada"
+    - "&7por el equipo administrativo."
+    - ""
+    - "&7Se activará más adelante."

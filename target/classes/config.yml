@@ -1,0 +1,87 @@
+# =========================================================
+#  SuperShop - Configuración general
+#  Todo lo que ves acá se puede editar sin recompilar.
+#  Los nombres de Material deben ser válidos para tu versión
+#  de Minecraft (usa /shop reload después de editar).
+# =========================================================
+
+gui:
+  main-menu:
+    title: "&8&lSuper Shop"
+    # Vidrio que rellena todo el borde del menú principal
+    border-glass: BLACK_STAINED_GLASS_PANE
+    # Slot (0-53) donde va la cabeza con el saldo del jugador
+    balance-head-slot: 49
+
+  category-menu:
+    # Cuántos ítems se muestran por página dentro de una categoría
+    items-per-page: 28
+    # Vidrio de relleno genérico (filas de navegación, huecos)
+    filler-glass: BLACK_STAINED_GLASS_PANE
+    # Íconos de los botones de navegación (slots fijos, ver abajo)
+    back-to-main-item: NETHER_STAR
+    previous-page-item: FEATHER
+    next-page-item: FIREWORK_ROCKET
+    close-item: BARRIER
+    sell-all-item: HOPPER
+    balance-head-slot: 49
+    back-to-main-slot: 46
+    previous-page-slot: 48
+    next-page-slot: 51
+    sell-all-slot: 50
+    close-slot: 53
+
+# Cantidad que se compra/vende con shift+clic (ademas de 1x con clic normal)
+clicks:
+  left-click-amount: 1
+  right-click-amount: 64
+  shift-click-sells-all: true
+
+sounds:
+  click: UI_BUTTON_CLICK
+  buy: ENTITY_EXPERIENCE_ORB_PICKUP
+  sell: ENTITY_EXPERIENCE_ORB_PICKUP
+  error: ENTITY_VILLAGER_NO
+  page-turn: ITEM_BOOK_PAGE_TURN
+
+particles:
+  enabled: true
+  buy: VILLAGER_HAPPY
+  sell: VILLAGER_HAPPY
+
+messages:
+  prefix: "&8[&6Shop&8] &r"
+  bought: "&a¡Compraste &f{amount}x {item} &apor &f${price}&a!"
+  sold: "&a¡Vendiste &f{amount}x {item} &apor &f${price}&a!"
+  not-enough-money: "&cNo tienes suficiente dinero. Te faltan &f${missing}&c."
+  not-enough-items: "&cNo tienes suficientes &f{item} &cpara vender."
+  no-sell: "&cEste ítem no se puede vender."
+  no-buy: "&cEste ítem no se puede comprar."
+  reload-success: "&a¡SuperShop recargado correctamente!"
+  no-permission: "&cNo tienes permiso para hacer esto."
+  only-players: "&cSolo un jugador puede usar este comando."
+
+# Cabeza que muestra el saldo del jugador (clic central en cualquier menú)
+balance-head:
+  name: "&6&lTu Saldo"
+  lore:
+    - "&7Balance actual:"
+    - "&a${balance}"
+    - ""
+    - "&7Compra y vende ítems en"
+    - "&7las categorías de la tienda."
+
+# Opciones adicionales de SuperShop
+shop:
+  spawners:
+    enabled: false # true para mostrar la categoría de spawners
+
+# Límites y comportamiento del menú de compra
+purchase:
+  minimum-amount: 1
+  maximum-amount: 2304
+  default-amount: 1
+  require-full-inventory-space: true
+
+animations:
+  enabled: true

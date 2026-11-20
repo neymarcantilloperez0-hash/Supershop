@@ -4,6 +4,7 @@ import mx.network.supershop.commands.ShopCommand;
 import mx.network.supershop.economy.EconomyManager;
 import mx.network.supershop.gui.CategoryGUI;
 import mx.network.supershop.gui.MainMenuGUI;
+import mx.network.supershop.gui.PurchaseGUI;
 import mx.network.supershop.listeners.ShopGUIListener;
 import mx.network.supershop.placeholders.ShopPlaceholders;
 import mx.network.supershop.shop.ShopManager;
@@ -14,6 +15,7 @@ public class SuperShop extends JavaPlugin {
     private ShopManager shopManager;
     private MainMenuGUI mainMenuGUI;
     private CategoryGUI categoryGUI;
+    private PurchaseGUI purchaseGUI;
 
     @Override
     public void onEnable() {
@@ -30,6 +32,7 @@ public class SuperShop extends JavaPlugin {
 
         this.mainMenuGUI = new MainMenuGUI(this);
         this.categoryGUI = new CategoryGUI(this);
+        this.purchaseGUI = new PurchaseGUI(this);
 
         getCommand("shop").setExecutor(new ShopCommand(this));
         getServer().getPluginManager().registerEvents(new ShopGUIListener(this), this);
@@ -50,4 +53,5 @@ public class SuperShop extends JavaPlugin {
     public ShopManager getShopManager() { return shopManager; }
     public MainMenuGUI getMainMenuGUI() { return mainMenuGUI; }
     public CategoryGUI getCategoryGUI() { return categoryGUI; }
+    public PurchaseGUI getPurchaseGUI() { return purchaseGUI; }
 }

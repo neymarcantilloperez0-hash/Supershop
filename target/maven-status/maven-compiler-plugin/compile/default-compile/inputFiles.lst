@@ -1,0 +1,16 @@
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/SuperShop.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/commands/ShopCommand.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/economy/EconomyManager.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/CategoryGUI.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/CategoryHolder.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/MainMenuGUI.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/MainMenuHolder.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/MenuAnimator.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/PurchaseGUI.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/gui/PurchaseHolder.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/listeners/ShopGUIListener.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/placeholders/ShopPlaceholders.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/shop/ShopCategory.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/shop/ShopItem.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/shop/ShopManager.java
+/storage/emulated/0/Download/SuperShop/src/main/java/mx/network/supershop/util/ItemBuilder.java

@@ -1,0 +1,16 @@
+mx/network/supershop/commands/ShopCommand.class
+mx/network/supershop/shop/ShopManager.class
+mx/network/supershop/placeholders/ShopPlaceholders.class
+mx/network/supershop/economy/EconomyManager.class
+mx/network/supershop/listeners/ShopGUIListener.class
+mx/network/supershop/gui/CategoryGUI.class
+mx/network/supershop/SuperShop.class
+mx/network/supershop/shop/ShopItem.class
+mx/network/supershop/gui/PurchaseGUI.class
+mx/network/supershop/gui/PurchaseHolder.class
+mx/network/supershop/gui/MainMenuGUI.class
+mx/network/supershop/util/ItemBuilder.class
+mx/network/supershop/gui/MenuAnimator.class
+mx/network/supershop/gui/CategoryHolder.class
+mx/network/supershop/gui/MainMenuHolder.class
+mx/network/supershop/shop/ShopCategory.class

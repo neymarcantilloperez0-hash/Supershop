@@ -44,6 +44,10 @@ public class ShopManager {
         }
 
         for (String catId : categoriesSection.getKeys(false)) {
+            if (catId.equalsIgnoreCase("spawners") && !plugin.getConfig().getBoolean("shop.spawners.enabled", false)) {
+                plugin.getLogger().info("Categoría Spawners desactivada por configuración.");
+                continue;
+            }
             ConfigurationSection catSection = categoriesSection.getConfigurationSection(catId);
             if (catSection == null) continue;
 

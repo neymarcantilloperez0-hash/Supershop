@@ -2,304 +2,508 @@ package mx.network.supershop.listeners;
 
 import mx.network.supershop.SuperShop;
 import mx.network.supershop.economy.EconomyManager;
-import mx.network.supershop.gui.CategoryHolder;
-import mx.network.supershop.gui.MainMenuHolder;
+import mx.network.supershop.gui.BrowseHolder;
+import mx.network.supershop.gui.CategoryGUI;
+import mx.network.supershop.gui.FilterGUI;
+import mx.network.supershop.gui.FilterHolder;
+import mx.network.supershop.gui.GuiUtil;
+import mx.network.supershop.gui.MainHolder;
+import mx.network.supershop.gui.MenuAnimator;
+import mx.network.supershop.gui.PurchaseGUI;
+import mx.network.supershop.gui.PurchaseHolder;
+import mx.network.supershop.gui.ShopHolder;
 import mx.network.supershop.shop.ShopCategory;
 import mx.network.supershop.shop.ShopItem;
-import mx.network.supershop.util.ItemBuilder;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Location;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class ShopGUIListener implements Listener {
 
+    private static final long SELL_ALL_CONFIRM_MS = 5000L;
+
     private final SuperShop plugin;
+    private final PurchaseGUI purchaseGUI;
+    private final FilterGUI filterGUI;
 
     public ShopGUIListener(SuperShop plugin) {
         this.plugin = plugin;
+        this.purchaseGUI = new PurchaseGUI(plugin);
+        this.filterGUI = new FilterGUI(plugin);
+        MenuAnimator.start(plugin);
+    }
+
+    private boolean isOurs(InventoryHolder h) {
+        return h instanceof ShopHolder;
+    }
+
+    // ------------------------------------------------------------------
+    //  Apertura / cierre (animaciones)
+    // ------------------------------------------------------------------
+
+    @EventHandler
+    public void onOpen(InventoryOpenEvent e) {
+        InventoryHolder h = e.getInventory().getHolder();
+        if (!(h instanceof ShopHolder) || !(e.getPlayer() instanceof Player)) return;
+        Player p = (Player) e.getPlayer();
+        MenuAnimator.track(p, (ShopHolder) h);
+        if (h instanceof MainHolder || h instanceof BrowseHolder) sound(p, "open");
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent event) {
-        InventoryHolder holder = event.getInventory().getHolder();
-        if (!(holder instanceof MainMenuHolder) && !(holder instanceof CategoryHolder)) return;
-
-        event.setCancelled(true); // nunca se mueven ítems reales dentro de estos menús
-
-        if (!(event.getWhoClicked() instanceof Player player)) return;
-        ItemStack clicked = event.getCurrentItem();
-        if (clicked == null || clicked.getType() == Material.AIR) return;
-
-        if (holder instanceof MainMenuHolder) {
-            handleMainMenuClick(player, clicked, event.getSlot());
-        } else {
-            handleCategoryClick(player, (CategoryHolder) holder, clicked, event.getSlot(), event.getClick());
+    public void onClose(InventoryCloseEvent e) {
+        if (e.getPlayer() instanceof Player) {
+            MenuAnimator.untrack((Player) e.getPlayer(), e.getInventory());
         }
     }
 
-    // ================= MENÚ PRINCIPAL =================
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        MenuAnimator.untrack(e.getPlayer(), null);
+    }
 
-    private void handleMainMenuClick(Player player, ItemStack clicked, int slot) {
-        for (ShopCategory category : plugin.getShopManager().getCategories().values()) {
-            if (category.getMainMenuSlot() == slot) {
-                playSound(player, "click");
-                player.openInventory(plugin.getCategoryGUI().build(player, category, 0));
+    // ------------------------------------------------------------------
+    //  Clics
+    // ------------------------------------------------------------------
+
+    @EventHandler
+    public void onDrag(InventoryDragEvent e) {
+        if (isOurs(e.getView().getTopInventory().getHolder())) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        Inventory top = e.getView().getTopInventory();
+        InventoryHolder holder = top.getHolder();
+        if (!isOurs(holder)) return;
+
+        e.setCancelled(true);
+        if (!(e.getWhoClicked() instanceof Player)) return;
+        Player p = (Player) e.getWhoClicked();
+        if (e.getClickedInventory() == null || e.getClickedInventory() != top) return;
+
+        int slot = e.getRawSlot();
+        ClickType click = e.getClick();
+
+        if (holder instanceof MainHolder) {
+            handleMainMenuClick(p, slot);
+        } else if (holder instanceof BrowseHolder) {
+            handleBrowseClick(p, (BrowseHolder) holder, slot, click);
+        } else if (holder instanceof FilterHolder) {
+            handleFilterClick(p, (FilterHolder) holder, slot);
+        } else if (holder instanceof PurchaseHolder) {
+            handlePurchaseClick(p, (PurchaseHolder) holder, slot);
+        }
+    }
+
+    // ------------------------------------------------------------------
+    //  Menú principal
+    // ------------------------------------------------------------------
+
+    private void handleMainMenuClick(Player p, int slot) {
+        FileConfiguration cfg = plugin.getConfig();
+        if (slot == cfg.getInt("gui.main-menu.close-slot", 53)) {
+            sound(p, "click");
+            p.closeInventory();
+            return;
+        }
+        for (ShopCategory cat : plugin.getShopManager().getCategories().values()) {
+            if (cat.getMainMenuSlot() == slot) {
+                if (GuiUtil.categoryHidden(plugin, cat)) continue;
+                if (!GuiUtil.categoryEnabled(plugin, cat)) {
+                    msg(p, "category-disabled", "&cEsa categoría está deshabilitada por el momento.");
+                    sound(p, "error");
+                    return;
+                }
+                sound(p, "click");
+                p.openInventory(plugin.getCategoryGUI().build(p, cat, 0));
                 return;
             }
         }
     }
 
-    // ================= MENÚ DE CATEGORÍA =================
+    // ------------------------------------------------------------------
+    //  Menú de categoría
+    // ------------------------------------------------------------------
 
-    private void handleCategoryClick(Player player, CategoryHolder holder, ItemStack clicked, int slot, ClickType clickType) {
-        ShopCategory category = holder.getCategory();
-        int backSlot = plugin.getConfig().getInt("gui.category-menu.back-to-main-slot", 46);
-        int prevSlot = plugin.getConfig().getInt("gui.category-menu.previous-page-slot", 48);
-        int nextSlot = plugin.getConfig().getInt("gui.category-menu.next-page-slot", 51);
-        int sellAllSlot = plugin.getConfig().getInt("gui.category-menu.sell-all-slot", 50);
-        int closeSlot = plugin.getConfig().getInt("gui.category-menu.close-slot", 53);
+    private void handleBrowseClick(Player p, BrowseHolder h, int slot, ClickType click) {
+        FileConfiguration cfg = plugin.getConfig();
+        CategoryGUI gui = plugin.getCategoryGUI();
+        ShopCategory cat = h.getCategory();
+        List<ShopItem> visible = h.getVisible();
+        int page = h.getPage();
+        int pages = CategoryGUI.pageCount(visible.size());
+        String base = "gui.category-menu.";
 
-        if (slot == closeSlot) {
-            playSound(player, "click");
-            player.closeInventory();
-            return;
-        }
-        if (slot == backSlot) {
-            playSound(player, "click");
-            player.openInventory(plugin.getMainMenuGUI().build(player));
-            return;
-        }
-        if (slot == prevSlot) {
-            playSound(player, "page-turn");
-            player.openInventory(plugin.getCategoryGUI().build(player, category, holder.getPage() - 1));
-            return;
-        }
-        if (slot == nextSlot) {
-            playSound(player, "page-turn");
-            player.openInventory(plugin.getCategoryGUI().build(player, category, holder.getPage() + 1));
-            return;
-        }
-        if (slot == sellAllSlot) {
-            sellAllOfCategory(player, category);
+        // Si el admin deshabilitó la categoría mientras el menú estaba abierto
+        if (!GuiUtil.categoryEnabled(plugin, cat)) {
+            msg(p, "category-disabled", "&cEsa categoría está deshabilitada por el momento.");
+            sound(p, "error");
+            p.closeInventory();
             return;
         }
 
-        // Si no fue un botón de navegación, buscamos a qué ShopItem corresponde el slot.
-        ShopItem shopItem = findItemForIcon(category, clicked);
-        if (shopItem == null) return;
-
-        switch (clickType) {
-            case LEFT -> buy(player, shopItem, 1);
-            case RIGHT -> buy(player, shopItem, 64);
-            case SHIFT_RIGHT -> sellAllOfItem(player, shopItem);
-            case SHIFT_LEFT -> sell(player, shopItem, 1);
-            default -> { /* otros tipos de clic no hacen nada */ }
+        if (slot == cfg.getInt(base + "back-to-main-slot", 46)) {
+            sound(p, "click");
+            p.openInventory(plugin.getMainMenuGUI().build(p));
+            return;
+        }
+        if (slot == cfg.getInt(base + "close-slot", 53)) {
+            sound(p, "click");
+            p.closeInventory();
+            return;
         }
 
-        // Refrescamos el menú para que la cabeza de saldo se vea actualizada al instante.
-        refreshOpenCategory(player, category, holder.getPage());
-    }
-
-    private ShopItem findItemForIcon(ShopCategory category, ItemStack clicked) {
-        String clickedName = clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()
-                ? clicked.getItemMeta().getDisplayName() : null;
-        if (clickedName == null) return null;
-
-        for (ShopItem item : category.getItems()) {
-            if (ItemBuilder.color(item.getDisplayName()).equals(clickedName)) {
-                return item;
+        // Filtro: clic = elegir, clic der. = siguiente, shift = ver todo
+        if (slot == cfg.getInt(base + "filter-slot", 47)) {
+            if (!h.hasFilters()) return;
+            if (click.isShiftClick()) {
+                h.setFilterIndex(0);
+                h.setPage(0);
+                sound(p, "page-turn");
+                gui.render(h, p, true);
+            } else if (click.isRightClick()) {
+                h.setFilterIndex((h.getFilterIndex() + 1) % h.getFilters().size());
+                h.setPage(0);
+                sound(p, "page-turn");
+                gui.render(h, p, true);
+            } else {
+                sound(p, "click");
+                p.openInventory(filterGUI.build(p, h));
             }
+            return;
         }
-        return null;
+
+        // Las flechas SOLO funcionan si realmente hay otra página (arregla el bug de páginas infinitas)
+        int jump = Math.max(2, cfg.getInt(base + "page-jump", 5));
+        if (slot == cfg.getInt(base + "previous-page-slot", 48)) {
+            if (page > 0) {
+                int np = click.isShiftClick() ? 0 : (click.isRightClick() ? page - jump : page - 1);
+                h.setPage(Math.max(0, np));
+                sound(p, "page-turn");
+                gui.render(h, p, true);
+            }
+            return;
+        }
+        if (slot == cfg.getInt(base + "next-page-slot", 51)) {
+            if (page < pages - 1) {
+                int np = click.isShiftClick() ? pages - 1 : (click.isRightClick() ? page + jump : page + 1);
+                h.setPage(Math.min(pages - 1, np));
+                sound(p, "page-turn");
+                gui.render(h, p, true);
+            }
+            return;
+        }
+
+        // Vender todo: pide confirmar con un segundo clic
+        if (slot == cfg.getInt(base + "sell-all-slot", 50)) {
+            long now = System.currentTimeMillis();
+            if (now > h.getSellArmedUntil()) {
+                if (gui.estimateSellAll(p, visible) <= 0) {
+                    msg(p, "nothing-to-sell", "&cNo tienes nada de esta categoría para vender.");
+                    sound(p, "error");
+                    return;
+                }
+                h.setSellArmedUntil(now + SELL_ALL_CONFIRM_MS);
+                sound(p, "click");
+                gui.render(h, p, false);
+                return;
+            }
+            h.setSellArmedUntil(0L);
+            sellAllOfList(p, visible);
+            gui.render(h, p, false);
+            return;
+        }
+
+        // Ítems
+        int pos = CategoryGUI.indexOfSlot(slot);
+        if (pos < 0) return;
+        if (h.getInventory().getItem(slot) == null) return; // todavía no apareció (animación) o slot vacío
+        int idx = page * CategoryGUI.ITEM_SLOTS.length + pos;
+        if (idx >= visible.size()) return;
+        ShopItem it = visible.get(idx);
+        int fi = h.getFilterIndex();
+
+        if (click.isShiftClick()) {
+            // vender todo, con menú de confirmación
+            if (!it.canSell()) {
+                msg(p, "no-sell", "&cEste ítem no se puede vender.");
+                sound(p, "error");
+                return;
+            }
+            int have = GuiUtil.count(p, it);
+            if (have <= 0) {
+                msg(p, "not-enough-items", "&cNo tienes suficientes &f{item} &cpara vender.", "item", it.getDisplayName());
+                sound(p, "error");
+                return;
+            }
+            sound(p, "click");
+            p.openInventory(purchaseGUI.build(p, cat, it, true, Math.min(have, purchaseGUI.maxAmount()), fi, page));
+        } else if (click.isRightClick()) {
+            if (!it.canSell()) {
+                msg(p, "no-sell", "&cEste ítem no se puede vender.");
+                sound(p, "error");
+                return;
+            }
+            if (GuiUtil.count(p, it) <= 0) {
+                msg(p, "not-enough-items", "&cNo tienes suficientes &f{item} &cpara vender.", "item", it.getDisplayName());
+                sound(p, "error");
+                return;
+            }
+            sound(p, "click");
+            p.openInventory(purchaseGUI.build(p, cat, it, true, 1, fi, page));
+        } else if (click.isLeftClick()) {
+            if (!it.canBuy()) {
+                msg(p, "no-buy", "&cEste ítem no se puede comprar.");
+                sound(p, "error");
+                return;
+            }
+            sound(p, "click");
+            p.openInventory(purchaseGUI.build(p, cat, it, false, 1, fi, page));
+        }
     }
 
-    // ================= ECONOMÍA =================
+    // ------------------------------------------------------------------
+    //  Menú de filtros
+    // ------------------------------------------------------------------
 
-    private void buy(Player player, ShopItem item, int amount) {
+    private void handleFilterClick(Player p, FilterHolder fh, int slot) {
+        if (slot == FilterGUI.SLOT_BACK) {
+            sound(p, "click");
+            p.openInventory(plugin.getCategoryGUI().build(p, fh.getCategory(), fh.getFilters(),
+                    fh.getSelected(), fh.getReturnPage()));
+            return;
+        }
+        int idx = FilterGUI.indexOfSlot(slot);
+        if (idx < 0 || idx >= fh.getFilters().size()) return;
+        sound(p, "page-turn");
+        p.openInventory(plugin.getCategoryGUI().build(p, fh.getCategory(), fh.getFilters(), idx, 0));
+    }
+
+    // ------------------------------------------------------------------
+    //  Menú de compra / venta
+    // ------------------------------------------------------------------
+
+    private void handlePurchaseClick(Player p, PurchaseHolder ph, int slot) {
+        int a = ph.getAmount();
+        int limit = purchaseGUI.limitFor(p, ph);
+
+        switch (slot) {
+            case PurchaseGUI.SLOT_M64: a -= 64; break;
+            case PurchaseGUI.SLOT_M10: a -= 10; break;
+            case PurchaseGUI.SLOT_M1: a -= 1; break;
+            case PurchaseGUI.SLOT_P1: a += 1; break;
+            case PurchaseGUI.SLOT_P10: a += 10; break;
+            case PurchaseGUI.SLOT_P64: a += 64; break;
+            case PurchaseGUI.SLOT_RESET: a = 1; break;
+            case PurchaseGUI.SLOT_STACK1: a = ph.getItem().getMaterial().getMaxStackSize(); break;
+            case PurchaseGUI.SLOT_STACK9: a = 9 * ph.getItem().getMaterial().getMaxStackSize(); break;
+            case PurchaseGUI.SLOT_STACK27: a = 27 * ph.getItem().getMaterial().getMaxStackSize(); break;
+            case PurchaseGUI.SLOT_STACK36: a = 36 * ph.getItem().getMaterial().getMaxStackSize(); break;
+            case PurchaseGUI.SLOT_MAX: a = purchaseGUI.maxFor(p, ph); break;
+            case PurchaseGUI.SLOT_BACK:
+                sound(p, "click");
+                p.openInventory(plugin.getCategoryGUI().build(p, ph.getCategory(), ph.getReturnFilter(), ph.getReturnPage()));
+                return;
+            case PurchaseGUI.SLOT_CANCEL:
+                sound(p, "click");
+                p.closeInventory();
+                return;
+            case PurchaseGUI.SLOT_CONFIRM:
+                if (ph.isSell()) {
+                    confirmSell(p, ph);
+                } else {
+                    confirmBuy(p, ph);
+                }
+                return;
+            default:
+                return;
+        }
+
+        a = Math.max(1, Math.min(a, limit));
+        ph.setAmount(a);
+        // el tono sube con la cantidad: se "siente" cuánto estás comprando
+        float pitch = 0.6f + 1.4f * Math.min(1f, a / (float) Math.max(1, Math.min(limit, 256)));
+        sound(p, "amount", pitch);
+        purchaseGUI.render(ph.getInventory(), ph, p);
+    }
+
+    private void confirmBuy(Player p, PurchaseHolder ph) {
+        ShopItem it = ph.getItem();
+        int a = ph.getAmount();
         Economy econ = EconomyManager.get();
-        if (econ == null) return;
-
-        if (!item.canBuy()) {
-            playSound(player, "error");
-            msg(player, "no-buy");
+        if (econ == null) {
+            p.sendMessage(GuiUtil.c("&cNo hay un sistema de economía disponible."));
+            sound(p, "error");
             return;
         }
-
-        double total = item.getBuyPrice() * amount;
-        if (econ.getBalance(player) < total) {
-            playSound(player, "error");
-            msg(player, "not-enough-money", "{missing}", format(total - econ.getBalance(player)));
+        double total = GuiUtil.round2(it.getBuyPrice() * a);
+        double bal = econ.getBalance(p);
+        if (bal + 1e-9 < total) {
+            msg(p, "not-enough-money", "&cNo tienes suficiente dinero. Te faltan &f${missing}&c.",
+                    "missing", GuiUtil.money(GuiUtil.round2(total - bal)));
+            sound(p, "error");
+            purchaseGUI.render(ph.getInventory(), ph, p);
             return;
         }
-
-        if (!hasInventorySpace(player, amount)) {
-            playSound(player, "error");
+        if (GuiUtil.freeSpace(p, it) < a) {
+            msg(p, "no-space", "&cNo tienes espacio suficiente en el inventario.");
+            sound(p, "error");
+            purchaseGUI.render(ph.getInventory(), ph, p);
             return;
         }
-
-        econ.withdrawPlayer(player, total);
-        player.getInventory().addItem(buildPhysicalItem(item, amount));
-
-        playSound(player, "buy");
-        spawnParticle(player, "buy");
-        msg(player, "bought", "{amount}", String.valueOf(amount), "{item}", ItemBuilder.color(item.getDisplayName()), "{price}", format(total));
+        EconomyResponse r = econ.withdrawPlayer(p, total);
+        if (!r.transactionSuccess()) {
+            msg(p, "not-enough-money", "&cNo tienes suficiente dinero. Te faltan &f${missing}&c.",
+                    "missing", GuiUtil.money(total));
+            sound(p, "error");
+            return;
+        }
+        GuiUtil.give(p, it, a);
+        msg(p, "bought", "&a¡Compraste &f{amount}x {item} &apor &f${price}&a!",
+                "amount", String.valueOf(a), "item", it.getDisplayName(), "price", GuiUtil.money(total));
+        sound(p, "buy");
+        particle(p, "buy");
+        finishTransaction(p, ph, Material.LIME_STAINED_GLASS_PANE);
     }
 
-    private void sell(Player player, ShopItem item, int amount) {
+    private void confirmSell(Player p, PurchaseHolder ph) {
+        ShopItem it = ph.getItem();
+        int a = ph.getAmount();
         Economy econ = EconomyManager.get();
-        if (econ == null) return;
-
-        if (!item.canSell()) {
-            playSound(player, "error");
-            msg(player, "no-sell");
+        if (econ == null) {
+            p.sendMessage(GuiUtil.c("&cNo hay un sistema de economía disponible."));
+            sound(p, "error");
             return;
         }
-
-        int owned = countMaterial(player, item.getMaterial());
-        if (owned < amount) {
-            playSound(player, "error");
-            msg(player, "not-enough-items", "{item}", ItemBuilder.color(item.getDisplayName()));
+        if (GuiUtil.count(p, it) < a) {
+            msg(p, "not-enough-items", "&cNo tienes suficientes &f{item} &cpara vender.", "item", it.getDisplayName());
+            sound(p, "error");
+            ph.setAmount(Math.max(1, Math.min(a, purchaseGUI.limitFor(p, ph))));
+            purchaseGUI.render(ph.getInventory(), ph, p);
             return;
         }
+        int removed = GuiUtil.remove(p, it, a);
+        double total = GuiUtil.round2(it.getSellPrice() * removed);
+        econ.depositPlayer(p, total);
+        msg(p, "sold", "&a¡Vendiste &f{amount}x {item} &apor &f${price}&a!",
+                "amount", String.valueOf(removed), "item", it.getDisplayName(), "price", GuiUtil.money(total));
+        sound(p, "sell");
+        particle(p, "sell");
 
-        removeMaterial(player, item.getMaterial(), amount);
-        double total = item.getSellPrice() * amount;
-        econ.depositPlayer(player, total);
-
-        playSound(player, "sell");
-        spawnParticle(player, "sell");
-        msg(player, "sold", "{amount}", String.valueOf(amount), "{item}", ItemBuilder.color(item.getDisplayName()), "{price}", format(total));
+        if (plugin.getConfig().getBoolean("purchase-menu.close-after-confirm", false)) {
+            p.closeInventory();
+        } else if (GuiUtil.count(p, it) <= 0) {
+            // ya no queda nada que vender: volvemos a la categoría
+            p.openInventory(plugin.getCategoryGUI().build(p, ph.getCategory(), ph.getReturnFilter(), ph.getReturnPage()));
+        } else {
+            finishTransaction(p, ph, Material.ORANGE_STAINED_GLASS_PANE);
+        }
     }
 
-    private void sellAllOfItem(Player player, ShopItem item) {
-        if (!item.canSell()) {
-            playSound(player, "error");
-            msg(player, "no-sell");
+    /** Después de una compra/venta: cierra o repinta el menú con un destello en el marco. */
+    private void finishTransaction(Player p, PurchaseHolder ph, Material flashGlass) {
+        if (plugin.getConfig().getBoolean("purchase-menu.close-after-confirm", false)) {
+            p.closeInventory();
             return;
         }
-        int owned = countMaterial(player, item.getMaterial());
-        if (owned <= 0) {
-            playSound(player, "error");
-            msg(player, "not-enough-items", "{item}", ItemBuilder.color(item.getDisplayName()));
-            return;
-        }
-        sell(player, item, owned);
+        ph.setAmount(Math.max(1, Math.min(ph.getAmount(), purchaseGUI.limitFor(p, ph))));
+        purchaseGUI.render(ph.getInventory(), ph, p);
+        ph.flash(flashGlass, 12);
     }
 
-    private void sellAllOfCategory(Player player, ShopCategory category) {
+    private void sellAllOfList(Player p, List<ShopItem> items) {
         Economy econ = EconomyManager.get();
-        if (econ == null) return;
-
-        double totalEarned = 0;
+        if (econ == null) {
+            p.sendMessage(GuiUtil.c("&cNo hay un sistema de economía disponible."));
+            sound(p, "error");
+            return;
+        }
         int totalItems = 0;
-
-        for (ShopItem item : category.getItems()) {
-            if (!item.canSell()) continue;
-            int owned = countMaterial(player, item.getMaterial());
-            if (owned <= 0) continue;
-
-            removeMaterial(player, item.getMaterial(), owned);
-            totalEarned += item.getSellPrice() * owned;
-            totalItems += owned;
+        double total = 0;
+        for (ShopItem it : items) {
+            if (!it.canSell()) continue;
+            int have = GuiUtil.count(p, it);
+            if (have <= 0) continue;
+            int removed = GuiUtil.remove(p, it, have);
+            totalItems += removed;
+            total += removed * it.getSellPrice();
         }
-
-        if (totalItems == 0) {
-            playSound(player, "error");
-            msg(player, "not-enough-items", "{item}", "ítems de " + ItemBuilder.color(category.getDisplayName()));
+        if (totalItems <= 0) {
+            msg(p, "nothing-to-sell", "&cNo tienes nada de esta categoría para vender.");
+            sound(p, "error");
             return;
         }
-
-        econ.depositPlayer(player, totalEarned);
-        playSound(player, "sell");
-        spawnParticle(player, "sell");
-        msg(player, "sold", "{amount}", String.valueOf(totalItems), "{item}", ItemBuilder.color(category.getDisplayName()), "{price}", format(totalEarned));
-
-        refreshOpenCategory(player, category, 0);
+        total = GuiUtil.round2(total);
+        econ.depositPlayer(p, total);
+        msg(p, "sold-all", "&a¡Vendiste &f{amount} ítems &apor &f${price}&a!",
+                "amount", String.valueOf(totalItems), "price", GuiUtil.money(total));
+        sound(p, "sell");
+        particle(p, "sell");
     }
 
-    // ================= HELPERS =================
+    // ------------------------------------------------------------------
+    //  Helpers: mensajes, sonidos, partículas
+    // ------------------------------------------------------------------
 
-    private ItemStack buildPhysicalItem(ShopItem item, int amount) {
-        ItemStack stack = new ItemStack(item.getMaterial(), amount);
-        return stack;
+    private void msg(Player p, String key, String def, String... kv) {
+        FileConfiguration cfg = plugin.getConfig();
+        String m = cfg.getString("messages." + key, def);
+        for (int i = 0; i + 1 < kv.length; i += 2) {
+            m = m.replace("{" + kv[i] + "}", kv[i + 1]);
+        }
+        String prefix = cfg.getString("messages.prefix", "&8[&6Shop&8] &r");
+        p.sendMessage(GuiUtil.c(prefix + m));
     }
 
-    private boolean hasInventorySpace(Player player, int amount) {
-        // Chequeo simple: si el inventario está completamente lleno, avisamos igual se intenta
-        // (addItem dropea al piso si no entra, así que dejamos pasar; se puede endurecer si se quiere).
-        return true;
+    private void sound(Player p, String key) {
+        sound(p, key, 1.0f);
     }
 
-    private int countMaterial(Player player, Material material) {
-        int count = 0;
-        for (ItemStack stack : player.getInventory().getContents()) {
-            if (stack != null && stack.getType() == material) {
-                count += stack.getAmount();
+    private void sound(Player p, String key, float pitch) {
+        String name = plugin.getConfig().getString("sounds." + key);
+        if (name == null || name.isEmpty()) return;
+        try {
+            Sound s = Sound.valueOf(name.toUpperCase());
+            p.playSound(p.getLocation(), s, 1.0f, Math.max(0.5f, Math.min(2.0f, pitch)));
+        } catch (IllegalArgumentException ignored) {
+            // sonido inválido en config.yml
+        }
+    }
+
+    private void particle(Player p, String key) {
+        FileConfiguration cfg = plugin.getConfig();
+        if (!cfg.getBoolean("particles.enabled", true)) return;
+        String configured = cfg.getString("particles." + key, "HAPPY_VILLAGER");
+        Particle part = null;
+        for (String cand : new String[]{configured, "HAPPY_VILLAGER", "VILLAGER_HAPPY"}) {
+            try {
+                part = Particle.valueOf(cand.toUpperCase());
+                break;
+            } catch (IllegalArgumentException ignored) {
+                // probamos el siguiente nombre (cambia según versión)
             }
         }
-        return count;
-    }
-
-    private void removeMaterial(Player player, Material material, int amount) {
-        int remaining = amount;
-        ItemStack[] contents = player.getInventory().getContents();
-        for (int i = 0; i < contents.length && remaining > 0; i++) {
-            ItemStack stack = contents[i];
-            if (stack == null || stack.getType() != material) continue;
-            int take = Math.min(stack.getAmount(), remaining);
-            stack.setAmount(stack.getAmount() - take);
-            remaining -= take;
-            if (stack.getAmount() <= 0) {
-                player.getInventory().setItem(i, null);
-            }
+        if (part != null) {
+            p.spawnParticle(part, p.getLocation().add(0, 1, 0), 12, 0.4, 0.5, 0.4, 0.0);
         }
-    }
-
-    private void refreshOpenCategory(Player player, ShopCategory category, int page) {
-        Inventory top = player.getOpenInventory().getTopInventory();
-        if (top.getHolder() instanceof CategoryHolder) {
-            player.openInventory(plugin.getCategoryGUI().build(player, category, page));
-        }
-    }
-
-    private void playSound(Player player, String key) {
-        String soundName = plugin.getConfig().getString("sounds." + key);
-        if (soundName == null) return;
-        try {
-            player.playSound(player.getLocation(), Sound.valueOf(soundName), 1f, 1f);
-        } catch (IllegalArgumentException ignored) { }
-    }
-
-    private void spawnParticle(Player player, String key) {
-        if (!plugin.getConfig().getBoolean("particles.enabled", true)) return;
-        String particleName = plugin.getConfig().getString("particles." + key);
-        if (particleName == null) return;
-        try {
-            Location loc = player.getLocation().add(0, 1, 0);
-            player.getWorld().spawnParticle(Particle.valueOf(particleName), loc, 12, 0.4, 0.4, 0.4);
-        } catch (IllegalArgumentException ignored) { }
-    }
-
-    private String format(double value) {
-        return String.format("%,.2f", value);
-    }
-
-    private void msg(Player player, String key, String... placeholders) {
-        String prefix = plugin.getConfig().getString("messages.prefix", "");
-        String text = plugin.getConfig().getString("messages." + key, "");
-        for (int i = 0; i + 1 < placeholders.length; i += 2) {
-            text = text.replace(placeholders[i], placeholders[i + 1]);
-        }
-        player.sendMessage(ItemBuilder.color(prefix + text));
     }
 }

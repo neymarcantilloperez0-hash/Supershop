@@ -1,0 +1,26 @@
+ACTUALIZACION SuperShop v4
+  - NUEVA categoria "Madera" (199 items): troncos, madera, tallos, tablones, escaleras, losas,
+    vallas, portones, puertas, trampillas, botones, placas, carteles, barcas (con cofre tambien),
+    mobiliario (cofres, barriles, mesa de crafteo, estanterias...) y palos. 9 filtros adentro.
+  - Menu principal en rejilla 3-4-3:
+        Bloques | Madera | Decoracion
+        Minerales | Comida | Equipamiento | Redstone
+        Mobs (Drops de Mobs) | Spawners | Objetos Especiales
+  - Iconos de categoria con CABEZAS (cuarzo, tronco, flor rosa, diamante, filete, spawner, regalo),
+    espada en Equipamiento y cabeza de zombie en Drops de Mobs. Se cambian en config.yml -> category-icons.
+  - "Drops de Mobs" ahora solo tiene drops (se movieron corazon del mar, huevos, eco y verruga).
+  - Spawners creados pero DESHABILITADOS: config.yml -> category-settings -> spawners -> enabled: true
+    para activarlos (hidden: true los oculta del menu).
+  - Menu de compra con atajos por stacks (1, 9, 27 y 36 stacks) ademas de +/-1, +10, +64, maximo.
+
+1) Descomprime este zip DENTRO de la carpeta del proyecto (/storage/emulated/0/Download/SuperShop),
+   aceptando reemplazar archivos.
+2) Git:
+     git add .
+     git commit -m "Categoria Madera, iconos con cabezas, spawners deshabilitables, atajos por stack"
+     git push origin main
+3) Baja el jar nuevo de GitHub Actions y subelo a plugins/.
+4) En el servidor BORRA plugins/SuperShop/shop.yml y config.yml viejos y reinicia.
+
+NOTA: si alguna cabeza sale como Steve, pega otro "Value" de minecraft-heads.com en
+config.yml -> category-icons -> <categoria> -> texture (o deja texture: "" para usar un item normal).
